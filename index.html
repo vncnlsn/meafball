@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throwable Bouncy Circle Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Static color outside the game area */
+            font-family: Arial, sans-serif;
+        }
+        #background {
+            position: absolute;
+            width: 90vw; /* Match canvas width */
+            height: 90vh; /* Match canvas height */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Bottom layer: background */
+        }
+        canvas {
+            position: absolute;
+            z-index: 10; /* Top layer: circle and border */
+            background: transparent; /* Transparent canvas background */
+        }
+        #level, #countdown, #wallHits {
+            position: absolute;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 2em;
+            font-weight: bold;
+            z-index: 5; /* Middle layer: text, above background but below circle */
+        }
+        #level {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #countdown {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4em;
+            transition: opacity 0.5s ease;
+        }
+        #wallHits {
+            top: 60px; /* Positioned below the level number */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="background"></div>
+    <div id="level">Level: 1</div>
+    <div id="countdown" style="opacity: 0;"></div>
+    <div id="wallHits" style="display: none;"></div>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const backgroundDiv = document.getElementById('background');
+        const levelDisplay = document.getElementById('level');
+        const countdownDisplay = document.getElementById('countdown');
+        const wallHitsDisplay = document.getElementById('wallHits');
+
+        // Set canvas size to fit the window
+        canvas.width = window.innerWidth * 0.9;
+        canvas.height = window.innerHeight * 0.9;
+
+        // Border width
+        const borderWidth = 2;
+
+        // Circle properties
+        const circle = {
+            x: canvas.width / 2,  // Initial x position
+            y: canvas.height / 2, // Initial y position
+            radius: 30,
+            dx: 0,  // X velocity
+            dy: 0,  // Y velocity
+            isDragging: false,
+            lastX: 0,
+            lastY: 0,
+            lastTime: 0,
+            wallContact: { // Track contact time for each wall
+                left: { time: 0, inContact: false },
+                right: { time: 0, inContact: false },
+                top: { time: 0, inContact: false },
+                bottom: { time: 0, inContact: false }
+            }
+        };
+
+        // Physics constants
+        const gravity = 0.5;  // Gravity pulling downward
+        const friction = 0.98; // Friction to slow down the circle
+        const bounciness = 0.9; // Coefficient of restitution (high for extra bouncy)
+        const bounceTimeWindow = 100; // Time window in milliseconds to detect a bounce
+
+        // Background color properties (using HSL for smooth transitions)
+        let backgroundHue = 0; // Hue for color cycling (0-360)
+        const backgroundSaturation = 70; // Fixed saturation (0-100%)
+        let backgroundLightness = 50; // Lightness (0-100%), starts at 50%
+        const maxLightness = 50; // Normal brightness level
+        const minLightness = 10; // Darkest possible level
+        const darkenAmount = 5; // How much to darken per hit
+        const lightenRate = 0.05; // How quickly lightness returns to normal
+
+        // Game state
+        let isCountingDown = false;
+        let countdown = 3;
+        let wallHits = 0;
+        let level = 1; // Start at level 1
+        let isTrackingHits = false;
+
+        // Function to convert HSL to RGB
+        function hslToRgb(h, s, l) {
+            s /= 100;
+            l /= 100;
+            const c = (1 - Math.abs(2 * l - 1)) * s;
+            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            const m = l - c / 2;
+            let r = 0, g = 0, b = 0;
+
+            if (0 <= h && h < 60) { r = c; g = x; b = 0; }
+            else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+            else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+            else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+            else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+            else if (300 <= h && h < 360) { r = c; g = 0; b = x; }
+
+            r = Math.round((r + m) * 255);
+            g = Math.round((g + m) * 255);
+            b = Math.round((b + m) * 255);
+
+            return { r, g, b };
+        }
+
+        // Function to invert RGB color
+        function invertColor(rgb) {
+            return {
+                r: 255 - rgb.r,
+                g: 255 - rgb.g,
+                b: 255 - rgb.b
+            };
+        }
+
+        // Update background color (via CSS on the background div)
+        function updateBackground() {
+            const rgb = hslToRgb(backgroundHue, backgroundSaturation, backgroundLightness);
+            backgroundDiv.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+        }
+
+        // Draw the border and circle on the canvas
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas for transparency
+
+            // Calculate circle (and border) color
+            const backgroundRgb = hslToRgb(backgroundHue, backgroundSaturation, backgroundLightness);
+            const circleRgb = invertColor(backgroundRgb);
+
+            // Draw border (matching circle color)
+            ctx.strokeStyle = `rgb(${circleRgb.r}, ${circleRgb.g}, ${circleRgb.b})`;
+            ctx.lineWidth = borderWidth * 2; // Double the border width for inner + outer
+            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
+            // Draw circle
+            ctx.beginPath();
+            ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgb(${circleRgb.r}, ${circleRgb.g}, ${circleRgb.b})`;
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Update physics and handle wall collisions
+        function updatePhysics() {
+            const currentTime = Date.now();
+
+            if (!circle.isDragging) {
+                // Apply gravity
+                circle.dy += gravity;
+
+                // Apply velocity
+                circle.x += circle.dx;
+                circle.y += circle.dy;
+
+                // Apply friction
+                circle.dx *= friction;
+                circle.dy *= friction;
+
+                // Check wall contacts and detect bounces
+                const walls = [
+                    { name: 'right', edge: canvas.width, pos: circle.x + circle.radius, velocity: circle.dx, isContact: circle.x + circle.radius >= canvas.width },
+                    { name: 'left', edge: 0, pos: circle.x - circle.radius, velocity: circle.dx, isContact: circle.x - circle.radius <= 0 },
+                    { name: 'bottom', edge: canvas.height, pos: circle.y + circle.radius, velocity: circle.dy, isContact: circle.y + circle.radius >= canvas.height },
+                    { name: 'top', edge: 0, pos: circle.y - circle.radius, velocity: circle.dy, isContact: circle.y - circle.radius <= 0 }
+                ];
+
+                walls.forEach(wall => {
+                    const contact = circle.wallContact[wall.name];
+                    if (wall.isContact) {
+                        // Circle is in contact with the wall
+                        if (!contact.inContact) {
+                            // Just made contact
+                            contact.inContact = true;
+                            contact.time = currentTime;
+                        }
+                    } else {
+                        // Circle is not in contact with the wall
+                        if (contact.inContact) {
+                            // Just left contact
+                            contact.inContact = false;
+                            const timeInContact = currentTime - contact.time;
+                            if (timeInContact <= bounceTimeWindow) {
+                                // Bounce detected (left contact quickly)
+                                backgroundLightness = Math.max(minLightness, backgroundLightness - darkenAmount);
+                                if (isTrackingHits) wallHits++;
+                            }
+                        }
+                    }
+                });
+
+                // Handle collisions (adjust position and velocity)
+                if (circle.x + circle.radius > canvas.width) {
+                    circle.x = canvas.width - circle.radius;
+                    circle.dx = -circle.dx * bounciness;
+                } else if (circle.x - circle.radius < 0) {
+                    circle.x = circle.radius;
+                    circle.dx = -circle.dx * bounciness;
+                }
+
+                if (circle.y + circle.radius > canvas.height) {
+                    circle.y = canvas.height - circle.radius;
+                    circle.dy = -circle.dy * bounciness;
+                } else if (circle.y - circle.radius < 0) {
+                    circle.y = circle.radius;
+                    circle.dy = -circle.dy * bounciness;
+                }
+            }
+
+            // Update background color (smooth hue cycling)
+            backgroundHue = (backgroundHue + 0.5) % 360; // Cycle hue for flowing colors
+
+            // Gradually restore background lightness
+            if (backgroundLightness < maxLightness) {
+                backgroundLightness += lightenRate;
+                if (backgroundLightness > maxLightness) backgroundLightness = maxLightness;
+            }
+
+            // Update wall hits display
+            if (isTrackingHits) {
+                wallHitsDisplay.textContent = `${wallHits}`;
+                wallHitsDisplay.style.display = 'block';
+            } else {
+                wallHitsDisplay.style.display = 'none';
+            }
+        }
+
+        // Handle countdown
+        function startCountdown() {
+            isCountingDown = true;
+            countdown = 3;
+            wallHits = 0;
+            isTrackingHits = true;
+            countdownDisplay.style.opacity = 1;
+            countdownDisplay.textContent = countdown;
+
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    countdownDisplay.textContent = countdown;
+                } else {
+                    countdownDisplay.style.opacity = 0;
+                    clearInterval(countdownInterval);
+                    isCountingDown = false;
+                }
+            }, 1000);
+        }
+
+        // Handle mouse/touch events
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: (e.clientX || e.touches[0].clientX) - rect.left,
+                y: (e.clientY || e.touches[0].clientY) - rect.top
+            };
+        }
+
+        function handleTap(e) {
+            e.preventDefault();
+            const pos = getMousePos(e);
+            const dist = Math.sqrt(
+                (pos.x - circle.x) ** 2 + (pos.y - circle.y) ** 2
+            );
+            if (dist < circle.radius) {
+                if (isTrackingHits && !isCountingDown) {
+                    // End current game
+                    isTrackingHits = false;
+                    if (wallHits === level) { // Target is now the current level
+                        level++;
+                        levelDisplay.textContent = `Level: ${level}`;
+                    }
+                    // Start new game immediately
+                    startCountdown();
+                } else if (!isCountingDown) {
+                    // Start new game if no game is in progress
+                    startCountdown();
+                }
+            }
+        }
+
+        function startDragging(e) {
+            e.preventDefault();
+            const pos = getMousePos(e);
+            const dist = Math.sqrt(
+                (pos.x - circle.x) ** 2 + (pos.y - circle.y) ** 2
+            );
+            if (dist < circle.radius) {
+                circle.isDragging = true;
+                circle.lastX = pos.x;
+                circle.lastY = pos.y;
+                circle.lastTime = Date.now();
+                circle.dx = 0;
+                circle.dy = 0;
+            }
+        }
+
+        function drag(e) {
+            e.preventDefault();
+            if (circle.isDragging) {
+                const pos = getMousePos(e);
+                circle.x = pos.x;
+                circle.y = pos.y;
+                const currentTime = Date.now();
+                const dt = (currentTime - circle.lastTime) / 1000; // Time in seconds
+                if (dt > 0) {
+                    circle.dx = (pos.x - circle.lastX) / dt;
+                    circle.dy = (pos.y - circle.lastY) / dt;
+                }
+                circle.lastX = pos.x;
+                circle.lastY = pos.y;
+                circle.lastTime = currentTime;
+            }
+        }
+
+        function stopDragging() {
+            circle.isDragging = false;
+        }
+
+        // Event listeners for mouse
+        canvas.addEventListener('mousedown', startDragging);
+        canvas.addEventListener('mousemove', drag);
+        canvas.addEventListener('mouseup', stopDragging);
+        canvas.addEventListener('click', handleTap);
+
+        // Event listeners for touch (mobile)
+        canvas.addEventListener('touchstart', (e) => {
+            startDragging(e);
+            handleTap(e);
+        });
+        canvas.addEventListener('touchmove', drag);
+        canvas.addEventListener('touchend', stopDragging);
+
+        // Animation loop
+        function animate() {
+            updatePhysics();
+            updateBackground(); // Update background color via CSS
+            drawScene(); // Draw border and circle on the canvas
+            requestAnimationFrame(animate);
+        }
+
+        // Start the animation
+        animate();
+    </script>
+</body>
+</html>
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
