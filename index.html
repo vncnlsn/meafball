@@ -4,15 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Allstate Permit Services</title>
-  <meta name="description" content="Allstate Permit Services is currently updating its website. Contact us for permitting and land services across the United States." />
+  <meta name="description" content="Allstate Permit Services is currently updating its website. We provide permitting and land services across the United States." />
   <style>
     :root{
-      --bg:#f7f4ef;
+      --bg:#f6f2eb;
       --card:#ffffff;
-      --text:#1f2a37;
-      --muted:#667085;
-      --accent:#a67c3d;
-      --border:#e7dfd2;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --accent:#9a7440;
+      --border:#e6ddd0;
+      --shadow:0 18px 50px rgba(31,41,55,.08);
     }
 
     * { box-sizing: border-box; }
@@ -22,31 +23,33 @@
       font-family: Inter, Arial, Helvetica, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top, rgba(166,124,61,0.08), transparent 35%),
-        linear-gradient(180deg, #fbf9f5 0%, var(--bg) 100%);
+        radial-gradient(circle at top, rgba(154,116,64,.10), transparent 35%),
+        linear-gradient(180deg, #fbf8f3 0%, var(--bg) 100%);
       display: grid;
       place-items: center;
-      padding: 24px;
+      padding: 20px;
     }
 
     .wrap {
       width: 100%;
-      max-width: 920px;
+      max-width: 880px;
     }
 
     .card {
-      background: rgba(255,255,255,0.88);
-      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(8px);
       border: 1px solid var(--border);
       border-radius: 28px;
-      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+      box-shadow: var(--shadow);
       padding: clamp(28px, 5vw, 64px);
+      text-align: center;
     }
 
     .eyebrow {
+      display: inline-block;
       text-transform: uppercase;
-      letter-spacing: 0.28em;
-      font-size: 0.78rem;
+      letter-spacing: .24em;
+      font-size: .78rem;
       color: var(--accent);
       font-weight: 700;
       margin-bottom: 18px;
@@ -55,16 +58,16 @@
     h1 {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.5rem, 6vw, 4.6rem);
-      line-height: 0.98;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.02;
       letter-spacing: -0.03em;
       font-weight: 500;
     }
 
     .lead {
-      margin: 24px 0 0;
-      max-width: 58ch;
-      font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+      margin: 22px auto 0;
+      max-width: 62ch;
+      font-size: clamp(1.02rem, 1.4vw, 1.15rem);
       line-height: 1.75;
       color: var(--text);
     }
@@ -72,36 +75,36 @@
     .panel {
       margin-top: 34px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 24px;
-      align-items: stretch;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      text-align: left;
     }
 
-    .notice, .contact {
+    .box {
       border: 1px solid var(--border);
       border-radius: 22px;
       background: var(--card);
-      padding: 26px;
+      padding: 24px;
     }
 
-    .notice h2, .contact h2 {
+    .box h2 {
       margin: 0 0 10px;
-      font-size: 1rem;
-      letter-spacing: 0.04em;
+      font-size: .84rem;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--accent);
     }
 
-    .notice p {
+    .box p {
       margin: 0;
-      line-height: 1.8;
       color: var(--muted);
+      line-height: 1.8;
       font-size: 1rem;
     }
 
     .contact .item {
       display: grid;
-      grid-template-columns: 24px 1fr;
+      grid-template-columns: 28px 1fr;
       gap: 14px;
       align-items: start;
       padding: 14px 0;
@@ -114,16 +117,16 @@
     }
 
     .icon {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       line-height: 1.2;
       margin-top: 2px;
     }
 
     .label {
       display: block;
-      font-size: 0.8rem;
+      font-size: .78rem;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: .12em;
       color: var(--muted);
       margin-bottom: 4px;
     }
@@ -133,22 +136,42 @@
       font-weight: 600;
       color: var(--text);
       text-decoration: none;
+      word-break: break-word;
+    }
+
+    .value:hover {
+      text-decoration: underline;
     }
 
     .footer {
       margin-top: 22px;
-      text-align: center;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: .94rem;
       line-height: 1.6;
     }
 
-    @media (max-width: 780px) {
-      .panel {
-        grid-template-columns: 1fr;
+    @media (max-width: 760px) {
+      body {
+        padding: 14px;
       }
+
       .card {
         border-radius: 22px;
+        padding: 24px 18px;
+      }
+
+      .panel {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        text-align: left;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 10vw, 3rem);
+      }
+
+      .lead {
+        max-width: none;
       }
     }
   </style>
@@ -160,27 +183,25 @@
       <h1>Our website is currently being updated.</h1>
 
       <p class="lead">
-        Allstate Permit Services continues to provide permit acquisition
-        and land services throughout the United States.
+        Allstate Permit Services provides permitting and land services for utility, energy, and infrastructure projects across the United States.
       </p>
 
       <div class="panel">
-        <div class="notice">
-          <h2>Status</h2>
+        <div class="box">
+          <h2>What We Do</h2>
           <p>
-            We are making improvements to better serve our clients and visitors.
-            Please check back soon for the new website.
+            Permitting and land services are the core of what we do. We continue to support projects with dependable coordination, communication, and field experience.
           </p>
         </div>
 
-        <div class="contact">
-          <h2>For Immediate Assistance</h2>
+        <div class="box contact">
+          <h2>Project Inquiries</h2>
 
           <div class="item">
             <div class="icon">📞</div>
             <div>
               <span class="label">Phone</span>
-              <a class="value" href="tel:+1435XXXXXXX">(303 903-5873</a>
+              <a class="value" href="tel:+13039035873">(303) 903-5873</a>
             </div>
           </div>
 
@@ -195,7 +216,7 @@
       </div>
 
       <div class="footer">
-        We appreciate your patience while we launch our new website.
+        Thank you for your patience while we launch the new site.
       </div>
     </section>
   </main>
