@@ -18,6 +18,7 @@
 
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
+
     body{
       min-height:100vh;
       font-family: Arial, Helvetica, sans-serif;
@@ -72,40 +73,30 @@
     }
 
     .subtle{
-      margin-top:18px;
+      max-width:58ch;
+      margin:18px auto 0;
       color:var(--muted);
       font-size:1rem;
       line-height:1.7;
     }
 
-    .panel{
-      margin-top:34px;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-      text-align:left;
-    }
-
-    .box{
+    .contact-box{
+      width:100%;
+      max-width:520px;
+      margin:34px auto 0;
       background:var(--card);
       border:1px solid var(--border);
       border-radius:22px;
-      padding:26px;
+      padding:28px;
+      text-align:left;
     }
 
-    .box h2{
+    .contact-box h2{
       margin:0 0 14px;
       color:var(--accent);
       text-transform:uppercase;
       letter-spacing:.14em;
       font-size:.85rem;
-    }
-
-    .box p{
-      margin:0;
-      line-height:1.85;
-      color:var(--muted);
-      font-size:1rem;
     }
 
     .contact-item{
@@ -157,13 +148,8 @@
         font-size:clamp(2rem,11vw,3.2rem);
       }
 
-      .panel{
-        grid-template-columns:1fr;
-        gap:14px;
+      .contact-box{
         margin-top:28px;
-      }
-
-      .box{
         padding:22px;
       }
     }
@@ -180,30 +166,27 @@
         Allstate Permit Services provides permitting and land services for utility, energy, and infrastructure projects throughout the United States.
       </p>
 
-      <div class="panel">
-        <div class="box">
-          <h2>Website Update</h2>
-          <p>
-            We're improving our website and look forward to sharing it with you soon.
-            Thank you for your patience while we make the update.
-          </p>
+      <p class="subtle">
+        We're improving our website and look forward to sharing it with you soon. Thank you for your patience while we make the update.
+      </p>
+
+      <div class="contact-box">
+        <h2>Contact</h2>
+
+        <div class="contact-item">
+          <span class="label">Phone</span>
+          <a class="value" href="tel:+13039035873">(303) 903-5873</a>
         </div>
 
-        <div class="box">
-          <h2>Contact</h2>
-
-          <div class="contact-item">
-            <span class="label">Phone</span>
-            <a class="value" href="tel:+13039035873">(303) 903-5873</a>
-          </div>
-
-          <div class="contact-item">
-            <span class="label">Email</span>
-            <a class="value" href="mailto:allstatepermit@allstatepermit.com">allstatepermit@allstatepermit.com</a>
-          </div>
+        <div class="contact-item">
+          <span class="label">Email</span>
+          <a class="value" href="mailto:allstatepermit@allstatepermit.com">allstatepermit@allstatepermit.com</a>
         </div>
       </div>
-      
+
+      <div class="footer">
+        We appreciate your patience.
+      </div>
     </section>
   </main>
 </body>
