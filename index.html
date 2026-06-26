@@ -1,224 +1,255 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Allstate Permit Services</title>
-  <meta name="description" content="Allstate Permit Services is currently updating its website. We provide permitting and land services across the United States." />
-  <style>
-    :root{
-      --bg:#f6f2eb;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --accent:#9a7440;
-      --border:#e6ddd0;
-      --shadow:0 18px 50px rgba(31,41,55,.08);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allstate Permit Services</title>
+    <meta name="description" content="Allstate Permit Services is currently updating its website. We continue to provide permitting and land services throughout the United States.">
 
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      min-height: 100vh;
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top, rgba(154,116,64,.10), transparent 35%),
-        linear-gradient(180deg, #fbf8f3 0%, var(--bg) 100%);
-      display: grid;
-      place-items: center;
-      padding: 20px;
-    }
+    <style>
+        :root{
+            --bg:#f6f2eb;
+            --card:#ffffff;
+            --text:#1f2937;
+            --muted:#6b7280;
+            --accent:#9a7440;
+            --border:#e7ddd0;
+            --shadow:0 20px 60px rgba(15,23,42,.08);
+        }
 
-    .wrap {
-      width: 100%;
-      max-width: 880px;
-    }
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
 
-    .card {
-      background: rgba(255,255,255,.92);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      padding: clamp(28px, 5vw, 64px);
-      text-align: center;
-    }
+        html,body{
+            height:100%;
+        }
 
-    .eyebrow {
-      display: inline-block;
-      text-transform: uppercase;
-      letter-spacing: .24em;
-      font-size: .78rem;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
+        body{
+            font-family:Inter,Arial,Helvetica,sans-serif;
+            color:var(--text);
+            background:
+                radial-gradient(circle at top, rgba(154,116,64,.08), transparent 38%),
+                linear-gradient(180deg,#fbf8f4 0%,var(--bg) 100%);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:24px;
+        }
 
-    h1 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.2rem, 5vw, 4.2rem);
-      line-height: 1.02;
-      letter-spacing: -0.03em;
-      font-weight: 500;
-    }
+        .container{
+            width:100%;
+            max-width:960px;
+        }
 
-    .lead {
-      margin: 22px auto 0;
-      max-width: 62ch;
-      font-size: clamp(1.02rem, 1.4vw, 1.15rem);
-      line-height: 1.75;
-      color: var(--text);
-    }
+        .card{
+            background:rgba(255,255,255,.92);
+            border:1px solid var(--border);
+            border-radius:30px;
+            box-shadow:var(--shadow);
+            padding:clamp(34px,5vw,70px);
+            text-align:center;
+        }
 
-    .panel {
-      margin-top: 34px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      text-align: left;
-    }
+        .eyebrow{
+            color:var(--accent);
+            text-transform:uppercase;
+            letter-spacing:.28em;
+            font-size:.82rem;
+            font-weight:700;
+            margin-bottom:20px;
+        }
 
-    .box {
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      background: var(--card);
-      padding: 24px;
-    }
+        h1{
+            font-family:Georgia,"Times New Roman",serif;
+            font-weight:500;
+            font-size:clamp(2.7rem,6vw,5rem);
+            line-height:.96;
+            letter-spacing:-.03em;
+            color:var(--text);
+        }
 
-    .box h2 {
-      margin: 0 0 10px;
-      font-size: .84rem;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
+        .lead{
+            max-width:720px;
+            margin:28px auto 0;
+            font-size:1.2rem;
+            line-height:1.75;
+        }
 
-    .box p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 1rem;
-    }
+        .panel{
+            margin-top:46px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:22px;
+        }
 
-    .contact .item {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 14px;
-      align-items: start;
-      padding: 14px 0;
-      border-top: 1px solid var(--border);
-    }
+        .box{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:22px;
+            padding:30px;
+            text-align:left;
+        }
 
-    .contact .item:first-of-type {
-      border-top: 0;
-      padding-top: 0;
-    }
+        .box h2{
+            color:var(--accent);
+            text-transform:uppercase;
+            letter-spacing:.14em;
+            font-size:.88rem;
+            margin-bottom:18px;
+        }
 
-    .icon {
-      font-size: 1.1rem;
-      line-height: 1.2;
-      margin-top: 2px;
-    }
+        .box p{
+            color:var(--muted);
+            line-height:1.85;
+            font-size:1rem;
+        }
 
-    .label {
-      display: block;
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .12em;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
+        .box p + p{
+            margin-top:18px;
+        }
 
-    .value {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text);
-      text-decoration: none;
-      word-break: break-word;
-    }
+        .contact-item{
+            padding:18px 0;
+        }
 
-    .value:hover {
-      text-decoration: underline;
-    }
+        .contact-item + .contact-item{
+            border-top:1px solid var(--border);
+        }
 
-    .footer {
-      margin-top: 22px;
-      color: var(--muted);
-      font-size: .94rem;
-      line-height: 1.6;
-    }
+        .label{
+            display:block;
+            text-transform:uppercase;
+            letter-spacing:.12em;
+            color:var(--muted);
+            font-size:.8rem;
+            margin-bottom:8px;
+        }
 
-    @media (max-width: 760px) {
-      body {
-        padding: 14px;
-      }
+        .value{
+            color:var(--text);
+            text-decoration:none;
+            font-size:1.18rem;
+            font-weight:600;
+            word-break:break-word;
+        }
 
-      .card {
-        border-radius: 22px;
-        padding: 24px 18px;
-      }
+        .value:hover{
+            text-decoration:underline;
+        }
 
-      .panel {
-        grid-template-columns: 1fr;
-        gap: 14px;
-        text-align: left;
-      }
+        .footer{
+            margin-top:34px;
+            color:var(--muted);
+            font-size:.95rem;
+        }
 
-      h1 {
-        font-size: clamp(2rem, 10vw, 3rem);
-      }
+        @media (max-width:768px){
 
-      .lead {
-        max-width: none;
-      }
-    }
-  </style>
+            body{
+                padding:16px;
+            }
+
+            .card{
+                padding:28px 22px;
+                border-radius:22px;
+            }
+
+            h1{
+                font-size:clamp(2.3rem,11vw,3.5rem);
+            }
+
+            .lead{
+                font-size:1.05rem;
+                line-height:1.7;
+            }
+
+            .panel{
+                grid-template-columns:1fr;
+                gap:16px;
+                margin-top:34px;
+            }
+
+            .box{
+                padding:24px;
+            }
+
+            .value{
+                font-size:1.05rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <main class="wrap">
-    <section class="card" aria-label="Website update notice">
-      <div class="eyebrow">Allstate Permit Services</div>
-      <h1>Our website is currently being updated.</h1>
 
-      <p class="lead">
-        Allstate Permit Services provides permitting and land services for utility, energy, and infrastructure projects across the United States.
-      </p>
+<div class="container">
 
-      <div class="panel">
-        <div class="box">
-          <h2>What We Do</h2>
-          <p>
-            Permitting and land services are the core of what we do. We continue to support projects with dependable coordination, communication, and field experience.
-          </p>
+    <div class="card">
+
+        <div class="eyebrow">
+            ALLSTATE PERMIT SERVICES
         </div>
 
-        <div class="box contact">
-          <h2>Project Inquiries</h2>
+        <h1>
+            Our website is currently<br>being updated.
+        </h1>
 
-          <div class="item">
-            <div class="icon">📞</div>
-            <div>
-              <span class="label">Phone</span>
-              <a class="value" href="tel:+13039035873">(303) 903-5873</a>
-            </div>
-          </div>
+        <p class="lead">
+            Allstate Permit Services provides permitting and land services for utility,
+            energy, and infrastructure projects throughout the United States.
+        </p>
 
-          <div class="item">
-            <div class="icon">✉️</div>
-            <div>
-              <span class="label">Email</span>
-              <a class="value" href="mailto:allstatepermit@allstatepermit.com">allstatepermit@allstatepermit.com</a>
+        <div class="panel">
+
+            <div class="box">
+
+                <h2>Website Update</h2>
+
+                <p>
+                    We're currently updating our website.
+                </p>
+
+                <p>
+                    We look forward to sharing the new site with you soon. Until then,
+                    please don't hesitate to contact us using the information provided.
+                </p>
+
             </div>
-          </div>
+
+            <div class="box">
+
+                <h2>Contact</h2>
+
+                <div class="contact-item">
+                    <span class="label">Phone</span>
+                    <a class="value" href="tel:+13039035873">
+                        (303) 903-5873
+                    </a>
+                </div>
+
+                <div class="contact-item">
+                    <span class="label">Email</span>
+                    <a class="value" href="mailto:allstatepermit@allstatepermit.com">
+                        allstatepermit@allstatepermit.com
+                    </a>
+                </div>
+
+            </div>
+
         </div>
-      </div>
 
-      <div class="footer">
-        Thank you for your patience while we launch the new site.
-      </div>
-    </section>
-  </main>
+        <div class="footer">
+            Thank you for your patience.
+        </div>
+
+    </div>
+
+</div>
+
 </body>
 </html>
+```
