@@ -5,213 +5,117 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light only" />
   <title>Allstate Permit Services</title>
-  <meta name="description" content="Allstate Permit Services provides permitting and land services for utility, energy, and infrastructure projects throughout the United States." />
-
+  <meta name="description" content="Allstate Permit Services is updating its website. Contact us at allstatepermit@allstatepermit.com or (303) 903-5873." />
   <style>
     :root{
-      --bg:#f6f2eb;
+      --bg:#f7f3ec;
       --card:#ffffff;
-      --text:#243043;
+      --text:#223047;
       --muted:#667085;
-      --navy:#223047;
-      --red:#b94b4b;
-      --blue:#4f6fa8;
-      --accent:#a77a3f;
-      --border:#eadfce;
-      --shadow:0 18px 50px rgba(36,48,67,.08);
-      --shadow-soft:0 8px 24px rgba(36,48,67,.06);
+      --accent:#b07b2f;
+      --border:#e9ddcc;
+      --shadow:0 18px 50px rgba(34,48,71,.08);
+      --blue:#6f89bb;
+      --red:#c57b7b;
     }
 
-    *{ box-sizing:border-box; }
-
-    html,body{
-      margin:0;
-      padding:0;
-      min-height:100%;
-    }
-
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;min-height:100%}
     body{
       min-height:100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 15% 10%, rgba(79,111,168,.10), transparent 22%),
-        radial-gradient(circle at 85% 12%, rgba(185,75,75,.08), transparent 20%),
-        radial-gradient(circle at top, rgba(167,122,63,.07), transparent 38%),
-        linear-gradient(180deg, #fcfaf6 0%, var(--bg) 100%);
       display:grid;
       place-items:center;
-      padding:22px;
+      padding:20px;
+      background:
+        radial-gradient(circle at top left, rgba(111,137,187,.08), transparent 24%),
+        radial-gradient(circle at top right, rgba(197,123,123,.08), transparent 22%),
+        linear-gradient(180deg, #fcfaf6 0%, var(--bg) 100%);
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
     }
 
-    .wrap{
+    .shell{
       width:100%;
-      max-width:1080px;
+      max-width:860px;
     }
 
     .card{
-      position:relative;
       background:rgba(255,255,255,.96);
       border:1px solid var(--border);
-      border-radius:30px;
+      border-radius:28px;
       box-shadow:var(--shadow);
-      padding:clamp(34px,5vw,84px);
+      padding:clamp(32px,5vw,64px);
       text-align:center;
+      position:relative;
       overflow:hidden;
     }
 
     .card::before{
       content:"";
       position:absolute;
-      top:0;
-      left:0;
-      right:0;
-      height:6px;
-      background:linear-gradient(90deg, var(--blue) 0 33%, #f6f2eb 33% 66%, var(--red) 66% 100%);
-      opacity:.7;
+      inset:0 0 auto 0;
+      height:5px;
+      background:linear-gradient(90deg, var(--blue) 0 34%, #efe7dc 34% 66%, var(--red) 66% 100%);
+      opacity:.75;
     }
 
     .eyebrow{
-      display:inline-block;
-      margin-bottom:22px;
+      margin:4px 0 18px;
       color:var(--accent);
       text-transform:uppercase;
-      letter-spacing:.26em;
-      font-size:.8rem;
+      letter-spacing:.24em;
+      font-size:.78rem;
       font-weight:700;
     }
 
     h1{
       margin:0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family:Georgia, "Times New Roman", serif;
       font-weight:500;
-      font-size:clamp(2.35rem,5.5vw,4.8rem);
-      line-height:1.06;
-      letter-spacing:-.035em;
-      color:var(--navy);
-      max-width:13ch;
-      margin-inline:auto;
+      color:var(--text);
+      font-size:clamp(2.2rem,7vw,4.4rem);
+      line-height:1.02;
+      letter-spacing:-.03em;
     }
 
-    .lead{
-      max-width:72ch;
-      margin:30px auto 0;
-      font-size:clamp(1.03rem,1.5vw,1.18rem);
-      line-height:1.9;
-      color:var(--navy);
-    }
-
-    .subtle{
-      max-width:68ch;
+    .line{
       margin:22px auto 0;
+      max-width:34rem;
       color:var(--muted);
-      font-size:1.02rem;
-      line-height:1.8;
+      font-size:1.03rem;
+      line-height:1.75;
     }
 
-    .cta-row{
-      margin-top:34px;
-      display:flex;
-      justify-content:center;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-
-    .cta{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:48px;
-      padding:0 18px;
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:700;
-      font-size:1rem;
-      transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease;
-      box-shadow:var(--shadow-soft);
-      border:1px solid transparent;
-      white-space:nowrap;
-    }
-
-    .cta:hover{
-      transform:translateY(-1px);
-    }
-
-    .cta-primary{
-      background:var(--navy);
-      color:#fff;
-    }
-
-    .cta-primary:hover{
-      background:#1d283a;
-    }
-
-    .cta-secondary{
+    .panel{
+      margin:34px auto 0;
+      max-width:520px;
+      border:1px solid var(--border);
+      border-radius:22px;
       background:#fff;
-      color:var(--navy);
-      border-color:var(--border);
-    }
-
-    .cta-secondary:hover{
-      background:#fbf8f1;
-    }
-
-    .contact-box{
-      width:100%;
-      max-width:680px;
-      margin:46px auto 0;
-      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.94));
-      border:1px solid var(--border);
-      border-radius:24px;
-      padding:34px 36px;
-      text-align:center;
-      position:relative;
-    }
-
-    .contact-box::before{
-      content:"";
-      position:absolute;
-      left:24px;
-      right:24px;
-      top:0;
-      height:5px;
-      border-radius:999px 999px 0 0;
-      background:linear-gradient(90deg, var(--blue) 0 34%, #e9edf4 34% 66%, var(--red) 66% 100%);
-      opacity:.75;
-    }
-
-    .contact-box h2{
-      margin:12px 0 8px;
-      color:var(--accent);
-      text-transform:uppercase;
-      letter-spacing:.16em;
-      font-size:.88rem;
-    }
-
-    .contact-box .support-line{
-      margin:0 0 18px;
-      color:var(--muted);
-      font-size:.98rem;
-      line-height:1.6;
-    }
-
-    .contact-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:0;
-      margin-top:10px;
-      border:1px solid var(--border);
-      border-radius:18px;
       overflow:hidden;
-      background:#fff;
+      box-shadow:0 8px 20px rgba(34,48,71,.04);
     }
 
-    .contact-item{
-      padding:24px 18px;
+    .panel-head{
+      padding:18px 18px 14px;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.82rem;
+      color:var(--accent);
+      border-bottom:1px solid var(--border);
       background:linear-gradient(180deg, #fff, #fffdf9);
     }
 
-    .contact-item + .contact-item{
+    .items{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+    }
+
+    .item{
+      padding:24px 18px 26px;
+    }
+
+    .item + .item{
       border-left:1px solid var(--border);
     }
 
@@ -220,139 +124,66 @@
       margin-bottom:10px;
       color:var(--muted);
       text-transform:uppercase;
-      letter-spacing:.13em;
-      font-size:.8rem;
+      letter-spacing:.14em;
+      font-size:.76rem;
     }
 
     .value{
-      color:var(--navy);
+      color:var(--text);
       text-decoration:none;
-      font-size:1.12rem;
+      font-size:1.05rem;
       font-weight:700;
+      line-height:1.4;
       word-break:break-word;
-      display:inline-block;
+    }
+
+    .value:hover{text-decoration:underline}
+
+    .footer{
+      margin-top:28px;
+      color:var(--muted);
+      font-size:.92rem;
       line-height:1.6;
     }
 
-    .value:hover{
-      text-decoration:underline;
-    }
-
-    .address{
-      margin-top:22px;
-      color:var(--muted);
-      font-size:.95rem;
-      line-height:1.7;
-    }
-
-    .footer{
-      margin-top:34px;
-      color:var(--muted);
-      font-size:.95rem;
-      line-height:1.7;
-    }
-
-    .footer strong{
-      color:var(--navy);
-      font-weight:700;
-    }
-
-    @media (max-width:760px){
-      body{
-        padding:14px;
-      }
-
-      .card{
-        border-radius:22px;
-        padding:28px 18px 30px;
-      }
-
-      h1{
-        font-size:clamp(2.1rem,9.2vw,3.4rem);
-        max-width:none;
-        line-height:1.04;
-      }
-
-      .lead{
-        margin-top:22px;
-        line-height:1.8;
-      }
-
-      .subtle{
-        margin-top:18px;
-      }
-
-      .cta-row{
-        margin-top:28px;
-      }
-
-      .contact-box{
-        margin-top:34px;
-        padding:26px 18px;
-      }
-
-      .contact-box::before{
-        left:18px;
-        right:18px;
-      }
-
-      .contact-grid{
-        grid-template-columns:1fr;
-      }
-
-      .contact-item + .contact-item{
-        border-left:none;
-        border-top:1px solid var(--border);
-      }
+    @media (max-width:700px){
+      body{padding:14px}
+      .card{border-radius:22px;padding:28px 16px 30px}
+      h1{font-size:clamp(2rem,10vw,3.2rem)}
+      .line{font-size:.99rem;margin-top:18px}
+      .panel{margin-top:28px}
+      .items{grid-template-columns:1fr}
+      .item + .item{border-left:none;border-top:1px solid var(--border)}
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
+  <main class="shell">
     <section class="card" aria-label="Website update notice">
       <div class="eyebrow">Allstate Permit Services</div>
+      <h1>Our website is being updated.</h1>
 
-      <h1>Our website is currently being updated.</h1>
-
-      <p class="lead">
-        Allstate Permit Services provides permitting and land services for utility, energy, and infrastructure projects throughout the United States.
+      <p class="line">
+        Permitting and land services for utility, energy, and infrastructure projects nationwide.
       </p>
 
-      <p class="subtle">
-        We're improving our website and look forward to sharing it with you soon. Thank you for your patience while we make the update.
-      </p>
-
-      <div class="cta-row" aria-label="Quick actions">
-        <a class="cta cta-primary" href="mailto:allstatepermit@allstatepermit.com">Email Us</a>
-        <a class="cta cta-secondary" href="tel:+13039035873">Call (303) 903-5873</a>
-      </div>
-
-      <div class="contact-box">
-        <h2>Contact</h2>
-        <p class="support-line">
-          For current inquiries, please reach out using the contact details below.
-        </p>
-
-        <div class="contact-grid">
-          <div class="contact-item">
+      <div class="panel">
+        <div class="panel-head">Contact</div>
+        <div class="items">
+          <div class="item">
             <span class="label">Phone</span>
             <a class="value" href="tel:+13039035873">(303) 903-5873</a>
           </div>
-
-          <div class="contact-item">
+          <div class="item">
             <span class="label">Email</span>
             <a class="value" href="mailto:allstatepermit@allstatepermit.com">allstatepermit@allstatepermit.com</a>
           </div>
         </div>
-
-        <p class="address">
-          Serving clients across the United States for utility, energy, and infrastructure permitting needs.
-        </p>
       </div>
 
-      <p class="footer">
-        <strong>Need immediate assistance?</strong> Email us or call during normal business hours.
-      </p>
+      <div class="footer">
+        We are updating the site and will be back soon.
+      </div>
     </section>
   </main>
 </body>
