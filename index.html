@@ -3,188 +3,193 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="light only" />
   <title>Allstate Permit Services</title>
-  <meta name="description" content="Allstate Permit Services is updating its website. Contact us at allstatepermit@allstatepermit.com or (303) 903-5873." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
   <style>
-    :root{
-      --bg:#f7f3ec;
-      --card:#ffffff;
-      --text:#223047;
-      --muted:#667085;
-      --accent:#b07b2f;
-      --border:#e9ddcc;
-      --shadow:0 18px 50px rgba(34,48,71,.08);
-      --blue:#6f89bb;
-      --red:#c57b7b;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #1B2A4A;
+      --cream: #F5F3EE;
+      --brass: #A87C3E;
+      --red:   #8B2635;
+      --mist:  #8A96A8;
     }
 
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;min-height:100%}
-    body{
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:20px;
-      background:
-        radial-gradient(circle at top left, rgba(111,137,187,.08), transparent 24%),
-        radial-gradient(circle at top right, rgba(197,123,123,.08), transparent 22%),
-        linear-gradient(180deg, #fcfaf6 0%, var(--bg) 100%);
-      color:var(--text);
-      font-family:Arial, Helvetica, sans-serif;
+    html, body { height: 100%; }
+
+    body {
+      background: var(--cream);
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
     }
 
-    .shell{
-      width:100%;
-      max-width:860px;
+    /* ── Main content — vertically and horizontally centered ── */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 64px 72px;
+      max-width: 860px;
+      width: 100%;
     }
 
-    .card{
-      background:rgba(255,255,255,.96);
-      border:1px solid var(--border);
-      border-radius:28px;
-      box-shadow:var(--shadow);
-      padding:clamp(32px,5vw,64px);
-      text-align:center;
-      position:relative;
-      overflow:hidden;
+    /* ── Top mark ── */
+    .mark {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 64px;
     }
 
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:0 0 auto 0;
-      height:5px;
-      background:linear-gradient(90deg, var(--blue) 0 34%, #efe7dc 34% 66%, var(--red) 66% 100%);
-      opacity:.75;
+    /* Three-stripe tricolor — 1px each, stacked, 40px wide */
+    .tricolor {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: 36px;
+    }
+    .tricolor span {
+      display: block;
+      height: 1.5px;
+      width: 100%;
+    }
+    .tricolor span:nth-child(1) { background: var(--navy); }
+    .tricolor span:nth-child(2) { background: #B0BACA; }
+    .tricolor span:nth-child(3) { background: var(--red); }
+
+    .wordmark {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
     }
 
-    .eyebrow{
-      margin:4px 0 18px;
-      color:var(--accent);
-      text-transform:uppercase;
-      letter-spacing:.24em;
-      font-size:.78rem;
-      font-weight:700;
+    /* ── Headline ── */
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 7.5vw, 80px);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      color: var(--navy);
+      margin-bottom: 28px;
+      max-width: 720px;
+    }
+    h1 em {
+      font-style: italic;
     }
 
-    h1{
-      margin:0;
-      font-family:Georgia, "Times New Roman", serif;
-      font-weight:500;
-      color:var(--text);
-      font-size:clamp(2.2rem,7vw,4.4rem);
-      line-height:1.02;
-      letter-spacing:-.03em;
+    /* ── Descriptor — single line, no more ── */
+    .descriptor {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--mist);
+      letter-spacing: 0.01em;
+      margin-bottom: 72px;
     }
 
-    .line{
-      margin:22px auto 0;
-      max-width:34rem;
-      color:var(--muted);
-      font-size:1.03rem;
-      line-height:1.75;
+    /* ── Contact ── */
+    .contact {
+      display: flex;
+      align-items: flex-start;
+      gap: 56px;
     }
 
-    .panel{
-      margin:34px auto 0;
-      max-width:520px;
-      border:1px solid var(--border);
-      border-radius:22px;
-      background:#fff;
-      overflow:hidden;
-      box-shadow:0 8px 20px rgba(34,48,71,.04);
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .panel-head{
-      padding:18px 18px 14px;
-      text-transform:uppercase;
-      letter-spacing:.18em;
-      font-size:.82rem;
-      color:var(--accent);
-      border-bottom:1px solid var(--border);
-      background:linear-gradient(180deg, #fff, #fffdf9);
+    .contact-label {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
     }
 
-    .items{
-      display:grid;
-      grid-template-columns:1fr 1fr;
+    .contact-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--navy);
+      text-decoration: none;
+      transition: color 0.18s;
+    }
+    .contact-value:hover { color: var(--brass); }
+
+    /* ── Footer ── */
+    footer {
+      padding: 24px 72px;
+      border-top: 1px solid #DDDAD2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .item{
-      padding:24px 18px 26px;
+    .footer-left {
+      font-size: 11px;
+      font-weight: 300;
+      color: #A8A099;
+      letter-spacing: 0.04em;
     }
 
-    .item + .item{
-      border-left:1px solid var(--border);
+    .footer-right {
+      font-size: 11px;
+      font-weight: 300;
+      color: #A8A099;
+      letter-spacing: 0.04em;
     }
 
-    .label{
-      display:block;
-      margin-bottom:10px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      font-size:.76rem;
-    }
-
-    .value{
-      color:var(--text);
-      text-decoration:none;
-      font-size:1.05rem;
-      font-weight:700;
-      line-height:1.4;
-      word-break:break-word;
-    }
-
-    .value:hover{text-decoration:underline}
-
-    .footer{
-      margin-top:28px;
-      color:var(--muted);
-      font-size:.92rem;
-      line-height:1.6;
-    }
-
-    @media (max-width:700px){
-      body{padding:14px}
-      .card{border-radius:22px;padding:28px 16px 30px}
-      h1{font-size:clamp(2rem,10vw,3.2rem)}
-      .line{font-size:.99rem;margin-top:18px}
-      .panel{margin-top:28px}
-      .items{grid-template-columns:1fr}
-      .item + .item{border-left:none;border-top:1px solid var(--border)}
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      main { padding: 48px 32px; }
+      footer { padding: 20px 32px; flex-direction: column; gap: 6px; align-items: flex-start; }
+      .contact { flex-direction: column; gap: 32px; }
     }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <section class="card" aria-label="Website update notice">
-      <div class="eyebrow">Allstate Permit Services</div>
-      <h1>Our website is being updated.</h1>
 
-      <p class="line">
-        Permitting and land services for utility, energy, and infrastructure projects nationwide.
-      </p>
-
-      <div class="panel">
-        <div class="panel-head">Contact</div>
-        <div class="items">
-          <div class="item">
-            <span class="label">Phone</span>
-            <a class="value" href="tel:+13039035873">(303) 903-5873</a>
-          </div>
-          <div class="item">
-            <span class="label">Email</span>
-            <a class="value" href="mailto:allstatepermit@allstatepermit.com">allstatepermit@allstatepermit.com</a>
-          </div>
-        </div>
+  <main>
+    <div class="mark">
+      <div class="tricolor" aria-hidden="true">
+        <span></span><span></span><span></span>
       </div>
+      <span class="wordmark">Allstate Permit Services</span>
+    </div>
 
-      <div class="footer">
-        We're improving our website and look forward to sharing it with you soon. Thank you for your patience.
+    <h1>Our new website<br>is <em>on the way.</em></h1>
+
+    <p class="descriptor">Permitting &amp; land services for pipeline, seismic, and infrastructure projects nationwide.</p>
+
+    <div class="contact">
+      <div class="contact-item">
+        <span class="contact-label">Phone</span>
+        <a class="contact-value" href="tel:+13039035873">(303) 903-5873</a>
       </div>
-    </section>
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <a class="contact-value" href="mailto:allstatepermit@allstatepermit.com">allstatepermit@allstatepermit.com</a>
+      </div>
+    </div>
   </main>
+
+  <footer>
+    <span class="footer-left">Est. 1980</span>
+    <span class="footer-right">allstatepermit.com</span>
+  </footer>
+
 </body>
 </html>
