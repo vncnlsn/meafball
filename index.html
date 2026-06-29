@@ -19,42 +19,42 @@
       --mist:  #8A96A8;
     }
 
-    html, body { height: 100%; }
-
-    body {
+    html, body {
+      height: 100%;
       background: var(--cream);
       color: var(--navy);
       font-family: 'DM Sans', sans-serif;
-      min-height: 100vh;
-      display: grid;
-      grid-template-rows: 1fr auto;
     }
 
-    /* ── Main content — vertically and horizontally centered ── */
-    main {
+    body {
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      padding: 64px 72px;
-      max-width: 860px;
+      padding: 48px 24px;
+    }
+
+    /* ── Content block — left-aligned text, centered on page ── */
+    .content {
       width: 100%;
+      max-width: 580px;
     }
 
     /* ── Top mark ── */
     .mark {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 64px;
+      gap: 12px;
+      margin-bottom: 40px;
     }
 
-    /* Three-stripe tricolor — 1px each, stacked, 40px wide */
     .tricolor {
       display: flex;
       flex-direction: column;
       gap: 2px;
-      width: 36px;
+      width: 32px;
+      flex-shrink: 0;
     }
     .tricolor span {
       display: block;
@@ -65,10 +65,12 @@
     .tricolor span:nth-child(2) { background: #B0BACA; }
     .tricolor span:nth-child(3) { background: var(--red); }
 
-    .wordmark {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
+    /* ── Company name — bigger, serif ── */
+    .company-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 3vw, 22px);
+      font-weight: 400;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--brass);
     }
@@ -76,39 +78,53 @@
     /* ── Headline ── */
     h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(48px, 7.5vw, 80px);
+      font-size: clamp(46px, 9vw, 76px);
       font-weight: 300;
-      line-height: 1.08;
+      line-height: 1.07;
       letter-spacing: -0.015em;
       color: var(--navy);
-      margin-bottom: 28px;
-      max-width: 720px;
+      margin-bottom: 24px;
     }
-    h1 em {
-      font-style: italic;
-    }
+    h1 em { font-style: italic; }
 
-    /* ── Descriptor — single line, no more ── */
+    /* ── Descriptor ── */
     .descriptor {
       font-size: 14px;
       font-weight: 300;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--mist);
-      letter-spacing: 0.01em;
-      margin-bottom: 72px;
+      margin-bottom: 48px;
+      max-width: 440px;
+    }
+
+    /* ── Hairline ── */
+    .rule {
+      width: 100%;
+      height: 1px;
+      background: #DDDAD2;
+      margin-bottom: 36px;
+    }
+
+    /* ── Reach blurb ── */
+    .reach {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--mist);
+      margin-bottom: 28px;
     }
 
     /* ── Contact ── */
     .contact {
       display: flex;
       align-items: flex-start;
-      gap: 56px;
+      gap: 48px;
     }
 
     .contact-item {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .contact-label {
@@ -121,7 +137,7 @@
 
     .contact-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 400;
       color: var(--navy);
       text-decoration: none;
@@ -130,49 +146,37 @@
     .contact-value:hover { color: var(--brass); }
 
     /* ── Footer ── */
-    footer {
-      padding: 24px 72px;
-      border-top: 1px solid #DDDAD2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-left {
+    .footer-note {
+      margin-top: 52px;
       font-size: 11px;
       font-weight: 300;
-      color: #A8A099;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
+      color: #B0A89E;
     }
 
-    .footer-right {
-      font-size: 11px;
-      font-weight: 300;
-      color: #A8A099;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      main { padding: 48px 32px; }
-      footer { padding: 20px 32px; flex-direction: column; gap: 6px; align-items: flex-start; }
-      .contact { flex-direction: column; gap: 32px; }
+    @media (max-width: 480px) {
+      .contact { flex-direction: column; gap: 28px; }
     }
   </style>
 </head>
 <body>
 
-  <main>
+  <div class="content">
+
     <div class="mark">
       <div class="tricolor" aria-hidden="true">
         <span></span><span></span><span></span>
       </div>
-      <span class="wordmark">Allstate Permit Services</span>
+      <span class="company-name">Allstate Permit Services</span>
     </div>
 
     <h1>Our new website<br>is <em>on the way.</em></h1>
 
-    <p class="descriptor">Permitting &amp; land services for pipeline, seismic, and infrastructure projects nationwide.</p>
+    <p class="descriptor">Providing permitting &amp; land services for pipeline, seismic, energy, and infrastructure projects nationwide.</p>
+
+    <div class="rule"></div>
+
+    <p class="reach">Let's get your project moving. Reach us directly by phone or email.</p>
 
     <div class="contact">
       <div class="contact-item">
@@ -184,12 +188,10 @@
         <a class="contact-value" href="mailto:allstatepermit@allstatepermit.com">allstatepermit@allstatepermit.com</a>
       </div>
     </div>
-  </main>
 
-  <footer>
-    <span class="footer-left">Est. 1980</span>
-    <span class="footer-right">allstatepermit.com</span>
-  </footer>
+    <p class="footer-note">Est. 1980 &nbsp;·&nbsp; allstatepermit.com</p>
+
+  </div>
 
 </body>
 </html>
