@@ -60,15 +60,34 @@
     z-index: 100;
     display:flex;
     align-items:center;
-    justify-content:center;
-    padding: 26px 24px;
+    justify-content:space-between;
+    gap: 24px;
+    padding: 18px 24px;
     background: linear-gradient(to bottom, rgba(22,34,44,.55) 0%, rgba(22,34,44,0) 100%);
     transition: background .5s var(--ease), padding .4s var(--ease), box-shadow .4s var(--ease);
   }
   .site-nav.scrolled{
     background: var(--navy-deep);
-    padding: 16px 24px;
+    padding: 14px 24px;
     box-shadow: 0 6px 24px rgba(0,0,0,.18);
+  }
+  /* Persistent mark — small, top-left, present on every page and at every
+     scroll position. Distinct from the large cinematic .hero-mark, which is
+     a homepage-only moment. */
+  .nav-logo{
+    display:flex;
+    align-items:center;
+    flex: 0 0 auto;
+  }
+  .nav-logo img{
+    height: clamp(26px, 3.4vw, 34px);
+    width: auto;
+    filter: brightness(0) invert(1);
+    transition: height .4s var(--ease), opacity .25s var(--ease);
+  }
+  .nav-logo:hover img{ opacity:.82; }
+  .site-nav.scrolled .nav-logo img{
+    height: clamp(22px, 2.8vw, 28px);
   }
   .site-nav ul{
     list-style:none;
@@ -76,6 +95,7 @@
     align-items:center;
     gap: 40px;
     margin:0; padding:0;
+    flex: 0 0 auto;
   }
   .site-nav a{
     font-size: .78rem;
@@ -347,7 +367,11 @@
     gap: 48px;
     padding-bottom: 56px;
   }
-  .footer-brand img{ width: 92px; margin-bottom: 18px; }
+  .footer-brand img{
+    width: 128px;
+    margin-bottom: 18px;
+    filter: brightness(0) invert(1);
+  }
   .footer-brand p{
     font-family:'Roboto Slab', serif;
     font-size: .95rem;
@@ -387,6 +411,7 @@
     .footer-grid{ grid-template-columns: 1fr; gap: 36px; }
     .site-nav ul{ gap: 20px; }
     .site-nav a{ font-size:.68rem; letter-spacing:.14em; }
+    .nav-logo img{ height: 22px; }
     .hero-mark{
       left: 50%;
       transform: translateX(-50%);
@@ -396,6 +421,14 @@
       from{ opacity:0; transform: translateX(-50%) translateY(-10px) scale(.94); }
       to{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
     }
+  }
+
+  @media (max-width: 460px){
+    .site-nav{ padding: 14px 16px; }
+    .site-nav ul{ gap: 12px; }
+    .site-nav .divider{ display:none; }
+    .site-nav a{ font-size:.62rem; letter-spacing:.1em; }
+    .nav-logo img{ height: 19px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -409,6 +442,9 @@
 <body>
 
 <nav class="site-nav" id="siteNav" aria-label="Primary">
+  <a class="nav-logo" href="index.html" aria-label="APS Land — Home">
+    <img src="assets/logo.png" alt="APS Land">
+  </a>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li class="divider">/</li>
