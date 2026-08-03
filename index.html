@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APS Land — Permit Acquisition &amp; Land Services Since 1980</title>
+<meta name="description" content="APS Land delivers permit acquisition, land services, and field oversight for energy and infrastructure projects across the United States. In business since 1980.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* denim sky — used as a color IN the words now, not as a fill */
+    --navy:        #1E3B5F;
+    --navy-deep:   #16222C;
+    /* light, open cream — much closer to white, lots of air */
+    --paper:       #FAF6EA;
+    --paper-dim:   #EEE6D2;
+    /* barn red — the other patriotic accent, carried by text and hover states */
+    --clay:        #B23A28;
+    --clay-bright: #D9755F;
+    /* fence-wire steel — now reserved for quiet neutral hairlines only */
+    --brass:       #8C8271;
+    --ink:         #221C15;
+    --ink-soft:    rgba(34,28,21,.66);
+    --paper-soft:  rgba(250,246,234,.9);
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Public Sans', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background: var(--clay); color: var(--paper); }
+
+  :focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+  }
+
+  .eyebrow{
+    font-size: .72rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--clay);
+  }
+
+  /* ---------- NAV ---------- */
+  .site-nav{
+    position: fixed;
+    top:0; left:0; right:0;
+    z-index: 100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 26px 24px;
+    background: linear-gradient(to bottom, rgba(22,34,44,.55) 0%, rgba(22,34,44,0) 100%);
+    transition: background .5s var(--ease), padding .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .site-nav.scrolled{
+    background: var(--navy-deep);
+    padding: 16px 24px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.18);
+  }
+  .site-nav ul{
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap: 40px;
+    margin:0; padding:0;
+  }
+  .site-nav a{
+    font-size: .78rem;
+    letter-spacing: .18em;
+    font-weight: 600;
+    color: var(--paper);
+    text-transform: uppercase;
+    position:relative;
+    padding-bottom: 6px;
+  }
+  .site-nav a::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:1px;
+    background: var(--clay-bright);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s var(--ease);
+  }
+  .site-nav a:hover::after,
+  .site-nav a:focus-visible::after{ transform: scaleX(1); }
+  .site-nav .divider{
+    color: var(--brass);
+    opacity:.6;
+    font-size:.7rem;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    height: 92svh;
+    min-height: 560px;
+    width:100%;
+    overflow:hidden;
+    background: var(--navy-deep);
+  }
+  .hero video{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter: saturate(.92) contrast(1.03);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(22,34,44,.35) 0%, rgba(22,34,44,.05) 30%, rgba(22,34,44,.55) 100%);
+    pointer-events:none;
+  }
+  .hero-mark{
+    position:absolute;
+    top: 46%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width: min(150px, 22vw);
+    opacity:0;
+    animation: mark-in 1.4s var(--ease) .3s forwards;
+    filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));
+  }
+  @keyframes mark-in{
+    from{ opacity:0; transform: translate(-50%,-46%) scale(.92); }
+    to{ opacity:1; transform: translate(-50%,-50%) scale(1); }
+  }
+
+  /* literal "bottom border" caption ribbon of the hero, like a film title card */
+  .hero-caption{
+    position: relative;
+    background: var(--navy-deep);
+    border-top: 1px solid rgba(117,107,90,.35);
+    padding: 22px 24px;
+  }
+  .hero-caption p{
+    margin:0;
+    text-align:center;
+    color: var(--paper);
+    font-family:'Roboto Slab', serif;
+    font-weight: 500;
+    font-size: clamp(.86rem, 1.6vw, 1.18rem);
+    letter-spacing: .01em;
+    line-height:1.5;
+    max-width: 1100px;
+    margin-inline:auto;
+  }
+
+  /* ---------- GENERIC SECTION RHYTHM ---------- */
+  .statement{
+    padding: clamp(90px, 16vw, 190px) 24px;
+    text-align:center;
+  }
+  .statement-inner{
+    max-width: 760px;
+    margin:0 auto;
+    opacity:0;
+    transform: translateY(22px);
+    transition: opacity 1s var(--ease), transform 1s var(--ease);
+  }
+  .statement-inner.in-view{
+    opacity:1;
+    transform: translateY(0);
+  }
+  .statement p{
+    font-family:'Roboto Slab', serif;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+    line-height: 1.42;
+    color: var(--navy);
+    margin:0;
+  }
+  .statement.on-navy{ background: var(--navy); }
+  .statement.on-navy p{ color: var(--paper); }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee-section{
+    padding: 46px 0 64px;
+  }
+  .marquee-section .eyebrow-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 18px;
+    margin-bottom: 30px;
+    padding: 0 24px;
+  }
+  .eyebrow-row .rule{
+    height:1px;
+    width: 64px;
+    background: var(--navy);
+    opacity:.4;
+  }
+  .marquee-viewport{
+    position:relative;
+    overflow:hidden;
+    border-top: 1px solid var(--paper-dim);
+    border-bottom: 1px solid var(--paper-dim);
+    cursor: grab;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select:none;
+  }
+  .marquee-viewport.dragging{ cursor: grabbing; }
+  .marquee-viewport::before,
+  .marquee-viewport::after{
+    content:"";
+    position:absolute;
+    top:0; bottom:0;
+    width: 90px;
+    z-index:2;
+    pointer-events:none;
+  }
+  .marquee-viewport::before{
+    left:0;
+    background: linear-gradient(to right, var(--paper), rgba(236,228,210,0));
+  }
+  .marquee-viewport::after{
+    right:0;
+    background: linear-gradient(to left, var(--paper), rgba(236,228,210,0));
+  }
+  .marquee-track{
+    display:flex;
+    align-items:stretch;
+    will-change: transform;
+  }
+  .logo-cell{
+    flex: 0 0 auto;
+    width: 220px;
+    height: 118px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 0 30px;
+    border-right: 1px solid var(--paper-dim);
+  }
+  .logo-cell img{
+    max-width: 100%;
+    max-height: 56px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: .68;
+    filter: grayscale(1);
+    transition: opacity .3s var(--ease), filter .3s var(--ease);
+  }
+  .logo-cell:hover img{
+    opacity: 1;
+    filter: grayscale(0);
+  }
+  .marquee-hint{
+    text-align:center;
+    margin-top: 16px;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services-wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 130px;
+  }
+  .services-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--paper-dim);
+    border: 1px solid var(--paper-dim);
+    margin-top: 64px;
+  }
+  .service-card{
+    background: var(--paper);
+    padding: 44px 36px 40px;
+    position:relative;
+    transition: background .4s var(--ease);
+  }
+  .service-card::before{
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    height: 3px;
+    width: 0%;
+    background: var(--clay);
+    transition: width .5s var(--ease);
+  }
+  .service-card:hover::before,
+  .service-card:focus-within::before{ width: 100%; }
+  .service-card:hover{ background: var(--paper-soft); }
+  .service-card h3{
+    font-family:'Roboto Slab', serif;
+    font-weight: 500;
+    font-size: 1.28rem;
+    letter-spacing: .01em;
+    margin: 0 0 18px;
+    color: var(--navy);
+  }
+  .service-card ul{
+    margin:0; padding:0;
+    list-style:none;
+  }
+  .service-card li{
+    font-size: .92rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    padding: 7px 0;
+    border-top: 1px solid rgba(28,27,24,.08);
+  }
+  .service-card li:first-child{ border-top:none; }
+
+  @media (max-width: 860px){
+    .services-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background: var(--navy-deep);
+    color: var(--paper);
+    padding: 76px 24px 32px;
+  }
+  .footer-inner{
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 56px;
+  }
+  .footer-brand img{ width: 92px; margin-bottom: 18px; }
+  .footer-brand p{
+    font-family:'Roboto Slab', serif;
+    font-size: .95rem;
+    color: var(--paper-soft);
+    max-width: 260px;
+    line-height:1.6;
+  }
+  footer h4{
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--clay-bright);
+    margin: 0 0 18px;
+    font-weight:600;
+  }
+  footer ul{ list-style:none; margin:0; padding:0; }
+  footer li{ margin-bottom: 12px; }
+  footer a{
+    font-size: .92rem;
+    color: var(--paper-soft);
+    transition: color .25s var(--ease);
+  }
+  footer a:hover{ color: var(--clay-bright); }
+  .footer-bottom{
+    border-top: 1px solid rgba(117,107,90,.28);
+    padding-top: 26px;
+    display:flex;
+    flex-wrap:wrap;
+    gap: 12px 24px;
+    justify-content: space-between;
+    align-items:center;
+    font-size: .78rem;
+    color: var(--paper-soft);
+  }
+
+  @media (max-width: 720px){
+    .footer-grid{ grid-template-columns: 1fr; gap: 36px; }
+    .site-nav ul{ gap: 20px; }
+    .site-nav a{ font-size:.68rem; letter-spacing:.14em; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .statement-inner{ transition: opacity .3s linear; transform:none; }
+    .hero-mark{ animation: none; opacity:1; }
+    *{ animation-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="siteNav" aria-label="Primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li class="divider">/</li>
+    <li><a href="about.html">About</a></li>
+    <li class="divider">/</li>
+    <li><a href="services.html">Services</a></li>
+    <li class="divider">/</li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <!-- Replace src with the final hero montage video -->
+  <video autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+    <source src="assets/hero_video.mp4" type="video/mp4">
+  </video>
+  <img class="hero-mark" src="https://vncnlsn.github.io/apsland/logo.png" alt="APS Land">
+</header>
+
+<div class="hero-caption">
+  <p>Since 1980, we&rsquo;ve helped the people who power America earn the trust of the people who own it</p>
+</div>
+
+<!-- ================= BRIDGE STATEMENT ================= -->
+<section class="statement">
+  <div class="statement-inner" data-reveal>
+    <p>APS Land Services partners with energy and infrastructure companies across the United States.</p>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<section class="marquee-section">
+  <div class="eyebrow-row">
+    <span class="rule"></span>
+    <span class="eyebrow">Representative Clients &amp; Partners</span>
+    <span class="rule"></span>
+  </div>
+
+  <div class="marquee-viewport" id="marqueeViewport">
+    <div class="marquee-track" id="marqueeTrack"><!-- populated by JS --></div>
+  </div>
+  <p class="marquee-hint">Drag to browse</p>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="statement" style="padding-bottom: 0;">
+  <div class="statement-inner" data-reveal>
+    <p>We prioritize landowner relationships, secure land access, and deliver the precision, permitting, and field support that keep critical projects moving.</p>
+  </div>
+</section>
+
+<section class="services-wrap">
+  <div class="services-grid">
+    <div class="service-card">
+      <h3>Permitting &amp; Project Management</h3>
+      <ul>
+        <li>2D/3D seismic permitting</li>
+        <li>Turnkey or day-rate execution</li>
+        <li>Regulatory &amp; environmental compliance</li>
+        <li>Permit cost tracking &amp; reporting</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <h3>Leasing &amp; Title Research</h3>
+      <ul>
+        <li>Cursory to patent-to-present title research</li>
+        <li>Oil &amp; gas leasing</li>
+        <li>Seismic options &amp; right-of-way acquisition</li>
+        <li>Landowner contract negotiations</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <h3>GIS &amp; Land Management</h3>
+      <ul>
+        <li>GIS mapping &amp; 2D/3D project design</li>
+        <li>Mineral &amp; surface data management</li>
+        <li>Survey, drilling &amp; recording crew support</li>
+        <li>Real-time land management database</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="https://vncnlsn.github.io/apsland/logo.png" alt="APS Land">
+        <p>Land Services &amp; Permit Acquisition<br>Since 1980</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+1XXXXXXXXXX">(XXX) XXX-XXXX</a></li>
+          <li><a href="mailto:info@apsland.com">info@apsland.com</a></li>
+          <li>Texas &amp; Nationwide</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; Allstate Permit Services. All rights reserved.</span>
+      <span>APS Land — Since 1980</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* ---------- Nav background on scroll ---------- */
+  var nav = document.getElementById('siteNav');
+  var heroHeight = function(){ return document.querySelector('.hero').offsetHeight; };
+  function onScroll(){
+    if(window.scrollY > heroHeight() * 0.75){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
+  }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* ---------- Scroll reveal for statements ---------- */
+  var reveals = document.querySelectorAll('[data-reveal]');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  /* ---------- Logo marquee ---------- */
+  // Each entry is a placeholder. To add a real client logo, replace the
+  // `src` with your image path (e.g. "logos/exxonmobil.png") — images
+  // resize automatically to fit the evenly spaced cell via object-fit.
+  var LOGOS = [
+    'Client One','Client Two','Client Three','Client Four','Client Five',
+    'Client Six','Client Seven','Client Eight','Client Nine','Client Ten'
+  ];
+
+  function placeholderSrc(label){
+    var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='96'>" +
+      "<rect x='1' y='1' width='238' height='94' fill='none' stroke='#756B5A' stroke-width='1.5' stroke-dasharray='5 5'/>" +
+      "<text x='50%' y='53%' font-family='Public Sans, sans-serif' font-size='12' letter-spacing='2' fill='#756B5A' text-anchor='middle' dominant-baseline='middle'>" +
+      label.toUpperCase() + "</text></svg>";
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  }
+
+  var track = document.getElementById('marqueeTrack');
+  var viewport = document.getElementById('marqueeViewport');
+
+  function buildSet(){
+    var frag = document.createDocumentFragment();
+    LOGOS.forEach(function(name){
+      var cell = document.createElement('div');
+      cell.className = 'logo-cell';
+      var img = document.createElement('img');
+      img.src = placeholderSrc(name);
+      img.alt = name + ' — placeholder logo';
+      img.loading = 'lazy';
+      cell.appendChild(img);
+      frag.appendChild(cell);
+    });
+    return frag;
+  }
+  // duplicate the set twice for a seamless infinite loop
+  track.appendChild(buildSet());
+  track.appendChild(buildSet());
+
+  var position = 0;
+  var singleSetWidth = 0;
+  var dragging = false;
+  var momentum = 0;
+  var lastX = 0;
+  var lastT = 0;
+  var startX = 0;
+  var startPos = 0;
+  var autoSpeed = 0.35; // px per frame, slow ambient drift
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function measure(){
+    singleSetWidth = track.scrollWidth / 2;
+  }
+  window.addEventListener('load', measure);
+  window.addEventListener('resize', measure);
+  measure();
+
+  function wrap(){
+    if(singleSetWidth <= 0) return;
+    if(position <= -singleSetWidth){ position += singleSetWidth; }
+    if(position > 0){ position -= singleSetWidth; }
+  }
+
+  function frame(){
+    if(!dragging){
+      if(Math.abs(momentum) > 0.02){
+        position += momentum;
+        momentum *= 0.94;
+      } else if(!reducedMotion){
+        position -= autoSpeed;
+      }
+    }
+    wrap();
+    track.style.transform = 'translateX(' + position + 'px)';
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  function pointerDown(e){
+    dragging = true;
+    momentum = 0;
+    viewport.classList.add('dragging');
+    var x = (e.touches ? e.touches[0].clientX : e.clientX);
+    startX = x;
+    startPos = position;
+    lastX = x;
+    lastT = performance.now();
+    if(e.pointerId !== undefined && viewport.setPointerCapture){
+      try{ viewport.setPointerCapture(e.pointerId); }catch(err){}
+    }
+  }
+  function pointerMove(e){
+    if(!dragging) return;
+    var x = (e.touches ? e.touches[0].clientX : e.clientX);
+    var now = performance.now();
+    var dt = Math.max(now - lastT, 1);
+    var instV = (x - lastX) / dt * 16.6; // approximate px per frame
+    momentum = instV;
+    position = startPos + (x - startX);
+    lastX = x;
+    lastT = now;
+  }
+  function pointerUp(){
+    if(!dragging) return;
+    dragging = false;
+    viewport.classList.remove('dragging');
+  }
+
+  viewport.addEventListener('pointerdown', pointerDown);
+  window.addEventListener('pointermove', pointerMove);
+  window.addEventListener('pointerup', pointerUp);
+  window.addEventListener('pointercancel', pointerUp);
+
+  // touch fallback for browsers without full Pointer Events support
+  viewport.addEventListener('touchstart', pointerDown, { passive:true });
+  viewport.addEventListener('touchmove', pointerMove, { passive:true });
+  viewport.addEventListener('touchend', pointerUp);
+})();
+</script>
+
+</body>
+</html>
