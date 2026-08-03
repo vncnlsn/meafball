@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>APS Land Services — Standalone Home</title>
+  <style>
+    :root {
+      --paper: #faf6ef;
+      --paper-2: #f2ece1;
+      --ink: #1a2536;
+      --ink-soft: #516072;
+      --ink-faint: rgba(26, 37, 54, 0.55);
+      --navy: #17263d;
+      --navy-2: #233753;
+      --blue-muted: #5f748e;
+      --burgundy: #7f4b4b;
+      --clay: #ab7862;
+      --sand: #cdb48a;
+      --sage: #8a9a8a;
+      --warm: #d9c9ac;
+      --shadow: 0 28px 80px rgba(20, 31, 46, 0.08);
+      --shadow-soft: 0 18px 50px rgba(20, 31, 46, 0.06);
+      --radius: 26px;
+      --radius-sm: 18px;
+      --max: 1220px;
+      --gutter: clamp(1.2rem, 4vw, 2.8rem);
+      --hero-h: 100svh;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(1100px 700px at 12% 8%, rgba(127, 75, 75, 0.08), transparent 58%),
+        radial-gradient(900px 650px at 88% 18%, rgba(23, 38, 61, 0.08), transparent 56%),
+        radial-gradient(750px 520px at 50% 100%, rgba(171, 120, 98, 0.05), transparent 60%),
+        linear-gradient(180deg, #fbf7f0 0%, #f7f2e9 45%, #fcfaf6 100%);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .shell {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.7;
+      mix-blend-mode: multiply;
+    }
+    .ambient::before,
+    .ambient::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(14px);
+      opacity: 0.22;
+    }
+    .ambient::before {
+      width: 32rem;
+      height: 32rem;
+      left: -8rem;
+      top: 18rem;
+      background: rgba(23, 38, 61, 0.15);
+    }
+    .ambient::after {
+      width: 28rem;
+      height: 28rem;
+      right: -6rem;
+      bottom: 8rem;
+      background: rgba(127, 75, 75, 0.12);
+    }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      padding: 1.1rem var(--gutter) 0;
+    }
+    .topbar-inner {
+      width: min(var(--max), 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      pointer-events: auto;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      min-width: 0;
+      color: var(--navy);
+      letter-spacing: 0.01em;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .brand-mark {
+      width: 2.65rem;
+      height: 2.65rem;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(23,38,61,0.96), rgba(79,101,130,0.92));
+      box-shadow: 0 10px 26px rgba(23, 38, 61, 0.16);
+      position: relative;
+      overflow: hidden;
+      flex: 0 0 auto;
+    }
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .brand-mark::before {
+      background-image: linear-gradient(to bottom, transparent 0 30%, rgba(250,247,239,0.94) 30% 36%, transparent 36% 100%);
+      opacity: 0.75;
+    }
+    .brand-mark::after {
+      background-image:
+        linear-gradient(90deg, transparent 0 16%, rgba(205,180,138,0.95) 16% 34%, transparent 34% 66%, rgba(127,75,75,0.95) 66% 84%, transparent 84% 100%);
+      opacity: 0.42;
+      mix-blend-mode: screen;
+    }
+    .brand-text {
+      display: grid;
+      gap: 0.15rem;
+    }
+    .brand-text strong {
+      font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+    .brand-text span {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      white-space: nowrap;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(1rem, 2.3vw, 2rem);
+      white-space: nowrap;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav a {
+      font-size: 0.76rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26, 37, 54, 0.72);
+    }
+    .nav a:hover { color: var(--navy); }
+
+    .hero {
+      position: relative;
+      min-height: var(--hero-h);
+      display: grid;
+      align-items: end;
+      padding: 8rem var(--gutter) 2.2rem;
+      z-index: 1;
+    }
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        linear-gradient(180deg, rgba(20, 31, 46, 0.22) 0%, rgba(20, 31, 46, 0.1) 20%, rgba(251,247,239,0) 52%, rgba(251,247,239,0.78) 100%),
+        radial-gradient(1100px 720px at 50% 20%, rgba(23,38,61,0.14), transparent 64%),
+        linear-gradient(135deg, rgba(23,38,61,0.48), rgba(205,180,138,0.18) 54%, rgba(127,75,75,0.18));
+    }
+    .hero-media::before,
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0 5%, rgba(255,255,255,0.035) 5% 5.5%, transparent 5.5% 12%, rgba(255,255,255,0.018) 12% 12.3%, transparent 12.3% 100%),
+        linear-gradient(180deg, transparent 0 33%, rgba(255,255,255,0.05) 33% 33.4%, transparent 33.4% 66%, rgba(255,255,255,0.04) 66% 66.3%, transparent 66.3% 100%);
+      opacity: 0.5;
+      mix-blend-mode: screen;
+    }
+    .hero-media::after {
+      background:
+        radial-gradient(500px 240px at 34% 36%, rgba(255,255,255,0.16), transparent 60%),
+        radial-gradient(420px 220px at 70% 62%, rgba(255,255,255,0.12), transparent 58%);
+      opacity: 0.36;
+    }
+    .hero-copy {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: 1.1rem;
+      align-self: end;
+    }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(26, 37, 54, 0.56);
+    }
+    .hero-title {
+      margin: 0;
+      max-width: 14ch;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+      font-size: clamp(3.5rem, 9vw, 7.6rem);
+      color: #142133;
+      text-wrap: balance;
+    }
+    .hero-note {
+      max-width: 34rem;
+      font-size: clamp(0.98rem, 1.5vw, 1.16rem);
+      line-height: 1.8;
+      color: rgba(26, 37, 54, 0.62);
+      margin: 0;
+    }
+    .hero-scroll {
+      margin-top: 1.4rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: rgba(26, 37, 54, 0.56);
+      font-size: 0.76rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .hero-scroll::before {
+      content: "";
+      width: 2.8rem;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(23,38,61,0.0), rgba(23,38,61,0.5));
+    }
+
+    .story {
+      position: relative;
+      z-index: 1;
+      padding: 3rem var(--gutter) 2rem;
+    }
+    .story-inner {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      display: grid;
+      gap: clamp(1.2rem, 2.4vw, 2rem);
+    }
+    .lead-line {
+      max-width: 11ch;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      font-size: clamp(2.85rem, 6.8vw, 6rem);
+      color: #19263a;
+      text-wrap: balance;
+    }
+    .support-line {
+      margin: 0;
+      max-width: 52rem;
+      font-size: clamp(1rem, 1.7vw, 1.2rem);
+      line-height: 1.95;
+      color: rgba(26, 37, 54, 0.66);
+      text-wrap: pretty;
+    }
+    .support-line strong { color: var(--navy); font-weight: 650; }
+
+    .reel-section {
+      position: relative;
+      z-index: 1;
+      padding: 4.5rem var(--gutter) 3rem;
+    }
+    .reel-wrap {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(247,242,233,0.86)),
+        linear-gradient(135deg, rgba(23,38,61,0.06), rgba(127,75,75,0.04));
+      box-shadow: var(--shadow-soft);
+      padding: 1rem 0 1.2rem;
+    }
+    .reel-wrap::before,
+    .reel-wrap::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: clamp(2rem, 8vw, 6rem);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .reel-wrap::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(248,244,236,1), rgba(248,244,236,0));
+    }
+    .reel-wrap::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(248,244,236,1), rgba(248,244,236,0));
+    }
+    .reel-head {
+      padding: 0.2rem var(--gutter) 1rem;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .reel-kicker {
+      margin: 0;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26, 37, 54, 0.54);
+    }
+    .reel-hint {
+      margin: 0;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(26, 37, 54, 0.38);
+    }
+    .reel-viewport {
+      position: relative;
+      overflow: hidden;
+      touch-action: pan-y;
+      user-select: none;
+      cursor: grab;
+      padding: 0.6rem 0;
+    }
+    .reel-viewport:active { cursor: grabbing; }
+    .reel-track {
+      display: flex;
+      align-items: stretch;
+      gap: clamp(0.9rem, 1.4vw, 1.25rem);
+      width: max-content;
+      will-change: transform;
+      padding: 0 1.2rem;
+    }
+    .logo-slot {
+      width: clamp(8.75rem, 12vw, 11rem);
+      height: clamp(4.65rem, 7vw, 5.75rem);
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.78), rgba(240,233,221,0.72));
+      box-shadow: inset 0 0 0 1px rgba(23,38,61,0.07), 0 8px 20px rgba(20, 31, 46, 0.04);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      padding: 0.6rem;
+      transition: transform 180ms ease, opacity 180ms ease, background 180ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .logo-slot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(180px 70px at 50% 15%, rgba(23,38,61,0.06), transparent 72%);
+      opacity: 0.75;
+    }
+    .logo-slot span {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 100%;
+      line-height: 1.06;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 650;
+      font-size: clamp(0.66rem, 1vw, 0.84rem);
+      color: rgba(26, 37, 54, 0.62);
+      padding: 0 0.35rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .logo-slot img {
+      position: relative;
+      z-index: 1;
+      width: 84%;
+      height: 70%;
+      object-fit: contain;
+      object-position: center;
+      filter: grayscale(100%) contrast(1.05) brightness(0.48);
+      opacity: 0.95;
+      transition: filter 180ms ease, transform 180ms ease, opacity 180ms ease;
+    }
+    .logo-slot.is-focus {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.9), rgba(242,235,224,0.84));
+      transform: scale(1.02);
+      opacity: 1;
+    }
+    .logo-slot.is-focus img {
+      filter: grayscale(100%) contrast(1.08) brightness(0.62);
+      transform: scale(1.02);
+      opacity: 1;
+    }
+
+    .services-section {
+      position: relative;
+      z-index: 1;
+      padding: 4rem var(--gutter) 5rem;
+    }
+    .services-inner {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+    }
+    .services-head {
+      display: grid;
+      gap: 0.7rem;
+      margin-bottom: 1.25rem;
+    }
+    .services-head .eyebrow {
+      color: rgba(23, 38, 61, 0.52);
+    }
+    .services-head h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      line-height: 0.98;
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      color: #17263d;
+    }
+    .services-head p {
+      margin: 0;
+      max-width: 42rem;
+      font-size: clamp(0.98rem, 1.4vw, 1.12rem);
+      line-height: 1.85;
+      color: rgba(26, 37, 54, 0.6);
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.9rem, 1.6vw, 1.2rem);
+      margin-top: 2rem;
+    }
+    .service-card {
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.82), rgba(243,238,228,0.92));
+      box-shadow: var(--shadow-soft);
+      padding: 1.5rem 1.4rem 1.35rem;
+      min-height: 16rem;
+      display: grid;
+      align-content: start;
+      gap: 1rem;
+    }
+    .service-card:nth-child(1) {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.84), rgba(244,238,228,0.92));
+    }
+    .service-card:nth-child(2) {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.84), rgba(242,236,228,0.92));
+    }
+    .service-card:nth-child(3) {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.84), rgba(241,234,224,0.92));
+    }
+    .service-card h3 {
+      margin: 0;
+      font-size: 1.02rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .service-card .service-lead {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 2vw, 1.75rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      color: #18263b;
+      max-width: 12ch;
+    }
+    .service-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.6rem;
+    }
+    .service-list li {
+      color: rgba(26, 37, 54, 0.68);
+      font-size: 0.96rem;
+      line-height: 1.45;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .service-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 0.35rem;
+      height: 0.35rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--burgundy), var(--sand));
+      box-shadow: 0 0 0 4px rgba(171, 120, 98, 0.08);
+    }
+    .service-foot {
+      margin-top: 1rem;
+      color: rgba(26, 37, 54, 0.5);
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .footer {
+      position: relative;
+      z-index: 1;
+      padding: 1rem var(--gutter) 4rem;
+    }
+    .footer-inner {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      flex-wrap: wrap;
+      color: rgba(26, 37, 54, 0.5);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .footer-inner strong {
+      color: var(--navy);
+      letter-spacing: 0.14em;
+    }
+
+    @media (max-width: 960px) {
+      .service-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 7rem; }
+      .hero-title { max-width: 12ch; }
+      .brand-text span { letter-spacing: 0.14em; }
+    }
+
+    @media (max-width: 720px) {
+      .topbar-inner { align-items: start; flex-direction: column; }
+      .nav { justify-content: flex-start; gap: 0.95rem; }
+      .hero { padding-top: 8.5rem; }
+      .story { padding-top: 2.2rem; }
+      .reel-section, .services-section { padding-top: 3.4rem; }
+      .logo-slot { width: 8.3rem; }
+      .service-card { min-height: 14.5rem; }
+      .footer-inner { align-items: start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="#top" aria-label="APS Land Services home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-text">
+            <strong>APS Land Services</strong>
+            <span>Permit Acquisition &amp; Land Services</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-label="Hero video montage placeholder">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <div class="eyebrow">APS Land Services</div>
+          <h1 class="hero-title">Steady work. Trusted ground.</h1>
+          <p class="hero-note">
+            Replace this ambient hero block with the montage video when you are ready.
+            The composition is intentionally quiet so the logo can sit over the imagery without competing with the rest of the page.
+          </p>
+          <div class="hero-scroll">Scroll</div>
+        </div>
+      </section>
+
+      <section class="story" id="about">
+        <div class="story-inner">
+          <p class="lead-line">Since 1980, we've helped the people who power America earn the trust of the people who own it.</p>
+          <p class="support-line">
+            APS Land Services partners with American energy and infrastructure companies across the United States. We prioritize landowner relationships, secure land access, and deliver precision, permitting, and field support that keep critical projects moving.
+          </p>
+        </div>
+      </section>
+
+      <section class="reel-section">
+        <div class="reel-wrap">
+          <div class="reel-head">
+            <p class="reel-kicker">Representative partners</p>
+            <p class="reel-hint">Drag, swipe, or scroll to browse</p>
+          </div>
+          <div class="reel-viewport" id="reelViewport" aria-label="Logo reel">
+            <div class="reel-track" id="reelTrack">
+              <div class="logo-slot"><span>ExxonMobil</span></div>
+              <div class="logo-slot"><span>Chevron</span></div>
+              <div class="logo-slot"><span>TGS</span></div>
+              <div class="logo-slot"><span>Dawson</span></div>
+              <div class="logo-slot"><span>Williams</span></div>
+              <div class="logo-slot"><span>ONEOK</span></div>
+              <div class="logo-slot"><span>CGG</span></div>
+              <div class="logo-slot"><span>Shell</span></div>
+              <div class="logo-slot"><span>BP</span></div>
+              <div class="logo-slot"><span>Halliburton</span></div>
+              <div class="logo-slot"><span>ExxonMobil</span></div>
+              <div class="logo-slot"><span>Chevron</span></div>
+              <div class="logo-slot"><span>TGS</span></div>
+              <div class="logo-slot"><span>Dawson</span></div>
+              <div class="logo-slot"><span>Williams</span></div>
+              <div class="logo-slot"><span>ONEOK</span></div>
+              <div class="logo-slot"><span>CGG</span></div>
+              <div class="logo-slot"><span>Shell</span></div>
+              <div class="logo-slot"><span>BP</span></div>
+              <div class="logo-slot"><span>Halliburton</span></div>
+              <div class="logo-slot"><span>ExxonMobil</span></div>
+              <div class="logo-slot"><span>Chevron</span></div>
+              <div class="logo-slot"><span>TGS</span></div>
+              <div class="logo-slot"><span>Dawson</span></div>
+              <div class="logo-slot"><span>Williams</span></div>
+              <div class="logo-slot"><span>ONEOK</span></div>
+              <div class="logo-slot"><span>CGG</span></div>
+              <div class="logo-slot"><span>Shell</span></div>
+              <div class="logo-slot"><span>BP</span></div>
+              <div class="logo-slot"><span>Halliburton</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="services-section" id="services">
+        <div class="services-inner">
+          <div class="services-head">
+            <div class="eyebrow">Specialty offering</div>
+            <h2>Built to carry the land side of the job.</h2>
+            <p>
+              The services below are grouped as a workflow instead of a checklist: what it takes to earn access, keep everyone informed, and move critical projects forward without creating unnecessary friction.
+            </p>
+          </div>
+
+          <div class="service-grid">
+            <article class="service-card">
+              <h3>Access</h3>
+              <p class="service-lead">Getting the right permission from the right people.</p>
+              <ul class="service-list">
+                <li>Land access and permit acquisition</li>
+                <li>Right-of-way and easement support</li>
+                <li>Landowner coordination</li>
+                <li>Field entry and access management</li>
+              </ul>
+              <div class="service-foot">Flagship offering</div>
+            </article>
+
+            <article class="service-card">
+              <h3>Precision</h3>
+              <p class="service-lead">Defensible work with the details mapped cleanly.</p>
+              <ul class="service-list">
+                <li>Title and ownership research</li>
+                <li>Parcel mapping and GIS support</li>
+                <li>Mineral rights and document review</li>
+                <li>Data verification and due diligence</li>
+              </ul>
+              <div class="service-foot">Accuracy matters here</div>
+            </article>
+
+            <article class="service-card">
+              <h3>Execution</h3>
+              <p class="service-lead">On-the-ground support that keeps projects moving.</p>
+              <ul class="service-list">
+                <li>Field operations and boots-on-the-ground support</li>
+                <li>Project coordination and reporting</li>
+                <li>Regulatory and agency coordination</li>
+                <li>Closeout, restoration, and follow-through</li>
+              </ul>
+              <div class="service-foot">From planning through closeout</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer" id="contact">
+        <div class="footer-inner">
+          <strong>APS Land Services</strong>
+          <span>Contact section placeholder</span>
+          <span>Replace with phone, email, and address</span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const viewport = document.getElementById('reelViewport');
+      const track = document.getElementById('reelTrack');
+      if (!viewport || !track) return;
+
+      const originalSlots = Array.from(track.children);
+      let setWidth = 0;
+      let offset = 0;
+      let autoSpeed = 0.32; // px / frame, gentle drift
+      let velocity = autoSpeed;
+      let dragging = false;
+      let lastX = 0;
+      let lastT = 0;
+      let pointerId = null;
+      let raf = null;
+
+      function buildInfiniteTrack() {
+        // Rebuild to guarantee seamless width after resize.
+        const fragment = document.createDocumentFragment();
+        originalSlots.forEach((node) => fragment.appendChild(node.cloneNode(true)));
+        originalSlots.forEach((node) => fragment.appendChild(node.cloneNode(true)));
+        originalSlots.forEach((node) => fragment.appendChild(node.cloneNode(true)));
+        track.innerHTML = '';
+        track.appendChild(fragment);
+        setWidth = Array.from(track.children).slice(0, originalSlots.length).reduce((sum, el) => sum + el.getBoundingClientRect().width, 0)
+          + (originalSlots.length - 1) * parseFloat(getComputedStyle(track).gap || '0');
+        // Keep offset within bounds.
+        offset = ((offset % setWidth) + setWidth) % setWidth;
+      }
+
+      function wrapOffset() {
+        if (!setWidth) return;
+        while (offset >= setWidth) offset -= setWidth;
+        while (offset < 0) offset += setWidth;
+      }
+
+      function updateFocus() {
+        const items = Array.from(track.children);
+        const center = viewport.getBoundingClientRect().left + viewport.getBoundingClientRect().width / 2;
+        items.forEach((item) => {
+          const r = item.getBoundingClientRect();
+          const itemCenter = r.left + r.width / 2;
+          const distance = Math.abs(center - itemCenter);
+          const maxDistance = viewport.getBoundingClientRect().width / 2;
+          const t = Math.min(1, distance / maxDistance);
+          const scale = 1.06 - t * 0.12;
+          const opacity = 1 - t * 0.34;
+          item.style.transform = `scale(${scale.toFixed(3)})`;
+          item.style.opacity = opacity.toFixed(3);
+          item.classList.toggle('is-focus', t < 0.25);
+        });
+      }
+
+      function tick() {
+        if (!dragging) {
+          velocity += (autoSpeed - velocity) * 0.02;
+          offset += velocity;
+        }
+        wrapOffset();
+        track.style.transform = `translate3d(${-offset}px, 0, 0)`;
+        updateFocus();
+        raf = requestAnimationFrame(tick);
+      }
+
+      function onPointerDown(e) {
+        dragging = true;
+        pointerId = e.pointerId;
+        viewport.setPointerCapture(pointerId);
+        lastX = e.clientX;
+        lastT = performance.now();
+        velocity = 0;
+        viewport.classList.add('is-dragging');
+      }
+
+      function onPointerMove(e) {
+        if (!dragging || e.pointerId !== pointerId) return;
+        const now = performance.now();
+        const dx = e.clientX - lastX;
+        const dt = Math.max(16, now - lastT);
+        offset -= dx;
+        velocity = (-dx / dt) * 16;
+        lastX = e.clientX;
+        lastT = now;
+      }
+
+      function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        pointerId = null;
+        viewport.classList.remove('is-dragging');
+        if (Math.abs(velocity) < 0.12) velocity = autoSpeed;
+      }
+
+      viewport.addEventListener('pointerdown', onPointerDown);
+      viewport.addEventListener('pointermove', onPointerMove);
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      viewport.addEventListener('pointerleave', () => {
+        if (dragging) endDrag();
+      });
+
+      viewport.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        // Horizontal wheel first; vertical wheel as fallback.
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        offset += delta * 1.1;
+        velocity = delta * 0.02;
+      }, { passive: false });
+
+      const resize = () => {
+        buildInfiniteTrack();
+        updateFocus();
+      };
+      window.addEventListener('resize', resize);
+
+      resize();
+      tick();
+    })();
+  </script>
+</body>
+</html>
