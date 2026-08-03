@@ -129,17 +129,16 @@
   }
   .hero-mark{
     position:absolute;
-    top: 46%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    width: min(150px, 22vw);
+    top: clamp(96px, 16vh, 150px);
+    left: clamp(24px, 6vw, 72px);
+    width: min(130px, 18vw);
     opacity:0;
     animation: mark-in 1.4s var(--ease) .3s forwards;
     filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));
   }
   @keyframes mark-in{
-    from{ opacity:0; transform: translate(-50%,-46%) scale(.92); }
-    to{ opacity:1; transform: translate(-50%,-50%) scale(1); }
+    from{ opacity:0; transform: translateY(-10px) scale(.94); }
+    to{ opacity:1; transform: translateY(0) scale(1); }
   }
 
   /* literal "bottom border" caption ribbon of the hero, like a film title card */
@@ -416,7 +415,7 @@
   <video autoplay muted loop playsinline poster="assets/hero-poster.jpg">
     <source src="assets/hero_video.mp4" type="video/mp4">
   </video>
-  <img class="hero-mark" src="https://vncnlsn.github.io/apsland/logo.png" alt="APS Land">
+  <img class="hero-mark" src="assets/logo.png" alt="APS Land">
 </header>
 
 <div class="hero-caption">
@@ -488,7 +487,7 @@
   <div class="footer-inner">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="https://vncnlsn.github.io/apsland/logo.png" alt="APS Land">
+        <img src="assets/logo.png" alt="APS Land">
         <p>Land Services &amp; Permit Acquisition<br>Since 1980</p>
       </div>
       <div>
