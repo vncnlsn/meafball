@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services — APS Land Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #172436;
+    --navy-mid: #20324a;
+    --navy-deep: #0f1824;
+    --brass: #b59669;
+    --brass-light: #ceb28c;
+    --brass-dim: rgba(181, 150, 105, 0.14);
+    --cream: #f5f2ec;
+    --cream-dark: #ebe6de;
+    --white: #ffffff;
+    --text: #1d232b;
+    --text-mid: #4a5561;
+    --text-muted: #74808d;
+    --rule: #ddd8cf;
+    --rule-dark: rgba(255,255,255,0.08);
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --gutter: clamp(1.25rem, 4vw, 2.75rem);
+    --radius: 4px;
+    --transition: 0.22s cubic-bezier(0.25, 0.1, 0.25, 1);
+    --nav-h: 72px;
+    --intro-h: clamp(148px, 22vh, 208px);
+    --tabs-h: 58px;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--cream);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; border: 0; background: none; cursor: pointer; }
+  ul { list-style: none; }
+
+  .app { height: 100dvh; display: flex; flex-direction: column; }
+
+  /* ---------- NAV ---------- */
+  .nav-wrap {
+    height: var(--nav-h);
+    flex: 0 0 auto;
+    background: var(--navy-deep);
+    border-bottom: 1px solid rgba(181, 150, 105, 0.14);
+  }
+  .nav-inner {
+    max-width: 1220px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .nav-logo { color: var(--white); font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; letter-spacing: 0.01em; }
+  .nav-logo em { color: var(--brass-light); font-style: italic; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a { color: rgba(255,255,255,0.68); font-size: 0.83rem; font-weight: 500; transition: color var(--transition); }
+  .nav-links a:hover, .nav-links a.active { color: var(--white); }
+  .btn-nav-cta {
+    padding: 0.55rem 1.1rem;
+    border: 1px solid rgba(181,150,105,0.42);
+    border-radius: var(--radius);
+    color: var(--brass);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition: background var(--transition), color var(--transition);
+  }
+  .btn-nav-cta:hover { background: var(--brass); color: var(--navy-deep); }
+  .nav-toggle { display: none; }
+
+  /* ---------- INTRO (static) ---------- */
+  .intro {
+    flex: 0 0 var(--intro-h);
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .intro::after {
+    content: 'Services';
+    position: absolute;
+    right: -0.05em;
+    bottom: -0.28em;
+    color: rgba(255,255,255,0.035);
+    font-family: var(--font-display);
+    font-size: 9vw;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .intro-inner {
+    max-width: 1220px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .intro-copy { max-width: 640px; }
+  .eyebrow {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: var(--brass);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .intro-headline {
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.35rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .intro-headline em { color: var(--brass-light); font-style: italic; }
+  .intro-sub { color: rgba(255,255,255,0.5); font-size: 0.86rem; max-width: 50ch; }
+  .intro-actions { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+  .btn-primary {
+    padding: 0.85rem 1.7rem;
+    background: var(--brass);
+    color: var(--navy-deep);
+    border-radius: var(--radius);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    transition: background var(--transition), transform var(--transition);
+  }
+  .btn-primary:hover { background: var(--brass-light); transform: translateY(-1px); }
+  .intro-hint { color: rgba(255,255,255,0.32); font-size: 0.68rem; letter-spacing: 0.02em; }
+
+  /* ---------- TAB BAR ---------- */
+  .tabbar-wrap {
+    flex: 0 0 var(--tabs-h);
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+  }
+  .tabbar {
+    max-width: 1220px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabbar::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0 1rem;
+    white-space: nowrap;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-bottom: 2px solid transparent;
+    transition: color var(--transition), background var(--transition), border-color var(--transition);
+  }
+  .tab-num { color: var(--rule); font-size: 0.68rem; font-weight: 700; }
+  .tab:hover { color: var(--navy); background: var(--brass-dim); }
+  .tab:hover .tab-num { color: var(--brass); }
+  .tab.active { color: var(--navy); border-bottom-color: var(--brass); }
+  .tab.active .tab-num { color: var(--brass); }
+
+  /* ---------- CONTENT PANE ---------- */
+  .stage {
+    flex: 1 1 auto;
+    position: relative;
+    overflow: hidden;
+    background: var(--cream);
+  }
+  .panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 4vh, 3rem) var(--gutter);
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity 0.42s ease, transform 0.42s ease;
+  }
+  .panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .panel-inner {
+    max-width: 900px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 0 3.5rem;
+  }
+  .panel-label-col { padding-top: 0.2rem; }
+  .panel-tagline { color: var(--brass); font-family: var(--font-display); font-style: italic; font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .panel-name { color: var(--navy); font-family: var(--font-display); font-size: clamp(1.7rem, 3vw, 2.35rem); font-weight: 500; line-height: 1.1; }
+  .panel-desc { color: var(--text-mid); font-size: 0.98rem; line-height: 1.75; margin-bottom: 1.3rem; max-width: 56ch; }
+  .panel-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .panel-list li { position: relative; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.86rem; }
+  .panel-list li::before { content: '—'; position: absolute; left: 0; color: var(--brass); }
+
+  /* ---------- SIDE INDEX RAIL ---------- */
+  .rail {
+    position: absolute;
+    right: clamp(0.75rem, 2vw, 1.75rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 2;
+  }
+  .rail-mark {
+    width: 22px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--rule);
+    transition: background var(--transition), width var(--transition);
+  }
+  .rail-mark.active { background: var(--brass); width: 32px; }
+
+  /* ---------- CYCLE ARROWS (mobile / discoverability) ---------- */
+  .cycle-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.55;
+    transition: opacity var(--transition), color var(--transition);
+  }
+  .cycle-btn:hover { opacity: 1; color: var(--brass); }
+  .cycle-up { top: 0.6rem; }
+  .cycle-down { bottom: 0.6rem; }
+
+  @media (max-width: 900px) {
+    .panel-inner { grid-template-columns: 1fr; gap: 1rem; }
+    .rail { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    :root { --intro-h: clamp(168px, 30vh, 230px); }
+    .nav-links { display: none; }
+    .nav-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+    .nav-toggle span { width: 20px; height: 1.5px; background: var(--white); border-radius: 99px; display: block; }
+    .intro-inner { flex-direction: column; align-items: flex-start; justify-content: center; gap: 1rem; }
+    .intro-actions { align-items: flex-start; }
+    .tab { font-size: 0.72rem; padding: 0 0.75rem; }
+    .cycle-btn { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    .panel { transform: none !important; }
+  }
+
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="nav-wrap">
+    <nav class="nav-inner">
+      <a href="index.html" class="nav-logo">APS <em>Land</em></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="btn-nav-cta">Request Consultation</a></li>
+      </ul>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </header>
+
+  <section class="intro">
+    <div class="intro-inner">
+      <div class="intro-copy">
+        <span class="eyebrow">What we do</span>
+        <h1 class="intro-headline">The land and permit work, <em>one service at a time.</em></h1>
+        <p class="intro-sub">Click a service below, or scroll while hovering the panel to move through the list.</p>
+      </div>
+      <div class="intro-actions">
+        <a href="contact.html" class="btn-primary">Start a Conversation</a>
+        <span class="intro-hint">6 services</span>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tabbar-wrap" aria-label="Service selector">
+    <div class="tabbar" id="tabbar" role="tablist"></div>
+  </nav>
+
+  <main class="stage" id="stage" tabindex="0" aria-label="Service detail, scroll or use arrow keys to browse">
+    <button class="cycle-btn cycle-up" id="cycle-up" aria-label="Previous service">▲ Prev</button>
+    <div id="panels"></div>
+    <div class="rail" id="rail"></div>
+    <button class="cycle-btn cycle-down" id="cycle-down" aria-label="Next service">Next ▼</button>
+  </main>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const SERVICES = [
+    {
+      name: 'Permit Acquisition',
+      tagline: 'Getting crews cleared to work.',
+      desc: 'End-to-end permit acquisition for seismic, VSP, and microseismic programs — landowner contact, access negotiation, document execution, and tracking, so nothing stalls once crews are ready to move.',
+      items: ['Surface & mineral owner identification', 'Permit negotiation & execution', 'VSP & microseismic access permitting', 'Compliance documentation & tracking']
+    },
+    {
+      name: 'Landowner Relations & Field Oversight',
+      tagline: 'Staying involved after the signature.',
+      desc: 'APS stays on the project after the permit is signed — keeping field work aligned with the agreement, documenting issues early, and protecting the relationship with the landowner.',
+      items: ['Pre-entry landowner coordination', 'On-site field monitoring', 'Damage & claim documentation', 'Restoration verification', 'Settlement support for access claims']
+    },
+    {
+      name: 'Title & Land Research',
+      tagline: 'Knowing who owns what, before anyone knocks.',
+      desc: 'Ownership verification, deed research, parcel mapping, mineral tracing, and GIS spatial analysis, so the project starts with a clear picture of where the risk lives.',
+      items: ['Surface owner verification', 'Mineral rights research', 'Chain-of-title review', 'GIS mapping & spatial analysis', 'Curative work on problem parcels']
+    },
+    {
+      name: 'Right-of-Way & Leasing',
+      tagline: 'Securing the ground itself.',
+      desc: 'Permanent and temporary easements for pipelines and transmission lines, alongside oil and gas leasing, mineral rights negotiation, and lease administration.',
+      items: ['Permanent & temporary easements', 'Oil & gas leasing', 'Mineral rights negotiation', 'Lease administration support']
+    },
+    {
+      name: 'Regulatory Coordination',
+      tagline: 'Working every desk that needs to sign off.',
+      desc: 'Coordination with state, federal, county, railroad, and utility stakeholders, built into the project plan so approvals never become a late-stage bottleneck.',
+      items: ['State & federal agency coordination', 'County & railroad approvals', 'Utility stakeholder management', 'Planned in from day one, not tacked on']
+    },
+    {
+      name: 'Project & Cost Support',
+      tagline: 'The paperwork that keeps a project honest.',
+      desc: 'Early access and ownership review so the design reflects what is actually permittable, transparent cost tracking, and a flexible turnkey or day-rate engagement.',
+      items: ['Early access & design review', 'Permit cost tracking & reporting', 'Turnkey or day-rate structure', 'Clear documentation for the client record']
+    }
+  ];
+
+  const tabbar = document.getElementById('tabbar');
+  const panelsWrap = document.getElementById('panels');
+  const rail = document.getElementById('rail');
+  const stage = document.getElementById('stage');
+
+  SERVICES.forEach((s, i) => {
+    const tab = document.createElement('button');
+    tab.className = 'tab';
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('data-index', i);
+    tab.innerHTML = `<span class="tab-num">${String(i + 1).padStart(2, '0')}</span><span>${s.name}</span>`;
+    tab.addEventListener('click', () => setActive(i));
+    tabbar.appendChild(tab);
+
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('data-index', i);
+    panel.innerHTML = `
+      <div class="panel-inner">
+        <div class="panel-label-col">
+          <p class="panel-tagline">${s.tagline}</p>
+          <h2 class="panel-name">${s.name}</h2>
+        </div>
+        <div class="panel-body">
+          <p class="panel-desc">${s.desc}</p>
+          <ul class="panel-list">${s.items.map(it => `<li>${it}</li>`).join('')}</ul>
+        </div>
+      </div>`;
+    panelsWrap.appendChild(panel);
+
+    const mark = document.createElement('div');
+    mark.className = 'rail-mark';
+    rail.appendChild(mark);
+  });
+
+  let current = 0;
+  const tabs = () => Array.from(tabbar.querySelectorAll('.tab'));
+  const panels = () => Array.from(panelsWrap.querySelectorAll('.panel'));
+  const marks = () => Array.from(rail.querySelectorAll('.rail-mark'));
+
+  function setActive(index) {
+    current = (index + SERVICES.length) % SERVICES.length;
+    tabs().forEach((t, i) => t.classList.toggle('active', i === current));
+    panels().forEach((p, i) => p.classList.toggle('active', i === current));
+    marks().forEach((m, i) => m.classList.toggle('active', i === current));
+  }
+  setActive(0);
+
+  // Wheel-to-cycle, debounced so one notch = one step
+  let wheelLocked = false;
+  stage.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelLocked) return;
+    wheelLocked = true;
+    setActive(current + (e.deltaY > 0 ? 1 : -1));
+    setTimeout(() => { wheelLocked = false; }, 550);
+  }, { passive: false });
+
+  // Keyboard support
+  stage.addEventListener('keydown', (e) => {
+    if (['ArrowDown', 'ArrowRight'].includes(e.key)) { e.preventDefault(); setActive(current + 1); }
+    if (['ArrowUp', 'ArrowLeft'].includes(e.key)) { e.preventDefault(); setActive(current - 1); }
+  });
+
+  // Touch swipe for mobile
+  let touchStartY = null;
+  stage.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  stage.addEventListener('touchend', (e) => {
+    if (touchStartY === null) return;
+    const dy = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(dy) > 40) setActive(current + (dy > 0 ? 1 : -1));
+    touchStartY = null;
+  }, { passive: true });
+
+  document.getElementById('cycle-up').addEventListener('click', () => setActive(current - 1));
+  document.getElementById('cycle-down').addEventListener('click', () => setActive(current + 1));
+
+  // Mobile nav toggle
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
