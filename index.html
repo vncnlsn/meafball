@@ -131,10 +131,12 @@
     position:absolute;
     top: clamp(96px, 16vh, 150px);
     left: clamp(24px, 6vw, 72px);
-    width: min(130px, 18vw);
+    width: clamp(240px, 30vw, 390px);
     opacity:0;
     animation: mark-in 1.4s var(--ease) .3s forwards;
-    filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));
+    /* brightness(0) + invert(1) turns the mark solid white while keeping its transparency,
+       regardless of the source logo's original colors */
+    filter: brightness(0) invert(1) drop-shadow(0 6px 22px rgba(0,0,0,.45));
   }
   @keyframes mark-in{
     from{ opacity:0; transform: translateY(-10px) scale(.94); }
@@ -385,6 +387,15 @@
     .footer-grid{ grid-template-columns: 1fr; gap: 36px; }
     .site-nav ul{ gap: 20px; }
     .site-nav a{ font-size:.68rem; letter-spacing:.14em; }
+    .hero-mark{
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(180px, 55vw, 260px);
+    }
+    @keyframes mark-in{
+      from{ opacity:0; transform: translateX(-50%) translateY(-10px) scale(.94); }
+      to{ opacity:1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
