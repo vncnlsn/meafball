@@ -25,6 +25,13 @@
     --ease: cubic-bezier(.22,.61,.36,1);
     --shell: 1480px;
     --nav-h: 78px;
+    /* map-only palette — bright, modern, built for a near-black stage */
+    --map-bg:        #0B131A;
+    --map-bg-deep:   #070C10;
+    --map-line:      rgba(250,246,234,.08);
+    --map-off:       rgba(250,246,234,.045);
+    --map-accent:    #FF8F5E;
+    --map-accent-hi: #FFC978;
   }
 
   *{ box-sizing: border-box; }
@@ -157,25 +164,6 @@
     .nav-logo img{ height:24px; }
   }
 
-  /* ---------- SECTION HEAD (shared) ---------- */
-  .section-head{
-    margin-bottom: 48px;
-  }
-  .section-head h2{
-    font-family:'Roboto Slab', serif;
-    font-weight:500;
-    font-size: clamp(1.5rem, 2.4vw, 2.05rem);
-    color: var(--navy);
-    margin: 10px 0 0;
-  }
-  .section-head p{
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--ink-soft);
-    max-width: 620px;
-    margin: 14px 0 0;
-  }
-
   /* ================= 1. HERO ================= */
   .about-hero{ padding: var(--nav-h) 0 0; }
   .about-hero-frame{
@@ -185,7 +173,7 @@
   }
   .about-hero-media{
     position: relative;
-    height: clamp(420px, 74vh, 820px);
+    height: clamp(420px, 72vh, 780px);
     overflow: hidden;
     box-shadow: 0 30px 70px rgba(22,34,44,.22);
   }
@@ -206,25 +194,66 @@
     left: clamp(28px, 4vw, 56px);
     right: clamp(28px, 4vw, 56px);
     bottom: clamp(32px, 5vw, 56px);
-    max-width: 720px;
+    max-width: 640px;
   }
   .about-hero-copy .eyebrow{ color: var(--clay-bright); display:block; margin-bottom: 14px; }
   .about-hero-copy p{
     font-family:'Roboto Slab', serif;
     font-weight: 500;
-    font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+    font-size: clamp(1.3rem, 2.3vw, 1.85rem);
     line-height: 1.42;
     color: var(--paper);
     margin: 0;
   }
 
-  /* ================= 2. TIMELINE ================= */
-  .timeline-section{ padding: clamp(90px, 10vw, 140px) 0 clamp(70px, 8vw, 110px); }
-  .timeline-rail{
-    position: relative;
-    margin-top: 68px;
-    padding-top: 2px;
+  /* ================= 2. STORY (company narrative, landowner context woven in) ================= */
+  .story-section{ padding: clamp(80px, 9vw, 130px) 0; border-top: 1px solid var(--line); }
+  .story-grid{
+    display:grid;
+    grid-template-columns: 260px 1fr;
+    gap: 56px;
   }
+  .story-head{ position: sticky; top: calc(var(--nav-h) + 40px); align-self: start; }
+  .story-head h2{
+    font-family:'Roboto Slab', serif;
+    font-weight:500;
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+    color: var(--navy);
+    margin: 10px 0 0;
+    line-height: 1.28;
+  }
+  .story-copy p{
+    font-size: 1.06rem;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    max-width: 660px;
+    margin: 0 0 24px;
+  }
+  .story-copy p:last-child{ margin-bottom: 0; }
+  .story-copy p strong{ color: var(--ink); font-weight: 600; }
+  @media (max-width: 900px){
+    .story-grid{ grid-template-columns: 1fr; gap: 20px; }
+    .story-head{ position: static; }
+  }
+
+  /* ================= 3. TIMELINE ================= */
+  .timeline-section{ padding: clamp(70px, 8vw, 110px) 0; border-top: 1px solid var(--line); }
+  .section-head{ margin-bottom: 48px; }
+  .section-head h2{
+    font-family:'Roboto Slab', serif;
+    font-weight:500;
+    font-size: clamp(1.5rem, 2.4vw, 2.05rem);
+    color: var(--navy);
+    margin: 10px 0 0;
+  }
+  .section-head p{
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 620px;
+    margin: 14px 0 0;
+  }
+  .timeline-rail{ position: relative; margin-top: 68px; padding-top: 2px; }
   .timeline-rail::before{
     content:"";
     position:absolute;
@@ -269,21 +298,25 @@
     .timeline-track{ grid-template-columns: 1fr; gap: 32px; }
   }
 
-  /* ================= 3. INTERACTIVE MAP ================= */
+  /* ================= 4. INTERACTIVE MAP — large, dark, the page's visual anchor ================= */
   .map-section{
-    padding: clamp(70px, 8vw, 110px) 0;
-    border-top: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--map-bg) 0%, var(--map-bg-deep) 100%);
+    padding: clamp(90px, 10vw, 140px) 0;
+    margin-top: clamp(70px, 8vw, 110px);
   }
-  .map-layout{
-    display:grid;
-    grid-template-columns: 1fr 300px;
-    gap: 40px;
-    align-items: stretch;
+  .map-frame{
+    max-width: 1720px;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 96px);
   }
+  .map-section .section-head{ margin-bottom: 56px; }
+  .map-section .eyebrow{ color: var(--map-accent-hi); }
+  .map-section .section-head h2{ color: var(--paper); }
+  .map-section .section-head p{ color: rgba(250,246,234,.6); }
+
   .map-stage{
     position: relative;
-    background: var(--paper-dim);
-    border: 1px solid var(--line);
+    width: 100%;
   }
   #us-map{
     position: relative;
@@ -292,113 +325,112 @@
   }
   #us-map svg{ overflow: visible; }
 
-  /* state fills */
+  /* state fills — dim silhouette, bright glow only on covered states */
   #us-map svg path[data-state]{
-    fill: var(--paper);
-    stroke: var(--paper-dim);
-    stroke-width: 1.1;
-    transition: fill .28s var(--ease);
+    fill: var(--map-off);
+    stroke: var(--map-line);
+    stroke-width: 1;
+    transition: fill .3s var(--ease), filter .3s var(--ease);
   }
   #us-map svg path[data-state].covered{
-    fill: var(--navy);
-    opacity: .82;
+    fill: var(--map-accent);
     cursor: pointer;
+    filter: drop-shadow(0 0 7px rgba(255,143,94,.45));
   }
   #us-map svg path[data-state].covered.hovered,
   #us-map svg path[data-state].covered.pinned{
-    fill: var(--clay);
-    opacity: 1;
+    fill: var(--map-accent-hi);
+    filter: drop-shadow(0 0 16px rgba(255,201,120,.75));
   }
-  /* uncovered states stay quiet — only covered states illuminate */
   #us-map svg path[data-state]:not(.covered){ cursor: default; }
 
-  /* HQ marker */
+  /* HQ marker — reads clearly against the dark stage */
   #us-map svg .hq-marker .hq-dot{
-    fill: var(--clay-bright);
-    stroke: var(--paper);
+    fill: var(--paper);
+    stroke: var(--map-bg-deep);
     stroke-width: 1.5;
   }
   #us-map svg .hq-marker .hq-ping{
-    fill: var(--clay-bright);
+    fill: var(--paper);
     opacity: .55;
     transform-origin: center;
     animation: hq-pulse 2.2s var(--ease) infinite;
   }
   #us-map svg .hq-marker .hq-label{
     font-family: 'Public Sans', sans-serif;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: .02em;
-    fill: var(--navy-deep);
+    fill: var(--paper);
     paint-order: stroke;
-    stroke: var(--paper);
-    stroke-width: 3px;
+    stroke: var(--map-bg-deep);
+    stroke-width: 4px;
     stroke-linejoin: round;
   }
   @keyframes hq-pulse{
     0%   { r: 4;  opacity: .55; }
-    70%  { r: 15; opacity: 0;   }
-    100% { r: 15; opacity: 0;   }
+    70%  { r: 16; opacity: 0;   }
+    100% { r: 16; opacity: 0;   }
   }
   @media (prefers-reduced-motion: reduce){
     #us-map svg .hq-marker .hq-ping{ animation: none; opacity: 0; }
   }
 
-  /* Floating side panel */
-  .map-panel{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 4px;
-  }
+  /* floating glass panel — overlays the map instead of taking width from it */
   .map-panel-card{
-    background: var(--navy-deep);
-    color: var(--paper);
-    padding: 30px 28px;
-    min-height: 158px;
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    width: 272px;
+    max-width: calc(100% - 56px);
+    background: rgba(250,246,234,.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(250,246,234,.14);
+    padding: 26px 26px;
     display:flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 10px;
+    gap: 8px;
     opacity: 0;
-    transform: translateY(8px);
-    transition: opacity .3s var(--ease), transform .3s var(--ease), background-color .3s var(--ease);
+    transform: translateY(-6px);
+    transition: opacity .3s var(--ease), transform .3s var(--ease), border-color .3s var(--ease);
   }
   .map-panel-card.msp-visible{ opacity: 1; transform: translateY(0); }
-  .map-panel-card.msp-covered{ background: var(--clay); }
+  .map-panel-card.msp-covered{ border-color: rgba(255,201,120,.5); }
   .map-panel-eyebrow{
-    font-size: .68rem;
+    font-size: .66rem;
     letter-spacing: .18em;
     text-transform: uppercase;
-    color: var(--paper-soft);
+    color: rgba(250,246,234,.55);
   }
   #msp-name{
     font-family:'Roboto Slab', serif;
     font-weight: 500;
-    font-size: 1.55rem;
+    font-size: 1.4rem;
     line-height: 1.2;
+    color: var(--paper);
   }
   #msp-status{
-    font-size: .78rem;
+    font-size: .74rem;
     letter-spacing: .1em;
     text-transform: uppercase;
     font-weight: 600;
-    color: var(--paper-soft);
+    color: var(--map-accent-hi);
     min-height: 1em;
   }
-  .map-panel-hint{
-    margin-top: 18px;
-    font-size: .78rem;
+  .map-hint{
+    margin-top: 22px;
+    font-size: .8rem;
     line-height: 1.6;
-    color: var(--ink-soft);
+    color: rgba(250,246,234,.42);
+    max-width: 460px;
   }
-  @media (max-width: 980px){
-    .map-layout{ grid-template-columns: 1fr; }
-    .map-panel-card{ min-height: auto; }
+  @media (max-width: 720px){
+    .map-panel-card{ position: static; width: 100%; max-width: none; margin-top: 20px; transform:none; opacity:1; }
   }
 
-  /* ================= 4. LEADERSHIP ================= */
-  .leadership-section{ padding: clamp(90px, 10vw, 140px) 0; border-top: 1px solid var(--line); }
+  /* ================= 5. LEADERSHIP ================= */
+  .leadership-section{ padding: clamp(90px, 10vw, 140px) 0; }
   .leadership-grid{
     display:grid;
     grid-template-columns: 340px 1fr;
@@ -450,86 +482,35 @@
     .leader-portrait{ max-width: 320px; }
   }
 
-  /* ================= 5. LANDOWNER ASSISTANCE ================= */
-  .landowner-section{
-    padding: clamp(60px, 7vw, 90px) 0;
+  /* ================= 6. CLOSING BRIDGE (clients + landowners, one quiet line) ================= */
+  .bridge-section{
+    padding: clamp(70px, 8vw, 100px) 0;
+    text-align: center;
     border-top: 1px solid var(--line);
   }
-  .landowner-card{
-    background: var(--paper-dim);
-    padding: clamp(36px, 5vw, 56px);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  .landowner-card .eyebrow{ display:block; margin-bottom: 12px; }
-  .landowner-card h3{
+  .bridge-inner{ max-width: 620px; margin: 0 auto; }
+  .bridge-inner p{
     font-family:'Roboto Slab', serif;
     font-weight: 500;
-    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    font-size: clamp(1.1rem, 1.9vw, 1.35rem);
+    line-height: 1.6;
     color: var(--navy);
-    margin: 0 0 10px;
+    margin: 0 0 18px;
   }
-  .landowner-card p{
-    font-size: .95rem;
-    line-height: 1.65;
-    color: var(--ink-soft);
-    max-width: 520px;
-    margin: 0;
-  }
-  .landowner-link{
+  .bridge-link{
     display:inline-flex;
     align-items:center;
-    gap: 12px;
-    padding: 15px 28px;
-    border: 1px solid var(--navy);
-    color: var(--navy);
-    font-size:.76rem;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    font-weight:600;
-    flex: 0 0 auto;
-    transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+    gap: 8px;
+    font-size: .76rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--clay);
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s var(--ease);
   }
-  .landowner-link:hover{ background: var(--navy); color: var(--paper); }
-
-  /* ================= 6. CTA BAND ================= */
-  .cta-band{
-    background: var(--navy-deep);
-    padding: clamp(70px, 8vw, 100px) 0;
-  }
-  .cta-inner{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap: 32px;
-    flex-wrap:wrap;
-  }
-  .cta-inner h2{
-    font-family:'Roboto Slab', serif;
-    font-weight:500;
-    font-size: clamp(1.5rem, 2.6vw, 2.05rem);
-    color: var(--paper);
-    margin:0;
-    max-width: 560px;
-  }
-  .cta-btn{
-    display:inline-flex;
-    align-items:center;
-    gap: 12px;
-    padding: 16px 30px;
-    border: 1px solid var(--paper-soft);
-    color: var(--paper);
-    font-size:.76rem;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    font-weight:600;
-    flex:0 0 auto;
-    transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
-  }
-  .cta-btn:hover{ background: var(--clay); border-color: var(--clay); color: var(--paper); }
+  .bridge-link:hover{ border-color: var(--clay); }
 
   /* ================= 7. FOOTER (matches home page) ================= */
   footer{ background: var(--navy-deep); color: var(--paper); padding: 76px 0 32px; }
@@ -572,7 +553,6 @@
   }
   @media (max-width: 900px){
     .footer-grid{ grid-template-columns: 1fr; gap: 36px; }
-    .cta-inner{ justify-content:center; text-align:center; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -615,13 +595,28 @@
       <img src="https://picsum.photos/seed/aps-team/1800/1000" alt="The APS Land team in the field">
       <div class="about-hero-copy">
         <span class="eyebrow">Who We Are</span>
-        <p>A family-rooted company built by people who show up in person &mdash; on the land, with landowners, from the first permit to the last signature.</p>
+        <p>Four decades of permitting and land access work, built one landowner conversation at a time.</p>
       </div>
     </div>
   </div>
 </header>
 
-<!-- ================= 2. COMPANY TIMELINE ================= -->
+<!-- ================= 2. STORY ================= -->
+<section class="story-section shell">
+  <div class="story-grid" data-reveal>
+    <div class="story-head">
+      <span class="eyebrow">Our Story</span>
+      <h2>Built on Conversations, Not Just Contracts</h2>
+    </div>
+    <div class="story-copy">
+      <p>APS Land was founded in 1980 to help energy and infrastructure companies do something that sounds simple and rarely is: get permission to build, cross, or work on land that belongs to someone else. That work starts long before any equipment arrives. Our <strong>land agents</strong> are usually the first people a landowner meets — they explain what's being proposed, walk the property in person, and negotiate access and compensation before a single permit is ever filed.</p>
+      <p>From there, our <strong>permit specialists</strong> take over the regulatory side, coordinating directly with state and federal agencies so the paperwork never falls on the landowner. Our <strong>GIS and land management</strong> team maps routes and boundaries with enough precision to keep disruption to a minimum, and our <strong>field representatives</strong> stay on site through construction — so there's always one familiar person to call, rather than a rotating cast of contractors.</p>
+      <p>It's a way of working we've carried through every project since 1980: show up in person, explain the plan plainly, and treat the landowner as a partner in the project rather than an obstacle to it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. TIMELINE ================= -->
 <section class="timeline-section shell">
   <div class="section-head" data-reveal>
     <span class="eyebrow">Our History</span>
@@ -631,54 +626,50 @@
     <div class="timeline-track">
       <div class="timeline-item">
         <span class="yr">1980</span>
-        <p>APS Land is founded, taking on its first permitting and land access work.</p>
+        <p>APS Land opens its doors, taking on its first permitting and land access work in Texas.</p>
       </div>
       <div class="timeline-item">
         <span class="yr">1990s</span>
-        <p>Field operations expand beyond Texas into neighboring states.</p>
+        <p>Land agents begin building relationships with landowners across neighboring states.</p>
       </div>
       <div class="timeline-item">
         <span class="yr">2000s</span>
-        <p>Leasing and title research join permitting as core service lines.</p>
+        <p>Leasing and title research join permitting, so ownership questions get settled before crews arrive.</p>
       </div>
       <div class="timeline-item">
         <span class="yr">2010s</span>
-        <p>GIS and land management capabilities are added company-wide.</p>
+        <p>GIS and land management join the team, sharpening how routes are mapped and disruption is minimized.</p>
       </div>
       <div class="timeline-item">
         <span class="yr">Today</span>
-        <p>Nationwide coverage, built one landowner relationship at a time.</p>
+        <p>Field representatives stay on site nationwide, giving landowners one steady point of contact from start to finish.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ================= 3. INTERACTIVE COVERAGE MAP ================= -->
+<!-- ================= 4. INTERACTIVE COVERAGE MAP ================= -->
 <section class="map-section">
-  <div class="shell">
+  <div class="map-frame">
     <div class="section-head" data-reveal>
       <span class="eyebrow">Where We Work</span>
-      <h2>Nationwide Coverage</h2>
-      <p>Headquartered in Cache Valley, Utah, with project experience across the country. Hover or tap a state to see its status.</p>
+      <h2>A Nationwide Footprint</h2>
+      <p>Headquartered in Cache Valley, Utah, with permitting and land access work carried out coast to coast. Hover or tap a state to see its status.</p>
     </div>
 
-    <div class="map-layout" data-reveal>
-      <div class="map-stage">
-        <div id="us-map"></div>
-      </div>
-      <div class="map-panel">
-        <div class="map-panel-card" id="map-state-panel">
-          <span class="map-panel-eyebrow">State</span>
-          <span id="msp-name"></span>
-          <span id="msp-status"></span>
-        </div>
-        <p class="map-panel-hint">Highlighted states reflect APS Land's project history. This panel will expand to show project counts, clients, and services by state as that data is added.</p>
+    <div class="map-stage" data-reveal>
+      <div id="us-map"></div>
+      <div class="map-panel-card" id="map-state-panel">
+        <span class="map-panel-eyebrow">State</span>
+        <span id="msp-name"></span>
+        <span id="msp-status"></span>
       </div>
     </div>
+    <p class="map-hint">Highlighted states reflect APS Land's project history. This panel will expand to show project counts, clients, and services by state as that data is added.</p>
   </div>
 </section>
 
-<!-- ================= 4. LEADERSHIP ================= -->
+<!-- ================= 5. LEADERSHIP ================= -->
 <section class="leadership-section shell">
   <div class="section-head" data-reveal>
     <span class="eyebrow">Leadership</span>
@@ -694,28 +685,16 @@
       <h3>[President Name]</h3>
       <span class="leader-title">President, APS Land</span>
       <p>[Placeholder biography. A short account of the President's background in land services and permitting, years with the company, and the philosophy that guides how APS Land approaches landowner relationships and project delivery.]</p>
-      <p class="leader-quote">&ldquo;[Placeholder quote &mdash; a short statement on what APS Land stands for.]&rdquo;</p>
+      <p class="leader-quote">&ldquo;A permit is just paperwork. The relationship with the landowner is the actual work.&rdquo;</p>
     </div>
   </div>
 </section>
 
-<!-- ================= 5. LANDOWNER ASSISTANCE ================= -->
-<section class="landowner-section shell">
-  <div class="landowner-card" data-reveal>
-    <div>
-      <span class="eyebrow">For Landowners</span>
-      <h3>Have a Question About a Project on Your Land?</h3>
-      <p>We know it can be confusing when a project touches your property. Our landowner assistance page walks through what to expect and how to reach us directly.</p>
-    </div>
-    <a class="landowner-link" href="landowners.html">Landowner Resources</a>
-  </div>
-</section>
-
-<!-- ================= 6. CTA BAND ================= -->
-<section class="cta-band">
-  <div class="shell cta-inner" data-reveal>
-    <h2>Let&rsquo;s talk about your next project.</h2>
-    <a class="cta-btn" href="contact.html">Contact APS Land</a>
+<!-- ================= 6. CLOSING BRIDGE ================= -->
+<section class="bridge-section shell">
+  <div class="bridge-inner" data-reveal>
+    <p>APS Land works for the companies building today's infrastructure — and for the landowners whose property makes that work possible.</p>
+    <a class="bridge-link" href="contact.html">Questions about a project on your property? Get in touch &rarr;</a>
   </div>
 </section>
 
