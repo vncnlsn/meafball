@@ -74,11 +74,6 @@
     top:0; left:0; right:0;
     z-index: 100;
     height: var(--nav-h);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap: 24px;
-    padding: 0 40px;
     background: var(--navy-deep);
     border-bottom: 1px solid var(--line-on-navy);
     box-shadow: 0 4px 18px rgba(0,0,0,.14);
@@ -86,9 +81,22 @@
   }
   .site-nav.scrolled{ box-shadow: 0 8px 26px rgba(0,0,0,.22); }
 
+  /* three-zone layout, width-matched to .hero-frame so the logo and
+     the search icon line up exactly with the hero/content margins */
+  .nav-inner{
+    max-width: 1720px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5vw, 96px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 40px;
+  }
+
   .nav-logo{ display:flex; align-items:center; flex: 0 0 auto; }
   .nav-logo img{
-    height: 30px;
+    height: 32px;
     width: auto;
     filter: brightness(0) invert(1);
     transition: opacity .25s var(--ease);
@@ -99,8 +107,11 @@
     list-style:none;
     display:flex;
     align-items:center;
-    gap: 44px;
-    margin:0; padding:0;
+    justify-content: space-evenly;
+    flex: 1 1 auto;
+    max-width: 620px;
+    margin: 0 auto;
+    padding:0;
   }
   .nav-links a{
     font-size: .78rem;
@@ -110,6 +121,7 @@
     text-transform: uppercase;
     position:relative;
     padding-bottom: 6px;
+    white-space: nowrap;
   }
   .nav-links a::after{
     content:"";
@@ -129,7 +141,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    width: 34px; height: 34px;
+    width: 38px; height: 38px;
     color: var(--paper-soft);
     border: 1px solid var(--line-on-navy);
     border-radius: 2px;
@@ -495,7 +507,7 @@
 
   @media (max-width: 780px){
     .shell{ padding: 0 24px; }
-    .site-nav{ padding: 0 20px; }
+    .nav-inner{ padding: 0 20px; gap: 20px; }
     .nav-links{ gap: 20px; }
     .nav-links a{ font-size:.66rem; letter-spacing:.12em; }
   }
@@ -516,22 +528,24 @@
 <body>
 
 <nav class="site-nav" id="siteNav" aria-label="Primary">
-  <a class="nav-logo" href="index.html" aria-label="APS Land — Home">
-    <img src="assets/logo.png" alt="APS Land">
-  </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="services.html">Services</a></li>
-    <li><a href="contact.html">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="nav-search" type="button" aria-label="Search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <circle cx="11" cy="11" r="7"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-    </button>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="APS Land — Home">
+      <img src="assets/logo.png" alt="APS Land">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="nav-search" type="button" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </div>
   </div>
 </nav>
 
