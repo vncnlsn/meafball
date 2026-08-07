@@ -22,6 +22,15 @@
     --paper-soft:  rgba(250,246,234,.9);
     --line:        rgba(28,27,24,.14);
     --line-on-navy: rgba(250,246,234,.16);
+    /* Map accent — a single restrained cool signal color, kept separate from
+       the clay/brass site palette on purpose so covered-state glow reads as
+       "instrument panel" rather than editorial accent. Chosen for reliable
+       contrast against navy across color-vision types (relies on brightness/
+       glow, not hue-pairing, to convey state). */
+    --glow:        #55D6C4;
+    --glow-strong: #7CE8D9;
+    --glow-dim:    rgba(85,214,196,.22);
+    --glow-line:   rgba(85,214,196,.4);
     --ease: cubic-bezier(.22,.61,.36,1);
     --shell: 1440px;
     --nav-h: 78px;
@@ -97,30 +106,112 @@
   @media (max-width: 980px){ .timeline-track{ grid-template-columns: repeat(2, 1fr); gap: 40px 24px; } }
   @media (max-width: 560px){ .timeline-track{ grid-template-columns: 1fr; gap: 32px; } }
 
-  /* ---------- 4. COVERAGE (placeholder, not interactive) ---------- */
-  .map-section{ background: var(--navy-deep); padding: clamp(80px, 9vw, 120px) 0; margin-top: clamp(64px, 7vw, 100px); }
+  /* ---------- 4. COVERAGE MAP ---------- */
+  .map-section{ background: var(--navy-deep); padding: clamp(80px, 9vw, 120px) 0; margin-top: clamp(64px, 7vw, 100px); position: relative; }
   .map-frame{ max-width: 1680px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 96px); }
   .map-section .eyebrow{ color: var(--clay-bright); }
   .map-section .section-head h2{ color: var(--paper); }
   .map-section .section-head p{ color: rgba(250,246,234,.6); }
-  .map-placeholder{
-    position: relative; border: 1px dashed var(--line-on-navy);
-    padding: clamp(40px, 5vw, 64px); display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;
+
+  .map-interactive{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.65fr 1fr;
+    gap: clamp(32px, 4vw, 56px);
+    align-items: start;
   }
-  .map-placeholder-note{
-    position:absolute; top:18px; right:18px; font-family: var(--mono); font-size: .64rem;
-    letter-spacing:.08em; text-transform:uppercase; color: rgba(250,246,234,.4);
+
+  .map-canvas-wrap{
+    position: relative;
+    aspect-ratio: 1000 / 589;
+    width: 100%;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(85,214,196,.05), transparent 60%),
+      linear-gradient(180deg, rgba(250,246,234,.025), rgba(250,246,234,0));
+    border: 1px solid var(--line-on-navy);
   }
-  .map-copy p{ font-family: var(--serif); font-style: italic; font-weight:500; font-size: clamp(1.1rem, 1.7vw, 1.35rem); line-height:1.55; color: var(--paper-soft); margin: 0 0 20px; max-width: 440px; }
-  .map-copy .stamp-inline{
-    display:inline-flex; align-items:center; gap:10px; font-family: var(--mono); font-size:.72rem;
-    letter-spacing:.06em; color: var(--clay-bright); text-transform:uppercase; border:1px dashed rgba(217,117,95,.5);
-    padding: 10px 16px;
+  .map-canvas{ position: absolute; inset: 0; }
+  .map-canvas svg{ width: 100%; height: 100%; display: block; }
+
+  .map-canvas path{
+    fill: rgba(250,246,234,.045);
+    stroke: rgba(250,246,234,.15);
+    stroke-width: 1;
+    cursor: pointer;
+    transition: fill .5s var(--ease), stroke .5s var(--ease), filter .5s var(--ease);
   }
-  .state-ledger{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 4px 20px; align-content:start; }
-  .state-ledger span{ font-family: var(--mono); font-size: .82rem; color: rgba(250,246,234,.72); padding: 6px 0; border-bottom: 1px solid var(--line-on-navy); }
-  .state-ledger span.hq{ color: var(--clay-bright); }
-  @media (max-width: 900px){ .map-placeholder{ grid-template-columns: 1fr; } .state-ledger{ grid-template-columns: repeat(2, 1fr); } }
+  .map-canvas path:hover{ fill: rgba(250,246,234,.085); }
+
+  .map-canvas path.covered{
+    stroke: var(--glow-line);
+    filter: drop-shadow(0 0 1.5px rgba(85,214,196,.35));
+  }
+  .map-canvas path.covered.hovered,
+  .map-canvas path.covered.pinned{
+    fill: var(--glow-dim);
+    stroke: var(--glow-strong);
+    filter: drop-shadow(0 0 5px rgba(85,214,196,.6));
+  }
+
+  /* HQ marker — dot only, no permanent label or animation.
+     Info surfaces through the same side panel used for states, on hover/click. */
+  .hq-marker{ cursor: pointer; }
+  .hq-dot{
+    fill: var(--navy-deep);
+    stroke: rgba(250,246,234,.55);
+    stroke-width: 1.3;
+    transition: stroke .35s var(--ease), fill .35s var(--ease), filter .35s var(--ease);
+  }
+  .hq-marker:hover .hq-dot,
+  .hq-marker.pinned .hq-dot{
+    fill: var(--glow-strong);
+    stroke: var(--glow-strong);
+    filter: drop-shadow(0 0 5px rgba(85,214,196,.75));
+  }
+
+  /* Floating state/HQ info panel */
+  .map-state-panel{
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    padding: 13px 20px;
+    background: rgba(22,34,44,.86);
+    border: 1px solid var(--line-on-navy);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .3s var(--ease), transform .3s var(--ease);
+    pointer-events: none;
+    min-width: 168px;
+  }
+  .map-state-panel.msp-visible{ opacity: 1; transform: translateY(0); }
+  .msp-name{ display:block; font-family: var(--serif); font-weight: 500; font-size: 1.05rem; color: var(--paper); }
+  .msp-status{ display:block; font-family: var(--mono); font-size: .66rem; letter-spacing:.07em; text-transform: uppercase; color: rgba(250,246,234,.4); margin-top: 5px; }
+  .map-state-panel.msp-covered .msp-status{ color: var(--glow-strong); }
+  .map-state-panel.msp-hq .msp-status{ color: var(--clay-bright); }
+
+  /* Sidebar */
+  .map-sidebar-intro{ font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.6; color: var(--paper-soft); margin: 0 0 26px; max-width: 420px; }
+  .state-tags{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .state-tag{
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase;
+    color: rgba(250,246,234,.55);
+    border: 1px solid var(--line-on-navy);
+    padding: 7px 11px;
+    cursor: pointer;
+    transition: color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+    background: transparent;
+  }
+  .state-tag:hover{ color: var(--paper); border-color: rgba(85,214,196,.4); }
+  .state-tag.active{ color: var(--glow-strong); border-color: var(--glow-line); background: var(--glow-dim); }
+  .state-tag.hq-tag{ color: var(--clay-bright); border-color: rgba(217,117,95,.35); }
+  .state-tag.hq-tag:hover{ color: var(--clay-bright); border-color: rgba(217,117,95,.6); }
+  .state-tag.hq-tag.active{ color: var(--clay-bright); border-color: rgba(217,117,95,.7); background: rgba(217,117,95,.1); }
+
+  @media (max-width: 900px){
+    .map-interactive{ grid-template-columns: 1fr; }
+  }
 
   /* ---------- 5. LEADERSHIP ---------- */
   .leadership-section{ padding: clamp(80px, 9vw, 120px) 0; }
@@ -235,8 +326,8 @@
   </div>
 </section>
 
-<!-- ================= 4. COVERAGE (placeholder) ================= -->
-<section class="map-section">
+<!-- ================= 4. COVERAGE MAP ================= -->
+<section class="map-section" id="coverage">
   <div class="map-frame">
     <div class="section-head" data-reveal>
       <span class="eyebrow">Where We Work</span>
@@ -244,21 +335,43 @@
       <p>Headquartered in Cache Valley, Utah, with permitting and land access work carried out coast to coast.</p>
     </div>
 
-    <div class="map-placeholder" data-reveal>
-      <span class="map-placeholder-note">Interactive coverage map — coming soon</span>
-      <div class="map-copy">
-        <p>Twenty-three states and counting. In Texas alone, our agents have worked land in 129 counties.</p>
-        <span class="stamp-inline">Coverage detail in progress</span>
+    <div class="map-interactive" data-reveal>
+      <div class="map-canvas-wrap">
+        <div id="us-map" class="map-canvas" aria-label="Interactive map of U.S. states where APS Land operates"></div>
+        <div id="map-state-panel" class="map-state-panel">
+          <span id="msp-name" class="msp-name"></span>
+          <span id="msp-status" class="msp-status"></span>
+        </div>
       </div>
-      <div class="state-ledger">
-        <span class="hq">Utah (HQ)</span>
-        <span>Alabama</span><span>Arkansas</span><span>California</span>
-        <span>Florida</span><span>Idaho</span><span>Illinois</span>
-        <span>Kansas</span><span>Louisiana</span><span>Maryland</span>
-        <span>Michigan</span><span>Mississippi</span><span>Nebraska</span>
-        <span>Nevada</span><span>New Mexico</span><span>Ohio</span>
-        <span>Oklahoma</span><span>Oregon</span><span>Pennsylvania</span>
-        <span>South Dakota</span><span>Texas</span><span>West Virginia</span>
+
+      <div class="map-sidebar">
+        <p class="map-sidebar-intro">Twenty-three states and counting. In Texas alone, our agents have worked land in 129 counties.</p>
+        <div class="state-tags" id="state-tag-list">
+          <span class="state-tag hq-tag" data-hq="true">Cache Valley, UT — HQ</span>
+          <span class="state-tag" data-state="AL">Alabama</span>
+          <span class="state-tag" data-state="AR">Arkansas</span>
+          <span class="state-tag" data-state="CA">California</span>
+          <span class="state-tag" data-state="FL">Florida</span>
+          <span class="state-tag" data-state="ID">Idaho</span>
+          <span class="state-tag" data-state="IL">Illinois</span>
+          <span class="state-tag" data-state="KS">Kansas</span>
+          <span class="state-tag" data-state="LA">Louisiana</span>
+          <span class="state-tag" data-state="MD">Maryland</span>
+          <span class="state-tag" data-state="MI">Michigan</span>
+          <span class="state-tag" data-state="MS">Mississippi</span>
+          <span class="state-tag" data-state="NE">Nebraska</span>
+          <span class="state-tag" data-state="NV">Nevada</span>
+          <span class="state-tag" data-state="NM">New Mexico</span>
+          <span class="state-tag" data-state="OH">Ohio</span>
+          <span class="state-tag" data-state="OK">Oklahoma</span>
+          <span class="state-tag" data-state="OR">Oregon</span>
+          <span class="state-tag" data-state="PA">Pennsylvania</span>
+          <span class="state-tag" data-state="SD">South Dakota</span>
+          <span class="state-tag" data-state="TX">Texas</span>
+          <span class="state-tag" data-state="UT">Utah</span>
+          <span class="state-tag" data-state="WA">Washington</span>
+          <span class="state-tag" data-state="WV">West Virginia</span>
+        </div>
       </div>
     </div>
   </div>
@@ -359,7 +472,65 @@
     reveals.forEach(function(el){ el.classList.add('in-view'); });
   }
 })();
+
+/* ---- Coverage map: one-time "magnetic nudge" scroll assist ----
+   When the map section first drifts into view, nudge the page a fraction
+   of the way toward centering it — never a hard snap, and immediately
+   cancelled by any wheel, touch, or key input so it never fights the user. */
+(function(){
+  var section = document.getElementById('coverage');
+  if(!section) return;
+
+  var cancelled = false;
+  var triggered = false;
+
+  function cancel(){ cancelled = true; }
+  ['wheel','touchstart','keydown','pointerdown'].forEach(function(evt){
+    window.addEventListener(evt, cancel, { passive: true, once: true });
+  });
+
+  function nudge(){
+    if(triggered || cancelled) return;
+    triggered = true;
+
+    var rect = section.getBoundingClientRect();
+    var viewportCenter = window.innerHeight / 2;
+    var sectionCenter = rect.top + rect.height / 2;
+    var delta = sectionCenter - viewportCenter;
+
+    // Skip if already close to centered, or too far away to feel "gentle."
+    if(Math.abs(delta) < 48 || Math.abs(delta) > window.innerHeight * 0.85) return;
+
+    var distance = delta * 0.32; // partial nudge only, not a full recenter
+    var startY = window.scrollY;
+    var startTime = null;
+    var duration = 850;
+
+    function step(ts){
+      if(cancelled) return;
+      if(!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      window.scrollTo(0, startY + distance * eased);
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting && entry.intersectionRatio > 0.35){
+          nudge();
+          io.disconnect();
+        }
+      });
+    }, { threshold: [0.35] });
+    io.observe(section);
+  }
+})();
 </script>
+<script src="us-map.js" defer></script>
 
 </body>
 </html>
