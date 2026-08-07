@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — APS Land — Permit Acquisition &amp; Land Services Since 1980</title>
+<meta name="description" content="APS Land's story — four decades of permit acquisition, land services, and field oversight told through people, history, and nationwide reach.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:        #1E3B5F;
+    --navy-deep:   #16222C;
+    --paper:       #FAF6EA;
+    --paper-dim:   #EEE6D2;
+    --clay:        #B23A28;
+    --clay-bright: #D9755F;
+    --brass:       #8C8271;
+    --ink:         #221C15;
+    --ink-soft:    rgba(34,28,21,.66);
+    --paper-soft:  rgba(250,246,234,.9);
+    --line:        rgba(28,27,24,.14);
+    --line-on-navy: rgba(250,246,234,.16);
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --shell: 1440px;
+    --nav-h: 78px;
+    --serif: 'Spectral', Georgia, serif;
+    --sans: 'Public Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  img{ max-width:100%; display:block; }
+  .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background: var(--clay); color: var(--paper); }
+  :focus-visible{ outline: 2px solid var(--brass); outline-offset: 3px; }
+  .shell{ max-width: var(--shell); margin: 0 auto; padding: 0 56px; }
+  .eyebrow{ font-family: var(--mono); font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; font-weight: 500; color: var(--clay); }
+  .eyebrow::before{ content:"— "; color: var(--brass); }
+  h1,h2,h3{ font-family: var(--serif); font-weight: 600; letter-spacing: -.005em; }
+  [data-reveal]{ opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  [data-reveal].in-view{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- NAV ---------- */
+  .site-nav{ position: fixed; top:0; left:0; right:0; z-index: 100; height: var(--nav-h); background: var(--navy-deep); border-bottom: 1px solid var(--line-on-navy); box-shadow: 0 4px 18px rgba(0,0,0,.14); transition: box-shadow .35s var(--ease); }
+  .site-nav.scrolled{ box-shadow: 0 8px 26px rgba(0,0,0,.22); }
+  .nav-inner{ max-width: 1680px; height: 100%; margin: 0 auto; padding: 0 clamp(24px, 5vw, 96px); display:flex; align-items:center; justify-content:space-between; gap: 40px; }
+  .nav-logo{ font-family: var(--serif); font-weight: 600; font-size: 1.28rem; color: var(--paper); flex:0 0 auto; display:flex; align-items:baseline; gap:8px; }
+  .nav-logo span{ font-family: var(--mono); font-size: .62rem; letter-spacing:.1em; color: var(--clay-bright); font-weight:500; }
+  .nav-links{ list-style:none; display:flex; align-items:center; justify-content: space-evenly; flex: 1 1 auto; max-width: 560px; margin: 0 auto; padding:0; }
+  .nav-links a{ font-size: .86rem; letter-spacing: .03em; font-weight: 500; color: var(--paper-soft); position:relative; padding-bottom: 6px; white-space: nowrap; }
+  .nav-links a.current{ color: var(--clay-bright); }
+  .nav-links a::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background: var(--clay-bright); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
+  .nav-links a:hover{ color: var(--paper); }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links a.current::after{ transform: scaleX(1); }
+  .nav-right{ display:flex; align-items:center; gap: 22px; flex: 0 0 auto; }
+  .nav-phone{ font-family: var(--mono); font-size: .78rem; color: var(--paper-soft); }
+  @media (max-width: 780px){ .shell{ padding: 0 24px; } .nav-inner{ padding: 0 20px; gap: 20px; } }
+  @media (max-width: 640px){ .nav-links, .nav-phone{ display:none; } :root{ --nav-h: 64px; } }
+
+  /* ---------- 1. HERO ---------- */
+  .about-hero{ padding: var(--nav-h) 0 0; }
+  .about-hero-frame{ max-width: 1680px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 96px); }
+  .about-hero-media{ position: relative; height: clamp(420px, 68vh, 700px); overflow: hidden; box-shadow: 0 24px 60px rgba(22,34,44,.2); }
+  .about-hero-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter: saturate(.88) contrast(1.02); }
+  .about-hero-media::after{ content:""; position:absolute; inset:0; background: linear-gradient(0deg, rgba(22,34,44,.74) 0%, rgba(22,34,44,.16) 42%, rgba(22,34,44,0) 68%); }
+  .about-hero-copy{ position:absolute; left: clamp(28px, 4vw, 64px); right: clamp(28px, 4vw, 64px); bottom: clamp(32px, 5vw, 56px); max-width: 640px; }
+  .about-hero-copy .eyebrow{ color: var(--clay-bright); display:block; margin-bottom: 14px; }
+  .about-hero-copy p{ font-family: var(--serif); font-weight: 500; font-style: italic; font-size: clamp(1.3rem, 2.3vw, 1.85rem); line-height: 1.42; color: var(--paper); margin: 0; }
+
+  /* ---------- 2. STORY ---------- */
+  .story-section{ padding: clamp(72px, 8vw, 116px) 0; border-top: 1px solid var(--line); }
+  .story-grid{ display:grid; grid-template-columns: 260px 1fr; gap: 56px; }
+  .story-head{ position: sticky; top: calc(var(--nav-h) + 40px); align-self: start; }
+  .story-head h2{ font-size: clamp(1.5rem, 2.2vw, 1.9rem); color: var(--navy); margin: 10px 0 0; line-height: 1.28; }
+  .story-copy p{ font-size: 1.06rem; line-height: 1.8; color: var(--ink-soft); max-width: 660px; margin: 0 0 24px; }
+  .story-copy p:last-child{ margin-bottom: 0; }
+  .story-copy p strong{ color: var(--ink); font-weight: 600; }
+  @media (max-width: 900px){ .story-grid{ grid-template-columns: 1fr; gap: 20px; } .story-head{ position: static; } }
+
+  /* ---------- 3. TIMELINE ---------- */
+  .timeline-section{ padding: clamp(64px, 7vw, 100px) 0; border-top: 1px solid var(--line); }
+  .section-head{ margin-bottom: 44px; }
+  .section-head h2{ font-size: clamp(1.5rem, 2.4vw, 2.05rem); color: var(--navy); margin: 10px 0 0; font-weight: 600; }
+  .section-head p{ font-size: 1rem; line-height: 1.65; color: var(--ink-soft); max-width: 620px; margin: 14px 0 0; }
+  .timeline-rail{ position: relative; margin-top: 60px; padding-top: 2px; }
+  .timeline-rail::before{ content:""; position:absolute; top:0; left:0; right:0; height:1px; background: var(--line); }
+  .timeline-track{ display:grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .timeline-item{ position:relative; padding-top: 26px; }
+  .timeline-item::before{ content:""; position:absolute; top:-5px; left:0; width: 9px; height: 9px; border-radius: 50%; background: var(--clay); box-shadow: 0 0 0 4px var(--paper); }
+  .timeline-item .yr{ font-family: var(--mono); font-weight:600; font-size: 1.02rem; color: var(--navy); display:block; margin-bottom: 8px; }
+  .timeline-item p{ font-size: .9rem; line-height: 1.6; color: var(--ink-soft); margin:0; max-width: 220px; }
+  @media (max-width: 980px){ .timeline-track{ grid-template-columns: repeat(2, 1fr); gap: 40px 24px; } }
+  @media (max-width: 560px){ .timeline-track{ grid-template-columns: 1fr; gap: 32px; } }
+
+  /* ---------- 4. COVERAGE (placeholder, not interactive) ---------- */
+  .map-section{ background: var(--navy-deep); padding: clamp(80px, 9vw, 120px) 0; margin-top: clamp(64px, 7vw, 100px); }
+  .map-frame{ max-width: 1680px; margin: 0 auto; padding: 0 clamp(24px, 5vw, 96px); }
+  .map-section .eyebrow{ color: var(--clay-bright); }
+  .map-section .section-head h2{ color: var(--paper); }
+  .map-section .section-head p{ color: rgba(250,246,234,.6); }
+  .map-placeholder{
+    position: relative; border: 1px dashed var(--line-on-navy);
+    padding: clamp(40px, 5vw, 64px); display:grid; grid-template-columns: 1.1fr 1fr; gap: 48px;
+  }
+  .map-placeholder-note{
+    position:absolute; top:18px; right:18px; font-family: var(--mono); font-size: .64rem;
+    letter-spacing:.08em; text-transform:uppercase; color: rgba(250,246,234,.4);
+  }
+  .map-copy p{ font-family: var(--serif); font-style: italic; font-weight:500; font-size: clamp(1.1rem, 1.7vw, 1.35rem); line-height:1.55; color: var(--paper-soft); margin: 0 0 20px; max-width: 440px; }
+  .map-copy .stamp-inline{
+    display:inline-flex; align-items:center; gap:10px; font-family: var(--mono); font-size:.72rem;
+    letter-spacing:.06em; color: var(--clay-bright); text-transform:uppercase; border:1px dashed rgba(217,117,95,.5);
+    padding: 10px 16px;
+  }
+  .state-ledger{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 4px 20px; align-content:start; }
+  .state-ledger span{ font-family: var(--mono); font-size: .82rem; color: rgba(250,246,234,.72); padding: 6px 0; border-bottom: 1px solid var(--line-on-navy); }
+  .state-ledger span.hq{ color: var(--clay-bright); }
+  @media (max-width: 900px){ .map-placeholder{ grid-template-columns: 1fr; } .state-ledger{ grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- 5. LEADERSHIP ---------- */
+  .leadership-section{ padding: clamp(80px, 9vw, 120px) 0; }
+  .leader-row{ display:grid; grid-template-columns: 340px 1fr; gap: 64px; align-items:start; }
+  .leader-row + .leader-row{ margin-top: clamp(64px, 7vw, 96px); padding-top: clamp(64px, 7vw, 96px); border-top: 1px solid var(--line); }
+  .leader-portrait{ aspect-ratio: 4/5; overflow:hidden; background: var(--paper-dim); }
+  .leader-portrait img{ width:100%; height:100%; object-fit:cover; filter: saturate(.9); }
+  .leader-copy .eyebrow{ display:block; margin-bottom: 14px; }
+  .leader-copy h3{ font-size: clamp(1.4rem, 2.2vw, 1.8rem); color: var(--navy); margin: 0 0 4px; font-weight:600; }
+  .leader-title{ font-family: var(--mono); font-size: .78rem; letter-spacing: .04em; color: var(--brass); margin-bottom: 24px; display:block; }
+  .leader-copy p{ font-size: 1rem; line-height: 1.75; color: var(--ink-soft); max-width: 620px; margin: 0 0 20px; }
+  .leader-quote{ font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.1rem, 1.7vw, 1.3rem); line-height: 1.55; color: var(--navy); border-left: 2px solid var(--clay); padding-left: 22px; margin: 28px 0 0; max-width: 540px; }
+  @media (max-width: 900px){ .leader-row{ grid-template-columns: 1fr; gap: 28px; } .leader-portrait{ max-width: 300px; } }
+
+  /* ---------- 6. CLOSING BRIDGE ---------- */
+  .bridge-section{ padding: clamp(64px, 7vw, 92px) 0; text-align: center; border-top: 1px solid var(--line); }
+  .bridge-inner{ max-width: 620px; margin: 0 auto; }
+  .bridge-inner p{ font-family: var(--serif); font-weight: 500; font-style: italic; font-size: clamp(1.1rem, 1.9vw, 1.35rem); line-height: 1.6; color: var(--navy); margin: 0 0 18px; }
+  .bridge-link{ display:inline-flex; align-items:center; gap: 8px; font-size: .86rem; font-weight: 600; color: var(--clay); padding-bottom: 4px; border-bottom: 1px solid transparent; transition: border-color .3s var(--ease); }
+  .bridge-link:hover{ border-color: var(--clay); }
+
+  /* ---------- 7. FOOTER ---------- */
+  footer{ background: var(--navy-deep); color: var(--paper); padding: 72px 0 32px; }
+  .footer-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; padding-bottom: 52px; border-bottom: 1px solid var(--line-on-navy); }
+  .footer-brand{ font-family: var(--serif); font-weight:600; font-size: 1.3rem; color: var(--paper); margin-bottom: 14px; }
+  .footer-brand p{ font-size: .92rem; color: var(--paper-soft); max-width: 260px; line-height:1.6; font-family: var(--sans); }
+  footer h4{ font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--clay-bright); margin: 0 0 16px; font-weight:500; }
+  footer ul{ list-style:none; margin:0; padding:0; }
+  footer li{ margin-bottom: 12px; }
+  footer a{ font-size: .92rem; color: var(--paper-soft); transition: color .25s var(--ease); }
+  footer a:hover{ color: var(--clay-bright); }
+  .footer-bottom{ padding-top: 24px; display:flex; flex-wrap:wrap; gap: 12px 24px; justify-content: space-between; align-items:center; font-family: var(--mono); font-size: .72rem; color: var(--paper-soft); }
+  @media (max-width: 900px){ .footer-grid{ grid-template-columns: 1fr; gap: 36px; } }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } [data-reveal]{ transition: opacity .3s linear; transform:none; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="siteNav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="APS Land — Home">APS Land<span>EST. 1980</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="current">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right"><span class="nav-phone">(XXX) XXX-XXXX</span></div>
+  </div>
+</nav>
+
+<!-- ================= 1. HERO ================= -->
+<header class="about-hero">
+  <div class="about-hero-frame">
+    <h1 class="visually-hidden">About APS Land</h1>
+    <div class="about-hero-media" data-reveal>
+      <!-- Replace with proprietary team photograph: assets/about/team-hero.jpg -->
+      <img src="https://picsum.photos/seed/aps-team/1800/1000" alt="The APS Land team in the field">
+      <div class="about-hero-copy">
+        <span class="eyebrow">Who We Are</span>
+        <p>Four decades of permitting and land access work, built one landowner conversation at a time.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 2. STORY ================= -->
+<section class="story-section shell">
+  <div class="story-grid" data-reveal>
+    <div class="story-head">
+      <span class="eyebrow">Our Story</span>
+      <h2>Built on Conversations, Not Just Contracts</h2>
+    </div>
+    <div class="story-copy">
+      <p>APS Land was founded in 1980 to help energy and infrastructure companies do something that sounds simple and rarely is: get permission to build, cross, or work on land that belongs to someone else. That work starts long before any equipment arrives. Our <strong>land agents</strong> are usually the first people a landowner meets — they explain what's being proposed, walk the property in person, and negotiate access and compensation before a single permit is ever filed.</p>
+      <p>From there, our <strong>permit specialists</strong> take over the regulatory side, coordinating directly with municipal, county, state, and federal agencies so the paperwork never falls on the landowner. Our <strong>GIS team</strong> maps routes and boundaries with enough precision to keep disruption to a minimum, and our <strong>title agents</strong> confirm chain of ownership so a project never stalls over a land record nobody checked.</p>
+      <p>It's a way of working we've carried through every project since 1980: show up in person, explain the plan plainly, and treat the landowner as a partner in the project rather than an obstacle to it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. TIMELINE ================= -->
+<section class="timeline-section shell">
+  <div class="section-head" data-reveal>
+    <span class="eyebrow">Our History</span>
+    <h2>Four Decades in the Field</h2>
+  </div>
+  <div class="timeline-rail" data-reveal>
+    <div class="timeline-track">
+      <div class="timeline-item">
+        <span class="yr">1980</span>
+        <p>APS Land opens its doors, taking on its first permitting and land access work in Texas.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="yr">1990s</span>
+        <p>Our team of mineral and surface agents grows, and work expands into neighboring states.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="yr">2000s</span>
+        <p>GIS mapping joins the process, sharpening how routes are planned and disruption is minimized.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="yr">2010s</span>
+        <p>Title curative services are added, so ownership questions get settled before crews arrive.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="yr">Today</span>
+        <p>Work carried out in 23 states, with the same manager-led, in-person approach we started with.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. COVERAGE (placeholder) ================= -->
+<section class="map-section">
+  <div class="map-frame">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Where We Work</span>
+      <h2>A Nationwide Footprint</h2>
+      <p>Headquartered in Cache Valley, Utah, with permitting and land access work carried out coast to coast.</p>
+    </div>
+
+    <div class="map-placeholder" data-reveal>
+      <span class="map-placeholder-note">Interactive coverage map — coming soon</span>
+      <div class="map-copy">
+        <p>Twenty-three states and counting. In Texas alone, our agents have worked land in 129 counties.</p>
+        <span class="stamp-inline">Coverage detail in progress</span>
+      </div>
+      <div class="state-ledger">
+        <span class="hq">Utah (HQ)</span>
+        <span>Alabama</span><span>Arkansas</span><span>California</span>
+        <span>Florida</span><span>Idaho</span><span>Illinois</span>
+        <span>Kansas</span><span>Louisiana</span><span>Maryland</span>
+        <span>Michigan</span><span>Mississippi</span><span>Nebraska</span>
+        <span>Nevada</span><span>New Mexico</span><span>Ohio</span>
+        <span>Oklahoma</span><span>Oregon</span><span>Pennsylvania</span>
+        <span>South Dakota</span><span>Texas</span><span>West Virginia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. LEADERSHIP ================= -->
+<section class="leadership-section shell">
+  <div class="section-head" data-reveal>
+    <span class="eyebrow">Leadership</span>
+    <h2>Guided by Experience</h2>
+  </div>
+
+  <div class="leader-row" data-reveal>
+    <div class="leader-portrait">
+      <!-- Replace with proprietary portrait: assets/about/president.jpg -->
+      <img src="https://picsum.photos/seed/aps-mark/700/875" alt="Portrait of Mark, President of APS Land">
+    </div>
+    <div class="leader-copy">
+      <span class="eyebrow">President</span>
+      <h3>Mark [Last Name]</h3>
+      <span class="leader-title">President, APS Land · 40+ Years in the Industry</span>
+      <p>Mark has spent more than four decades in land services, and led APS Land through the growth that took it from a Texas permitting outfit to a firm trusted in 23 states. His approach hasn't changed much in forty years: know the project, know the landowner, and be the one who answers when something needs sorting out.</p>
+      <p class="leader-quote">&ldquo;A permit is just paperwork. The relationship with the landowner is the actual work.&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="leader-row" data-reveal>
+    <div class="leader-portrait">
+      <!-- Replace with proprietary portrait: assets/about/vp.jpg -->
+      <img src="https://picsum.photos/seed/aps-vp/700/875" alt="Portrait of the Vice President of APS Land">
+    </div>
+    <div class="leader-copy">
+      <span class="eyebrow">Vice President</span>
+      <h3>[VP Name]</h3>
+      <span class="leader-title">Vice President, APS Land · 20+ Years in the Industry</span>
+      <p>With over twenty years in the industry, [VP Name] oversees day-to-day project management and client communication — the direct, single point of contact clients count on from permit filing through project close.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. CLOSING BRIDGE ================= -->
+<section class="bridge-section shell">
+  <div class="bridge-inner" data-reveal>
+    <p>APS Land works for the companies building today's infrastructure — and for the landowners whose property makes that work possible.</p>
+    <a class="bridge-link" href="contact.html">Questions about a project on your property? Get in touch &rarr;</a>
+  </div>
+</section>
+
+<!-- ================= 7. FOOTER ================= -->
+<footer>
+  <div class="shell">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">APS Land</div>
+        <p>Land Services &amp; Permit Acquisition<br>Since 1980</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+1XXXXXXXXXX">(XXX) XXX-XXXX</a></li>
+          <li><a href="mailto:info@apsland.com">info@apsland.com</a></li>
+          <li>Cache Valley, UT &amp; Nationwide</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; Allstate Permit Services. All rights reserved.</span>
+      <span>APS Land — Since 1980</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nav = document.getElementById('siteNav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 12); }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  var reveals = document.querySelectorAll('[data-reveal]');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in-view'); });
+  }
+})();
+</script>
+
+</body>
+</html>

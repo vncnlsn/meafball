@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — APS Land — Permit Acquisition &amp; Land Services Since 1980</title>
+<meta name="description" content="Get in touch with APS Land about permitting, right-of-way acquisition, GIS, or title curative work for your next project.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:        #1E3B5F;
+    --navy-deep:   #16222C;
+    --paper:       #FAF6EA;
+    --paper-dim:   #EEE6D2;
+    --clay:        #B23A28;
+    --clay-bright: #D9755F;
+    --brass:       #8C8271;
+    --ink:         #221C15;
+    --ink-soft:    rgba(34,28,21,.66);
+    --paper-soft:  rgba(250,246,234,.9);
+    --line:        rgba(28,27,24,.14);
+    --line-on-navy: rgba(250,246,234,.16);
+    --ease: cubic-bezier(.22,.61,.36,1);
+    --shell: 1440px;
+    --nav-h: 78px;
+    --serif: 'Spectral', Georgia, serif;
+    --sans: 'Public Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  img{ max-width:100%; display:block; }
+  .visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background: var(--clay); color: var(--paper); }
+  :focus-visible{ outline: 2px solid var(--brass); outline-offset: 3px; }
+  .shell{ max-width: var(--shell); margin: 0 auto; padding: 0 56px; }
+  .eyebrow{ font-family: var(--mono); font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; font-weight: 500; color: var(--clay); }
+  .eyebrow::before{ content:"— "; color: var(--brass); }
+  h1,h2,h3{ font-family: var(--serif); font-weight: 600; letter-spacing: -.005em; }
+  [data-reveal]{ opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  [data-reveal].in-view{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- NAV ---------- */
+  .site-nav{ position: fixed; top:0; left:0; right:0; z-index: 100; height: var(--nav-h); background: var(--navy-deep); border-bottom: 1px solid var(--line-on-navy); box-shadow: 0 4px 18px rgba(0,0,0,.14); transition: box-shadow .35s var(--ease); }
+  .site-nav.scrolled{ box-shadow: 0 8px 26px rgba(0,0,0,.22); }
+  .nav-inner{ max-width: 1680px; height: 100%; margin: 0 auto; padding: 0 clamp(24px, 5vw, 96px); display:flex; align-items:center; justify-content:space-between; gap: 40px; }
+  .nav-logo{ font-family: var(--serif); font-weight: 600; font-size: 1.28rem; color: var(--paper); flex:0 0 auto; display:flex; align-items:baseline; gap:8px; }
+  .nav-logo span{ font-family: var(--mono); font-size: .62rem; letter-spacing:.1em; color: var(--clay-bright); font-weight:500; }
+  .nav-links{ list-style:none; display:flex; align-items:center; justify-content: space-evenly; flex: 1 1 auto; max-width: 560px; margin: 0 auto; padding:0; }
+  .nav-links a{ font-size: .86rem; letter-spacing: .03em; font-weight: 500; color: var(--paper-soft); position:relative; padding-bottom: 6px; white-space: nowrap; }
+  .nav-links a.current{ color: var(--clay-bright); }
+  .nav-links a::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background: var(--clay-bright); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease); }
+  .nav-links a:hover{ color: var(--paper); }
+  .nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links a.current::after{ transform: scaleX(1); }
+  .nav-right{ display:flex; align-items:center; gap: 22px; flex: 0 0 auto; }
+  .nav-phone{ font-family: var(--mono); font-size: .78rem; color: var(--paper-soft); }
+  @media (max-width: 780px){ .shell{ padding: 0 24px; } .nav-inner{ padding: 0 20px; gap: 20px; } }
+  @media (max-width: 640px){ .nav-links, .nav-phone{ display:none; } :root{ --nav-h: 64px; } }
+
+  /* ---------- HERO ---------- */
+  .contact-hero{ padding: calc(var(--nav-h) + clamp(64px, 9vw, 108px)) 0 clamp(56px, 6vw, 84px); border-bottom: 1px solid var(--line); }
+  .contact-hero-inner{ max-width: 700px; }
+  .contact-hero h1{ font-size: clamp(2rem, 3.6vw, 2.9rem); color: var(--navy); margin: 12px 0 18px; line-height:1.16; }
+  .contact-hero p{ font-size: 1.08rem; line-height: 1.7; color: var(--ink-soft); margin:0; max-width: 560px; }
+
+  /* ---------- MAIN GRID: FORM + INFO ---------- */
+  .contact-main{ padding: clamp(64px, 8vw, 104px) 0; }
+  .contact-grid{ display:grid; grid-template-columns: 1.15fr .85fr; gap: 72px; align-items:start; }
+
+  .form-note{ font-family: var(--mono); font-size: .68rem; letter-spacing:.06em; text-transform:uppercase; color: var(--brass); margin-bottom: 22px; display:block; }
+  .field{ margin-bottom: 26px; }
+  .field label{ display:block; font-size: .82rem; font-weight:600; color: var(--ink); margin-bottom: 8px; }
+  .field label span{ color: var(--ink-soft); font-weight:400; }
+  .field input, .field select, .field textarea{
+    width:100%; border: none; border-bottom: 1px solid var(--line);
+    background: transparent; padding: 10px 2px; font-family: var(--sans);
+    font-size: .98rem; color: var(--ink); transition: border-color .25s var(--ease);
+  }
+  .field textarea{ resize: vertical; min-height: 110px; }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color: var(--clay); }
+  .field-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .submit-btn{
+    margin-top: 8px; display:inline-flex; align-items:center; gap: 12px;
+    padding: 15px 30px; background: var(--navy); color: var(--paper);
+    border: 1px solid var(--navy); font-size:.86rem; font-weight:600;
+    cursor:pointer; transition: background .3s var(--ease), border-color .3s var(--ease);
+  }
+  .submit-btn:hover{ background: var(--clay); border-color: var(--clay); }
+  @media (max-width: 560px){ .field-row{ grid-template-columns: 1fr; } }
+
+  .info-col{ border-left: 1px solid var(--line); padding-left: 48px; }
+  .info-block{ margin-bottom: 40px; }
+  .info-block:last-child{ margin-bottom:0; }
+  .info-block h3{ font-size: 1.02rem; color: var(--navy); margin: 0 0 12px; font-weight:600; }
+  .info-block p, .info-block a{ font-size: .96rem; line-height:1.7; color: var(--ink-soft); margin:0; display:block; }
+  .info-block a:hover{ color: var(--clay); }
+  .info-block .mono-line{ font-family: var(--mono); font-size: .92rem; color: var(--ink); }
+  .info-stamp{ margin-top: 44px; display:flex; align-items:center; gap: 16px; }
+  .info-stamp .ring{ width: 62px; height:62px; border-radius:50%; border: 1.5px dashed var(--brass); flex:0 0 auto; display:flex; align-items:center; justify-content:center; font-family: var(--mono); font-size:.56rem; letter-spacing:.06em; color: var(--brass); text-align:center; line-height:1.3; }
+  .info-stamp p{ font-family: var(--serif); font-style: italic; font-size: .96rem; color: var(--ink-soft); margin:0; }
+  @media (max-width: 900px){ .contact-grid{ grid-template-columns: 1fr; gap: 48px; } .info-col{ border-left:none; border-top: 1px solid var(--line); padding-left:0; padding-top: 40px; } }
+
+  /* ---------- REGIONS STRIP ---------- */
+  .regions-section{ padding: clamp(56px, 6vw, 84px) 0; border-top: 1px solid var(--line); }
+  .regions-row{ display:flex; flex-wrap:wrap; gap: 14px 28px; }
+  .regions-row span{ font-family: var(--mono); font-size: .84rem; color: var(--ink-soft); padding: 8px 0; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background: var(--navy-deep); color: var(--paper); padding: 72px 0 32px; margin-top: clamp(56px, 6vw, 84px); }
+  .footer-grid{ display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 48px; padding-bottom: 52px; border-bottom: 1px solid var(--line-on-navy); }
+  .footer-brand{ font-family: var(--serif); font-weight:600; font-size: 1.3rem; color: var(--paper); margin-bottom: 14px; }
+  .footer-brand p{ font-size: .92rem; color: var(--paper-soft); max-width: 260px; line-height:1.6; font-family: var(--sans); }
+  footer h4{ font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--clay-bright); margin: 0 0 16px; font-weight:500; }
+  footer ul{ list-style:none; margin:0; padding:0; }
+  footer li{ margin-bottom: 12px; }
+  footer a{ font-size: .92rem; color: var(--paper-soft); transition: color .25s var(--ease); }
+  footer a:hover{ color: var(--clay-bright); }
+  .footer-bottom{ padding-top: 24px; display:flex; flex-wrap:wrap; gap: 12px 24px; justify-content: space-between; align-items:center; font-family: var(--mono); font-size: .72rem; color: var(--paper-soft); }
+  @media (max-width: 900px){ .footer-grid{ grid-template-columns: 1fr; gap: 36px; } }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } [data-reveal]{ transition: opacity .3s linear; transform:none; } }
+</style>
+</head>
+<body>
+
+<nav class="site-nav" id="siteNav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html" aria-label="APS Land — Home">APS Land<span>EST. 1980</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="contact.html" class="current">Contact</a></li>
+    </ul>
+    <div class="nav-right"><span class="nav-phone">(XXX) XXX-XXXX</span></div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="contact-hero shell">
+  <div class="contact-hero-inner" data-reveal>
+    <span class="eyebrow">Get In Touch</span>
+    <h1>Tell us about the project.</h1>
+    <p>Whether you need permitting, right-of-way acquisition, GIS work, or title curative help — reach out and you'll hear back from someone who actually works the account, not a call center.</p>
+  </div>
+</header>
+
+<!-- ================= FORM + INFO ================= -->
+<section class="contact-main shell">
+  <div class="contact-grid">
+    <form class="contact-form" data-reveal onsubmit="event.preventDefault(); this.querySelector('.submit-btn').textContent='Message received — draft only';">
+      <span class="form-note">This form is a working draft — connect it to your inbox or CRM before launch.</span>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="service">What do you need? <span>(select one)</span></label>
+        <select id="service" name="service">
+          <option value="permitting">Seismic Permitting &amp; ROW Acquisition</option>
+          <option value="gis">GIS Services</option>
+          <option value="title">Title Curative</option>
+          <option value="other">Not sure yet</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Project details</label>
+        <textarea id="message" name="message" placeholder="Location, timeline, scope — whatever you've got." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+
+    <aside class="info-col" data-reveal>
+      <div class="info-block">
+        <h3>Call or Email</h3>
+        <a href="tel:+1XXXXXXXXXX" class="mono-line">(XXX) XXX-XXXX</a>
+        <a href="mailto:info@apsland.com" class="mono-line">info@apsland.com</a>
+      </div>
+      <div class="info-block">
+        <h3>Office</h3>
+        <p>Cache Valley, Utah<br>Field offices &amp; agents nationwide</p>
+      </div>
+      <div class="info-block">
+        <h3>Hours</h3>
+        <p>Monday – Friday<br>8:00 AM – 5:00 PM MT</p>
+      </div>
+      <div class="info-stamp">
+        <div class="ring">EST.<br>1980</div>
+        <p>Forty-plus years answering this exact kind of call.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= REGIONS ================= -->
+<section class="regions-section shell" data-reveal>
+  <span class="eyebrow" style="display:block; margin-bottom:20px;">Currently Permitting In</span>
+  <div class="regions-row">
+    <span>Texas</span><span>Oklahoma</span><span>Louisiana</span><span>New Mexico</span>
+    <span>Kansas</span><span>Nebraska</span><span>Utah</span><span>Nevada</span>
+    <span>+ 15 more states</span>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="shell">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">APS Land</div>
+        <p>Land Services &amp; Permit Acquisition<br>Since 1980</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+1XXXXXXXXXX">(XXX) XXX-XXXX</a></li>
+          <li><a href="mailto:info@apsland.com">info@apsland.com</a></li>
+          <li>Cache Valley, UT &amp; Nationwide</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; Allstate Permit Services. All rights reserved.</span>
+      <span>APS Land — Since 1980</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nav = document.getElementById('siteNav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 12); }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  var reveals = document.querySelectorAll('[data-reveal]');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in-view'); });
+  }
+})();
+</script>
+
+</body>
+</html>
