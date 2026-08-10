@@ -162,18 +162,30 @@
     showPanel(name, variant);
   }
 
+  var coveredPaths = [];
   paths.forEach(function (path) {
     var state   = path.getAttribute('data-state');
     var name    = path.getAttribute('data-name') || state;
     var covered = COVERED.indexOf(state) > -1;
-    if (covered) path.classList.add('covered');
+    if (covered) coveredPaths.push(path);
     wire(path, name, covered ? 'covered' : 'uncovered');
   });
+
+  var poweredOn = false;
+  function powerOnCoverage() {
+    if (poweredOn) return;
+    poweredOn = true;
+    coveredPaths.forEach(function (path, i) {
+      path.style.transitionDelay = (i * 28) + 'ms';
+      path.classList.add('covered');
+      window.setTimeout(function () { path.style.transitionDelay = ''; }, 1600);
+    });
+  }
 
   wire(hqGroup, HQ.name, 'hq');
 
   /* ---- State tag sidebar chips (plus the HQ chip) ---- */
-  var tags = document.querySelectorAll('.state-tag');
+  var tags = document.querySelectorAll('.state-tag:not(.province-tag)');
   tags.forEach(function (tag) {
     tag.addEventListener('click', function () {
       var isHQ = tag.hasAttribute('data-hq');
@@ -210,14 +222,18 @@
   if (mapSection && 'IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (!entry.isIntersecting) {
+        if (entry.isIntersecting) {
+          powerOnCoverage();
+        } else {
           if (pinned) { pinned.classList.remove('pinned'); pinned = null; }
           allInteractive.forEach(function (p) { p.classList.remove('hovered'); });
           tags.forEach(function (t) { t.classList.remove('active'); });
           hidePanel();
         }
       });
-    }, { threshold: 0 });
+    }, { threshold: 0.2 });
     io.observe(mapSection);
+  } else {
+    powerOnCoverage();
   }
 })();
