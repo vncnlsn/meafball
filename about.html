@@ -279,15 +279,13 @@
   }
   .landowner-photo{
     width: 100%;
-    aspect-ratio: 4/5;
+    max-width: 720px;
+    aspect-ratio: 16/9;
     overflow: hidden;
+    margin: clamp(28px, 3vw, 40px) 0;
     background: var(--paper-dim);
   }
-  .landowner-photo img{ width:100%; height:100%; object-fit: cover; }
-  @media (max-width: 900px){
-    .landowner-intro-row{ grid-template-columns: 1fr; }
-    .landowner-photo{ max-width: 420px; }
-  }
+  .landowner-photo img{ width:100%; height:100%; object-fit: cover; display:block; }
 
   .assurance-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); margin-top: 56px; border: 1px solid var(--line); }
   .assurance-card{ background: var(--paper); padding: 34px 28px; }
@@ -464,15 +462,15 @@
     <span class="eyebrow">For Landowners</span>
     <h2>You Stay In Control of What Happens on Your Land</h2>
   </div>
-  <div class="landowner-intro-row" data-reveal>
-    <div>
-      <p class="landowner-lede">If an APS Land Services agent has reached out, it's because a company is exploring whether the ground beneath your property can help strengthen America's energy and infrastructure — and we're the ones responsible for doing that the right way.</p>
-      <p class="landowner-sub">We contact landowners on behalf of the company we represent to secure a <strong>Limited Use Service Agreement</strong> — a temporary, tightly defined permission for a survey crew to access the property, use seismic tools to read what lies beneath the surface, and leave. It is not a lease. It is not a sale of mineral rights. It is not fracking, drilling, or mining. It does not give up any of your rights to your land. It exists for one purpose: to let a field team measure and record, safely and briefly, then go.</p>
-    </div>
-    <div class="landowner-photo">
-      <img src="assets/landowner_handshake.jpg" alt="A handshake agreement in a farm field, representing APS Land Services' work with landowners">
-    </div>
+  <div data-reveal>
+    <p class="landowner-lede">If an APS Land Services agent has reached out, it's because a company is exploring whether the ground beneath your property can help strengthen America's energy and infrastructure — and we're the ones responsible for doing that the right way.</p>
+    <p class="landowner-sub">We contact landowners on behalf of the company we represent to secure a <strong>Limited Use Service Agreement</strong> — a temporary, tightly defined permission for a survey crew to access the property, use seismic tools to read what lies beneath the surface, and leave. It is not a lease. It is not a sale of mineral rights. It is not fracking, drilling, or mining. It does not give up any of your rights to your land. It exists for one purpose: to let a field team measure and record, safely and briefly, then go.</p>
   </div>
+  <div class="landowner-photo" data-reveal>
+    <img src="assets/landowner_handshake.jpg" alt="A handshake agreement in a farm field, representing APS Land Services' work with landowners">
+  </div>
+
+  <div class="assurance-grid" data-reveal>
 
   <div class="assurance-grid" data-reveal>
     <div class="assurance-card">
