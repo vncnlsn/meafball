@@ -179,29 +179,30 @@
   .map-canvas path.covered{
     stroke: var(--glow-strong);
     stroke-width: 1.6;
-    filter: drop-shadow(0 0 2px rgba(85,214,196,.4));
+    filter: drop-shadow(0 0 1.7px rgba(85,214,196,.35));
   }
   .map-canvas path.covered.hovered,
   .map-canvas path.covered.pinned{
     fill: var(--glow-dim);
     stroke: var(--glow-strong);
-    filter: drop-shadow(0 0 6px rgba(85,214,196,.65));
+    filter: drop-shadow(0 0 5px rgba(85,214,196,.56));
   }
 
   /* HQ marker — dot only, no permanent label or animation.
      Info surfaces through the same side panel used for states, on hover/click. */
   .hq-marker{ cursor: pointer; }
   .hq-dot{
-    fill: var(--navy-deep);
-    stroke: rgba(250,246,234,.55);
+    fill: var(--clay);
+    stroke: var(--clay-bright);
     stroke-width: 1.3;
+    filter: drop-shadow(0 0 3px rgba(178,58,40,.55));
     transition: stroke .35s var(--ease), fill .35s var(--ease), filter .35s var(--ease);
   }
   .hq-marker:hover .hq-dot,
   .hq-marker.pinned .hq-dot{
     fill: var(--glow-strong);
     stroke: var(--glow-strong);
-    filter: drop-shadow(0 0 5px rgba(85,214,196,.75));
+    filter: drop-shadow(0 0 5px rgba(85,214,196,.65));
   }
 
   /* Floating state/HQ info panel */
@@ -234,8 +235,8 @@
   .state-tags{ display: flex; flex-wrap: wrap; gap: 8px; }
   .state-tag{
     font-family: var(--mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase;
-    color: rgba(250,246,234,.55);
-    border: 1px solid var(--line-on-navy);
+    color: rgba(250,246,234,.72);
+    border: 1px solid rgba(250,246,234,.22);
     padding: 7px 11px;
     cursor: pointer;
     transition: color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
