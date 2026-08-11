@@ -286,31 +286,60 @@
   .assurance-card h3{ font-size: .98rem; color: var(--navy); margin: 0 0 8px; font-weight: 600; line-height: 1.28; }
   .assurance-card p{ font-size: .82rem; line-height: 1.5; color: var(--ink-soft); margin: 0; }
 
-  .landowner-links{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-  .landowner-links a{
-    position: relative;
-    display:flex; flex-direction:column; gap: 4px;
-    padding: 18px 44px 18px 20px;
-    background: var(--paper-dim);
-    transition: background .25s var(--ease);
-  }
-  .landowner-links a:hover{ background: var(--navy); }
-  .landowner-links a:hover .ll-label,
-  .landowner-links a:hover .ll-desc{ color: var(--paper); }
-  .landowner-links a:hover .arrow{ color: var(--clay-bright); transform: translate(4px, -50%); }
-  .ll-label{ font-size: .88rem; font-weight: 600; color: var(--navy); transition: color .25s var(--ease); }
-  .ll-desc{ font-size: .76rem; color: var(--ink-soft); transition: color .25s var(--ease); }
-  .arrow{
-    position:absolute; top: 50%; right: 18px; transform: translateY(-50%);
-    font-weight: 600; color: var(--clay);
-    transition: transform .25s var(--ease), color .25s var(--ease);
+  .landowner-disclaim{
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: .92rem;
+    color: var(--navy);
+    margin: 16px 0 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    max-width: 700px;
   }
 
-  @media (max-width: 980px){ .assurance-grid{ grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 700px){
-    .assurance-grid, .landowner-links{ grid-template-columns: 1fr; }
-    .landowner-section{ min-height: auto; }
+  /* ---------- LANDOWNER TRUST MARQUEE ---------- */
+  .landowner-trust{ padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid var(--line); }
+  .landowner-trust-head{ margin-bottom: 22px; }
+  .landowner-trust-head .eyebrow{ display:block; margin-bottom: 10px; }
+  .landowner-trust-head p{ font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.02rem, 1.5vw, 1.2rem); color: var(--ink); margin: 0; max-width: 640px; }
+
+  .marquee-viewport{
+    position:relative; overflow:hidden;
+    border-top: 1px solid var(--paper-dim); border-bottom: 1px solid var(--paper-dim);
   }
+  .marquee-viewport::before, .marquee-viewport::after{
+    content:""; position:absolute; top:0; bottom:0; width: 80px; z-index:2; pointer-events:none;
+  }
+  .marquee-viewport::before{ left:0; background: linear-gradient(to right, var(--paper), rgba(250,246,234,0)); }
+  .marquee-viewport::after{ right:0; background: linear-gradient(to left, var(--paper), rgba(250,246,234,0)); }
+  .marquee-track{ display:flex; align-items:stretch; width: max-content; animation: scroll-left 46s linear infinite; }
+  .marquee-viewport:hover .marquee-track{ animation-play-state: paused; }
+  @keyframes scroll-left{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+  .logo-cell{
+    flex: 0 0 auto; height: 84px; display:flex; align-items:center; justify-content:center;
+    padding: 0 34px; border-right: 1px solid var(--paper-dim);
+    font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1rem;
+    color: var(--ink-soft); white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: reduce){ .marquee-track{ animation: none; } }
+
+  /* ---------- LANDOWNER CONTACT CTA ---------- */
+  .landowner-contact{ padding: clamp(48px, 6vw, 76px) 0; border-top: 1px solid var(--line); }
+  .landowner-contact .eyebrow{ display:block; margin-bottom: 12px; }
+  .landowner-contact h2{ font-size: clamp(1.4rem, 2.2vw, 1.9rem); color: var(--navy); margin: 0 0 14px; font-weight: 600; line-height: 1.25; max-width: 680px; }
+  .landowner-contact p{ font-size: .96rem; line-height: 1.65; color: var(--ink-soft); max-width: 640px; margin: 0 0 26px; }
+  .landowner-contact-links{ display:flex; gap: 16px; flex-wrap:wrap; }
+  .contact-link{
+    display:inline-flex; align-items:center; gap: 10px;
+    padding: 14px 26px;
+    border: 1px solid var(--navy);
+    color: var(--navy);
+    font-weight: 600; font-size: .9rem;
+    transition: background .25s var(--ease), color .25s var(--ease);
+  }
+  .contact-link:hover{ background: var(--navy); color: var(--paper); }
+  .contact-link .arrow{ transition: transform .25s var(--ease); }
+  .contact-link:hover .arrow{ transform: translateX(4px); }
 
   /* ---------- 8. FOOTER ---------- */
   footer{ background: var(--navy-deep); color: var(--paper); padding: 72px 0 32px; }
@@ -452,54 +481,61 @@
 <!-- ================= 5. LANDOWNER REASSURANCE ================= -->
 <section class="landowner-section shell">
   <div class="landowner-head" data-reveal>
-    <span class="eyebrow">For Landowners</span>
+    <span class="eyebrow">Landowners</span>
     <h2>You Stay In Control of What Happens on Your Land</h2>
   </div>
 
   <div data-reveal>
-    <p class="landowner-lede">If an APS agent has reached out, it's because a company is exploring whether your land can support American energy and infrastructure.</p>
-    <p class="landowner-sub">What we're asking for is a <strong>Limited Use Service Agreement</strong> — temporary permission for a survey crew to take seismic readings and leave. Not a lease. Not mineral rights. Not drilling.</p>
+    <p class="landowner-lede">If an APS agent has reached out, it's because a company is exploring whether your property may be part of an upcoming survey project.</p>
+    <p class="landowner-sub">APS works on behalf of energy and infrastructure companies to secure temporary, compensated access for survey work. The agreement defines what access is permitted, where work may occur, and the terms that apply.</p>
+    <p class="landowner-disclaim">Not a lease. Not mineral rights. Not drilling. Not permanent access.</p>
   </div>
 
   <div class="assurance-grid" data-reveal>
     <div class="assurance-card">
       <span class="assurance-num">01</span>
-      <h3>Limited, Not Permanent</h3>
-      <p>Survey access only, for a defined window — no ownership transfer, no mineral lease, no drilling.</p>
+      <h3>Limited Access</h3>
+      <p>Permission is for a defined purpose and period of time. You retain ownership and control of your property.</p>
     </div>
     <div class="assurance-card">
       <span class="assurance-num">02</span>
-      <h3>Minimal Footprint</h3>
-      <p>Crews disturb as little ground as possible, and restore what they use when the work is done.</p>
+      <h3>You Are Compensated</h3>
+      <p>Landowners are compensated for the access and activities agreed to before work begins.</p>
     </div>
     <div class="assurance-card">
       <span class="assurance-num">03</span>
-      <h3>Supports Domestic Energy</h3>
-      <p>The data helps determine what resources lie beneath American soil.</p>
+      <h3>Mapping What Lies Below</h3>
+      <p>Seismic surveys collect data used to better understand the geology and potential resources beneath the surface.</p>
     </div>
     <div class="assurance-card">
       <span class="assurance-num">04</span>
-      <h3>Safety First, Always</h3>
-      <p>Every team follows the same standard we've held since 1980.</p>
+      <h3>APS Stays Involved</h3>
+      <p>We coordinate with landowners, clients, and field crews to help ensure work follows the terms of the agreement.</p>
     </div>
   </div>
+</section>
 
-  <div class="landowner-links" data-reveal>
-    <a href="services.html">
-      <span class="ll-label">See The Work</span>
-      <span class="ll-desc">What the survey process involves</span>
-      <span class="arrow">&rarr;</span>
-    </a>
-    <a href="index.html#partners">
-      <span class="ll-label">See The Company</span>
-      <span class="ll-desc">Who APS is currently representing</span>
-      <span class="arrow">&rarr;</span>
-    </a>
-    <a href="contact.html">
-      <span class="ll-label">Talk To Us</span>
-      <span class="ll-desc">Reach APS directly</span>
-      <span class="arrow">&rarr;</span>
-    </a>
+<!-- ================= 5b. LANDOWNER TRUST MARQUEE ================= -->
+<section class="landowner-trust shell">
+  <div class="landowner-trust-head" data-reveal>
+    <span class="eyebrow">Decades of Trust in the Field</span>
+    <p>APS has represented leading American energy and infrastructure companies on projects across the country.</p>
+  </div>
+  <div class="marquee-viewport" id="marqueeViewportLandowner">
+    <div class="marquee-track" id="marqueeTrackLandowner"><!-- populated by JS --></div>
+  </div>
+</section>
+
+<!-- ================= 5c. LANDOWNER CONTACT CTA ================= -->
+<section class="landowner-contact shell">
+  <div data-reveal>
+    <span class="eyebrow">Questions Are Welcome</span>
+    <h2>Talk To Us Before, During, or After the Work</h2>
+    <p>If APS has contacted you, we're here to answer your questions. We can explain who we're representing, why we've contacted you, what the proposed work involves, and what your agreement allows.</p>
+    <div class="landowner-contact-links">
+      <a class="contact-link" href="tel:+1XXXXXXXXXX">Call APS <span class="arrow">&rarr;</span></a>
+      <a class="contact-link" href="mailto:info@apsland.com">Email APS <span class="arrow">&rarr;</span></a>
+    </div>
   </div>
 </section>
 
@@ -554,6 +590,30 @@
   } else {
     reveals.forEach(function(el){ el.classList.add('in-view'); });
   }
+
+  // Landowner-page client marquee — same roster as homepage.
+  // Replace text with real logo images when available: { name:'Devon', img:'logos/devon.png' }
+  var CLIENTS = [
+    'Anadarko','Apache','ConocoPhillips','Dawson Geophysical','Denbury','Devon',
+    'EOG Resources','Marathon Oil','Noble Energy','Ormat','OXY','Pioneer',
+    'Schlumberger','Seitel','TGS','Vantage Geophysical'
+  ];
+  var landownerTrack = document.getElementById('marqueeTrackLandowner');
+  if (landownerTrack) {
+    function buildSet(){
+      var frag = document.createDocumentFragment();
+      CLIENTS.forEach(function(name){
+        var cell = document.createElement('div');
+        cell.className = 'logo-cell';
+        cell.textContent = name;
+        frag.appendChild(cell);
+      });
+      return frag;
+    }
+    landownerTrack.appendChild(buildSet());
+    landownerTrack.appendChild(buildSet());
+  }
+  
 })();
 </script>
 <script src="assets/us-map.js" defer></script>
