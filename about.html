@@ -129,7 +129,7 @@
   @media (max-width: 900px){ .leader-row{ grid-template-columns: 1fr; gap: 28px; } .leader-portrait{ max-width: 300px; } }
 
   /* ---------- 5. COVERAGE MAP ---------- */
-  .map-section{ background: var(--navy-deep); padding: clamp(96px, 10vw, 136px) 0; position: relative; }
+  .map-section{ background: var(--navy-deep); padding: clamp(48px, 5vw, 72px) 0; position: relative; }
   .map-frame{ max-width: 1880px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 72px); }
   .map-section .eyebrow{ color: var(--clay-bright); }
   .map-section .section-head h2{ color: var(--paper); }
@@ -144,49 +144,43 @@
   }
 
   .map-canvas-wrap{
-    position: relative;
-    aspect-ratio: 1000 / 589;
-    width: 100%;
-    background:
-      radial-gradient(ellipse at 50% 30%, rgba(85,214,196,.06), transparent 62%),
-      repeating-linear-gradient(0deg, rgba(250,246,234,.025) 0 1px, transparent 1px 48px),
-      repeating-linear-gradient(90deg, rgba(250,246,234,.025) 0 1px, transparent 1px 48px),
-      linear-gradient(180deg, rgba(250,246,234,.03), rgba(250,246,234,0) 40%);
-    box-shadow:
-      inset 0 0 0 1px rgba(250,246,234,.05),
-      inset 0 60px 120px -60px rgba(0,0,0,.6),
-      inset 0 -40px 100px -60px rgba(0,0,0,.5);
-    filter: drop-shadow(0 30px 70px rgba(0,0,0,.45));
-  }
-  .map-canvas-wrap::before{
-    content:"";
-    position:absolute; inset:0;
-    background: radial-gradient(ellipse at center, transparent 55%, var(--navy-deep) 100%);
-    pointer-events:none;
-  }
-  .map-canvas{ position: absolute; inset: 0; }
-  .map-canvas svg{ width: 100%; height: 100%; display: block; }
+  position: relative;
+  aspect-ratio: 1000 / 560;
+  width: 100%;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(85,214,196,.05), transparent 62%),
+    repeating-linear-gradient(0deg, rgba(250,246,234,.02) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(90deg, rgba(250,246,234,.02) 0 1px, transparent 1px 48px);
+}
+.map-canvas{ position: absolute; inset: 0; }
+.map-canvas svg{ width: 100%; height: 100%; display: block; }
 
   .map-canvas path{
-    fill: rgba(250,246,234,.02);
-    stroke: rgba(250,246,234,.08);
-    stroke-width: 0.75;
-    cursor: pointer;
-    transition: fill .5s var(--ease), stroke .5s var(--ease), stroke-width .5s var(--ease), filter .5s var(--ease);
-  }
-  .map-canvas path:hover{ fill: rgba(250,246,234,.05); stroke: rgba(250,246,234,.14); }
+  fill: rgba(250,246,234,.03);
+  stroke: rgba(250,246,234,.16);
+  stroke-width: 0.75;
+  cursor: pointer;
+  transition: fill .35s var(--ease), stroke .3s var(--ease);
+  transform-box: fill-box;
+  transform-origin: center;
+}
 
-  .map-canvas path.covered{
-    stroke: var(--glow-strong);
-    stroke-width: 1.6;
-    filter: drop-shadow(0 0 1.7px rgba(85,214,196,.35));
-  }
-  .map-canvas path.covered.hovered,
-  .map-canvas path.covered.pinned{
-    fill: var(--glow-dim);
-    stroke: var(--glow-strong);
-    filter: drop-shadow(0 0 5px rgba(85,214,196,.56));
-  }
+/* Covered states — quiet tint at rest, no glow, no border emphasis */
+.map-canvas path.covered{
+  fill: rgba(85,214,196,.15);
+}
+
+/* Covered + hovered/pinned — brighten and lift */
+.map-canvas path.covered.hovered,
+.map-canvas path.covered.pinned{
+  fill: rgba(85,214,196,.42);
+  stroke: rgba(250,246,234,.3);
+  transform: scale(1.015);
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.4));
+  transition: fill .3s var(--ease), stroke .3s var(--ease), transform .3s var(--ease), filter .3s var(--ease);
+}
+
+/* Uncovered states never visually react — they only ever trigger the name label */
 
   /* HQ marker — dot only, no permanent label or animation.
      Info surfaces through the same side panel used for states, on hover/click. */
@@ -205,63 +199,30 @@
     filter: drop-shadow(0 0 5px rgba(85,214,196,.65));
   }
 
-  /* Floating state/HQ info panel */
   .map-state-panel{
-    position: absolute;
-    left: 24px;
-    bottom: 24px;
-    padding: 16px 24px;
-    background: rgba(22,34,44,.9);
-    border-left: 2px solid var(--line-on-navy);
-    box-shadow: 0 18px 40px rgba(0,0,0,.4);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity .3s var(--ease), transform .3s var(--ease), border-color .3s var(--ease);
-    pointer-events: none;
-    min-width: 180px;
-  }
-  .map-state-panel.msp-visible{ opacity: 1; transform: translateY(0); }
-  .msp-name{ display:block; font-family: var(--serif); font-weight: 500; font-size: 1.05rem; color: var(--paper); }
-  .msp-status{ display:block; font-family: var(--mono); font-size: .66rem; letter-spacing:.07em; text-transform: uppercase; color: rgba(250,246,234,.4); margin-top: 5px; }
-  .map-state-panel.msp-covered .msp-status{ color: var(--glow-strong); }
-  .map-state-panel.msp-hq .msp-status{ color: var(--clay-bright); }
-  .map-state-panel.msp-covered{ border-left-color: var(--glow-strong); }
-  .map-state-panel.msp-hq{ border-left-color: var(--clay-bright); }
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  padding: 10px 18px;
+  background: rgba(22,34,44,.85);
+  border-left: 2px solid var(--glow-line);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+  pointer-events: none;
+}
+.map-state-panel.msp-visible{ opacity: 1; transform: translateY(0); }
+.msp-name{ display:block; font-family: var(--serif); font-weight: 500; font-size: 1rem; color: var(--paper); white-space: nowrap; }
 
-  /* Sidebar */
-  .map-sidebar-intro{ font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.6; color: var(--paper-soft); margin: 0 0 26px; max-width: 420px; }
-  .state-tags{ display: flex; flex-wrap: wrap; gap: 8px; }
-  .state-tag{
-    font-family: var(--mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase;
-    color: rgba(250,246,234,.72);
-    border: 1px solid rgba(250,246,234,.22);
-    padding: 7px 11px;
-    cursor: pointer;
-    transition: color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
-    background: transparent;
-  }
-  .state-tag:hover{ color: var(--paper); border-color: rgba(85,214,196,.4); }
-  .state-tag.active{ color: var(--glow-strong); border-color: var(--glow-line); background: var(--glow-dim); }
-  .state-tag.hq-tag{ color: var(--clay-bright); border-color: rgba(217,117,95,.35); }
-  .state-tag.hq-tag:hover{ color: var(--clay-bright); border-color: rgba(217,117,95,.6); }
-  .state-tag.hq-tag.active{ color: var(--clay-bright); border-color: rgba(217,117,95,.7); background: rgba(217,117,95,.1); }
-  .province-divider{
-    width:100%; margin: 4px 0 2px;
-    font-family: var(--mono); font-size: .62rem; letter-spacing:.1em; text-transform:uppercase;
-    color: rgba(250,246,234,.35);
-  }
-  .state-tag.province-tag{
-    cursor: default;
-    color: rgba(250,246,234,.4);
-    border-style: dashed;
-  }
-  .state-tag.province-tag:hover{ color: rgba(250,246,234,.4); border-color: var(--line-on-navy); }
-
-  @media (max-width: 900px){
-    .map-interactive{ grid-template-columns: 1fr; }
-  }
+  .map-caption{
+  font-family: var(--serif); font-style: italic; font-weight: 500;
+  font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1.55;
+  color: rgba(250,246,234,.72);
+  max-width: 620px; margin: 0 0 24px;
+}
 
   /* ---------- 6. LANDOWNER REASSURANCE ---------- */
   .landowner-section{
@@ -397,14 +358,14 @@
       <p>Headquartered in Cache Valley, Utah, with permitting and land access work carried out coast to coast.</p>
     </div>
 
-    <div class="map-interactive" data-reveal>
-      <div class="map-canvas-wrap">
-        <div id="us-map" class="map-canvas" aria-label="Interactive map of U.S. states where APS Land Services operates"></div>
-        <div id="map-state-panel" class="map-state-panel">
-          <span id="msp-name" class="msp-name"></span>
-          <span id="msp-status" class="msp-status"></span>
-        </div>
-      </div>
+    <p class="map-caption" data-reveal>Twenty-five states and provinces and counting. In Texas alone, our agents have worked land in 129 counties.</p>
+
+<div class="map-canvas-wrap" data-reveal>
+  <div id="us-map" class="map-canvas" aria-label="Interactive map of U.S. states where APS Land Services operates"></div>
+  <div id="map-state-panel" class="map-state-panel">
+    <span id="msp-name" class="msp-name"></span>
+  </div>
+</div>
 
       <div class="map-sidebar">
         <p class="map-sidebar-intro">Twenty-five states and provinces and counting. In Texas alone, our agents have worked land in 129 counties.</p>
