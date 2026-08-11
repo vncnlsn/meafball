@@ -95,20 +95,20 @@
     '<circle class="hq-dot" cx="' + HQ.cx + '" cy="' + HQ.cy + '" r="4.5"></circle>';
   svgEl.appendChild(hqGroup);
 
-  /* ---- Panel elements (sidebar) ---- */
+  /* ---- Panel element ---- */
   var panel     = document.getElementById('map-state-panel');
-var panelName = document.getElementById('msp-name');
+  var panelName = document.getElementById('msp-name');
 
-function showPanel(name) {
-  if (!panel) return;
-  panelName.textContent = name;
-  panel.classList.add('msp-visible');
-}
-function hidePanel() {
-  if (!panel) return;
-  panel.classList.remove('msp-visible');
-  panelName.textContent = '';
-}
+  function showPanel(name) {
+    if (!panel) return;
+    panelName.textContent = name;
+    panel.classList.add('msp-visible');
+  }
+  function hidePanel() {
+    if (!panel) return;
+    panel.classList.remove('msp-visible');
+    panelName.textContent = '';
+  }
 
   /* ---- Unified interaction wiring (states + HQ marker share one pin) ---- */
   var paths = svgEl.querySelectorAll('path[data-state]');
@@ -119,41 +119,41 @@ function hidePanel() {
   var pinned = null;
 
   function wire(el, name, variant) {
-  var reactive = variant === 'covered' || variant === 'hq';
-  el.addEventListener('mouseenter', function () {
-    if (pinned) return;
-    if (reactive) el.classList.add('hovered');
-    showPanel(name);
-  });
-  el.addEventListener('mouseleave', function () {
-    if (pinned) return;
-    el.classList.remove('hovered');
-    hidePanel();
-  });
-  el.addEventListener('click', function () {
-    togglePin(el, name, reactive);
-  });
-  el.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
+    var reactive = variant === 'covered' || variant === 'hq';
+    el.addEventListener('mouseenter', function () {
+      if (pinned) return;
+      if (reactive) el.classList.add('hovered');
+      showPanel(name);
+    });
+    el.addEventListener('mouseleave', function () {
+      if (pinned) return;
+      el.classList.remove('hovered');
+      hidePanel();
+    });
+    el.addEventListener('click', function () {
       togglePin(el, name, reactive);
-    }
-  });
-}
-
-function togglePin(el, name, reactive) {
-  if (pinned === el) {
-    pinned = null;
-    el.classList.remove('pinned');
-    hidePanel();
-    return;
+    });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        togglePin(el, name, reactive);
+      }
+    });
   }
-  if (pinned) pinned.classList.remove('pinned');
-  pinned = el;
-  allInteractive.forEach(function (p) { p.classList.remove('hovered', 'pinned'); });
-  if (reactive) el.classList.add('pinned');
-  showPanel(name);
-}
+
+  function togglePin(el, name, reactive) {
+    if (pinned === el) {
+      pinned = null;
+      el.classList.remove('pinned');
+      hidePanel();
+      return;
+    }
+    if (pinned) pinned.classList.remove('pinned');
+    pinned = el;
+    allInteractive.forEach(function (p) { p.classList.remove('hovered', 'pinned'); });
+    if (reactive) el.classList.add('pinned');
+    showPanel(name);
+  }
 
   var coveredPaths = [];
   paths.forEach(function (path) {
@@ -177,17 +177,6 @@ function togglePin(el, name, reactive) {
 
   wire(hqGroup, HQ.name, 'hq');
 
-  /* ---- State tag sidebar chips (plus the HQ chip) ---- */
-      if (isHQ) {
-        showPanel(HQ.name, 'hq');
-      } else {
-        var tname    = target.getAttribute('data-name') || s;
-        var tcovered = COVERED.indexOf(s) > -1;
-        showPanel(tname, tcovered ? 'covered' : 'uncovered');
-      }
-    });
-  });
-
   /* ---- Scroll-away reset (leaves viewport → full reset) ---- */
   var mapSection = document.querySelector('.map-section');
   if (mapSection && 'IntersectionObserver' in window) {
@@ -197,8 +186,8 @@ function togglePin(el, name, reactive) {
           powerOnCoverage();
         } else {
           if (pinned) { pinned.classList.remove('pinned'); pinned = null; }
-allInteractive.forEach(function (p) { p.classList.remove('hovered', 'pinned'); });
-hidePanel();
+          allInteractive.forEach(function (p) { p.classList.remove('hovered', 'pinned'); });
+          hidePanel();
         }
       });
     }, { threshold: 0.2 });
