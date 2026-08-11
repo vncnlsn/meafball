@@ -264,60 +264,53 @@
   }
 
   /* ---------- 6. LANDOWNER REASSURANCE ---------- */
-  .landowner-section{ padding: clamp(96px, 10vw, 140px) 0; border-top: 1px solid var(--line); }
-  .landowner-head{ max-width: 720px; margin: 0 0 20px; }
-  .landowner-head .eyebrow{ display:block; margin-bottom: 14px; }
-  .landowner-head h2{ font-size: clamp(1.6rem, 2.6vw, 2.2rem); color: var(--navy); margin: 0 0 20px; line-height:1.24; }
-  .landowner-lede{ font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.1rem, 1.7vw, 1.35rem); line-height: 1.6; color: var(--ink); margin: 0 0 18px; max-width: 720px; }
-  .landowner-sub{ font-size: 1rem; line-height: 1.8; color: var(--ink-soft); max-width: 720px; margin: 0 0 8px; }
-
-  .landowner-intro-row{
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 48px;
-    align-items: start;
+  .landowner-section{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(26px, 3vw, 38px);
+    padding: clamp(48px, 6vw, 72px) 0;
+    border-top: 1px solid var(--line);
   }
-  .landowner-photo{
-    width: 100%;
-    max-width: 720px;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    margin: clamp(28px, 3vw, 40px) 0;
+  .landowner-head{ max-width: 720px; }
+  .landowner-head .eyebrow{ display:block; margin-bottom: 12px; }
+  .landowner-head h2{ font-size: clamp(1.5rem, 2.4vw, 2.05rem); color: var(--navy); margin: 0; line-height: 1.22; }
+
+  .landowner-lede{ font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.05rem, 1.5vw, 1.22rem); line-height: 1.55; color: var(--ink); margin: 14px 0 8px; max-width: 700px; }
+  .landowner-sub{ font-size: .96rem; line-height: 1.65; color: var(--ink-soft); max-width: 700px; margin: 0; }
+
+  .assurance-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .assurance-card{ background: var(--paper); padding: clamp(18px, 2.2vw, 26px) clamp(18px, 2vw, 22px); }
+  .assurance-num{ font-family: var(--mono); font-size: .68rem; letter-spacing:.06em; color: var(--clay); margin-bottom: 10px; display:block; }
+  .assurance-card h3{ font-size: .98rem; color: var(--navy); margin: 0 0 8px; font-weight: 600; line-height: 1.28; }
+  .assurance-card p{ font-size: .82rem; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+
+  .landowner-links{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .landowner-links a{
+    position: relative;
+    display:flex; flex-direction:column; gap: 4px;
+    padding: 18px 44px 18px 20px;
     background: var(--paper-dim);
+    transition: background .25s var(--ease);
   }
-  .landowner-photo img{ width:100%; height:100%; object-fit: cover; display:block; }
+  .landowner-links a:hover{ background: var(--navy); }
+  .landowner-links a:hover .ll-label,
+  .landowner-links a:hover .ll-desc{ color: var(--paper); }
+  .landowner-links a:hover .arrow{ color: var(--clay-bright); transform: translate(4px, -50%); }
+  .ll-label{ font-size: .88rem; font-weight: 600; color: var(--navy); transition: color .25s var(--ease); }
+  .ll-desc{ font-size: .76rem; color: var(--ink-soft); transition: color .25s var(--ease); }
+  .arrow{
+    position:absolute; top: 50%; right: 18px; transform: translateY(-50%);
+    font-weight: 600; color: var(--clay);
+    transition: transform .25s var(--ease), color .25s var(--ease);
+  }
 
-  .assurance-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); margin-top: 56px; border: 1px solid var(--line); }
-  .assurance-card{ background: var(--paper); padding: 34px 28px; }
-  .assurance-num{ font-family: var(--mono); font-size: .72rem; letter-spacing:.06em; color: var(--clay); margin-bottom: 16px; display:block; }
-  .assurance-card h3{ font-size: 1.12rem; color: var(--navy); margin: 0 0 12px; font-weight: 600; line-height:1.3; }
-  .assurance-card p{ font-size: .92rem; line-height: 1.68; color: var(--ink-soft); margin:0; }
   @media (max-width: 980px){ .assurance-grid{ grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px){ .assurance-grid{ grid-template-columns: 1fr; } }
-
-  .transparency-strip{
-    margin-top: 56px;
-    background: var(--paper-dim);
-    border: 1px solid var(--line);
-    padding: clamp(28px, 4vw, 40px) clamp(28px, 4vw, 44px);
-    display:grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 36px;
-    align-items: center;
+  @media (max-width: 700px){
+    .assurance-grid, .landowner-links{ grid-template-columns: 1fr; }
+    .landowner-section{ min-height: auto; }
   }
-  .transparency-strip h3{ font-size: 1.25rem; color: var(--navy); margin: 0 0 10px; font-weight:600; }
-  .transparency-strip p{ font-size: .96rem; line-height: 1.7; color: var(--ink-soft); margin: 0; max-width: 460px; }
-  .transparency-links{ display:flex; flex-direction:column; gap: 14px; }
-  .transparency-links a{
-    display:flex; align-items:center; justify-content:space-between; gap: 12px;
-    font-size: .92rem; font-weight: 600; color: var(--navy);
-    padding: 14px 18px; background: var(--paper); border: 1px solid var(--line);
-    transition: border-color .25s var(--ease), color .25s var(--ease);
-  }
-  .transparency-links a span.arrow{ font-weight: 500; color: var(--clay); transition: transform .25s var(--ease); }
-  .transparency-links a:hover{ border-color: var(--clay); }
-  .transparency-links a:hover span.arrow{ transform: translateX(4px); }
-  @media (max-width: 820px){ .transparency-strip{ grid-template-columns: 1fr; } }
 
   /* ---------- 8. FOOTER ---------- */
   footer{ background: var(--navy-deep); color: var(--paper); padding: 72px 0 32px; }
@@ -462,49 +455,51 @@
     <span class="eyebrow">For Landowners</span>
     <h2>You Stay In Control of What Happens on Your Land</h2>
   </div>
-  <div data-reveal>
-    <p class="landowner-lede">If an APS Land Services agent has reached out, it's because a company is exploring whether the ground beneath your property can help strengthen America's energy and infrastructure — and we're the ones responsible for doing that the right way.</p>
-    <p class="landowner-sub">We contact landowners on behalf of the company we represent to secure a <strong>Limited Use Service Agreement</strong> — a temporary, tightly defined permission for a survey crew to access the property, use seismic tools to read what lies beneath the surface, and leave. It is not a lease. It is not a sale of mineral rights. It is not fracking, drilling, or mining. It does not give up any of your rights to your land. It exists for one purpose: to let a field team measure and record, safely and briefly, then go.</p>
-  </div>
-  <div class="landowner-photo" data-reveal>
-    <img src="assets/landowner_handshake.jpg" alt="A handshake agreement in a farm field, representing APS Land Services' work with landowners">
-  </div>
 
-  <div class="assurance-grid" data-reveal>
+  <div data-reveal>
+    <p class="landowner-lede">If an APS agent has reached out, it's because a company is exploring whether your land can support American energy and infrastructure.</p>
+    <p class="landowner-sub">What we're asking for is a <strong>Limited Use Service Agreement</strong> — temporary permission for a survey crew to take seismic readings and leave. Not a lease. Not mineral rights. Not drilling.</p>
+  </div>
 
   <div class="assurance-grid" data-reveal>
     <div class="assurance-card">
       <span class="assurance-num">01</span>
       <h3>Limited, Not Permanent</h3>
-      <p>The agreement covers survey access only, for a defined window of time. It doesn't transfer ownership, lease your minerals, or authorize drilling of any kind — it authorizes a crew to take readings and leave the property as they found it.</p>
+      <p>Survey access only, for a defined window — no ownership transfer, no mineral lease, no drilling.</p>
     </div>
     <div class="assurance-card">
       <span class="assurance-num">02</span>
       <h3>Minimal Footprint</h3>
-      <p>Seismic survey work is designed to disturb as little ground as possible. Crews follow strict safety protocols on and off your property, and any area they use is restored to its original condition when the work is done.</p>
+      <p>Crews disturb as little ground as possible, and restore what they use when the work is done.</p>
     </div>
     <div class="assurance-card">
       <span class="assurance-num">03</span>
-      <h3>Strengthening American Energy</h3>
-      <p>The data gathered helps determine what resources exist beneath American soil — information that supports domestic energy development, stronger infrastructure, and the communities that depend on both.</p>
+      <h3>Supports Domestic Energy</h3>
+      <p>The data helps determine what resources lie beneath American soil.</p>
     </div>
     <div class="assurance-card">
       <span class="assurance-num">04</span>
       <h3>Safety First, Always</h3>
-      <p>Every field team operates under the same safety standard our agents have followed since 1980: proper coordination with the landowner, careful handling of equipment, and respect for the property the whole way through.</p>
+      <p>Every team follows the same standard we've held since 1980.</p>
     </div>
   </div>
 
-  <div class="transparency-strip" data-reveal>
-    <div>
-      <h3>Questions Are Always Welcome</h3>
-      <p>APS Land Services works in the open. If you'd like to know more before you sign anything, here's where to look — and who to ask.</p>
-    </div>
-    <div class="transparency-links">
-      <a href="services.html">See exactly what the survey work involves <span class="arrow">&rarr;</span></a>
-      <a href="index.html#partners">Check which company APS is currently representing <span class="arrow">&rarr;</span></a>
-      <a href="contact.html">Talk to a person who can walk you through it <span class="arrow">&rarr;</span></a>
-    </div>
+  <div class="landowner-links" data-reveal>
+    <a href="services.html">
+      <span class="ll-label">See The Work</span>
+      <span class="ll-desc">What the survey process involves</span>
+      <span class="arrow">&rarr;</span>
+    </a>
+    <a href="index.html#partners">
+      <span class="ll-label">See The Company</span>
+      <span class="ll-desc">Who APS is currently representing</span>
+      <span class="arrow">&rarr;</span>
+    </a>
+    <a href="contact.html">
+      <span class="ll-label">Talk To Us</span>
+      <span class="ll-desc">Reach APS directly</span>
+      <span class="arrow">&rarr;</span>
+    </a>
   </div>
 </section>
 
