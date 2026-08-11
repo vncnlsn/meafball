@@ -96,27 +96,19 @@
   svgEl.appendChild(hqGroup);
 
   /* ---- Panel elements (sidebar) ---- */
-  var panel       = document.getElementById('map-state-panel');
-  var panelName   = document.getElementById('msp-name');
-  var panelStatus = document.getElementById('msp-status');
+  var panel     = document.getElementById('map-state-panel');
+var panelName = document.getElementById('msp-name');
 
-  /* variant: 'covered' | 'uncovered' | 'hq' */
-  function showPanel(name, variant) {
-    if (!panel) return;
-    panelName.textContent = name;
-    panelStatus.textContent =
-      variant === 'covered' ? 'Active Coverage' :
-      variant === 'hq'      ? 'Headquarters' : '';
-    panel.classList.toggle('msp-covered', variant === 'covered');
-    panel.classList.toggle('msp-hq', variant === 'hq');
-    panel.classList.add('msp-visible');
-  }
-  function hidePanel() {
-    if (!panel) return;
-    panel.classList.remove('msp-visible', 'msp-covered', 'msp-hq');
-    panelName.textContent   = '';
-    panelStatus.textContent = '';
-  }
+function showPanel(name) {
+  if (!panel) return;
+  panelName.textContent = name;
+  panel.classList.add('msp-visible');
+}
+function hidePanel() {
+  if (!panel) return;
+  panel.classList.remove('msp-visible');
+  panelName.textContent = '';
+}
 
   /* ---- Unified interaction wiring (states + HQ marker share one pin) ---- */
   var paths = svgEl.querySelectorAll('path[data-state]');
@@ -127,40 +119,41 @@
   var pinned = null;
 
   function wire(el, name, variant) {
-    el.addEventListener('mouseenter', function () {
-      if (pinned) return;
-      el.classList.add('hovered');
-      showPanel(name, variant);
-    });
-    el.addEventListener('mouseleave', function () {
-      if (pinned) return;
-      el.classList.remove('hovered');
-      hidePanel();
-    });
-    el.addEventListener('click', function () {
-      togglePin(el, name, variant);
-    });
-    el.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        togglePin(el, name, variant);
-      }
-    });
-  }
-
-  function togglePin(el, name, variant) {
-    if (pinned === el) {
-      pinned = null;
-      el.classList.remove('pinned');
-      hidePanel();
-      return;
+  var reactive = variant === 'covered' || variant === 'hq';
+  el.addEventListener('mouseenter', function () {
+    if (pinned) return;
+    if (reactive) el.classList.add('hovered');
+    showPanel(name);
+  });
+  el.addEventListener('mouseleave', function () {
+    if (pinned) return;
+    el.classList.remove('hovered');
+    hidePanel();
+  });
+  el.addEventListener('click', function () {
+    togglePin(el, name, reactive);
+  });
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      togglePin(el, name, reactive);
     }
-    if (pinned) pinned.classList.remove('pinned');
-    pinned = el;
-    allInteractive.forEach(function (p) { p.classList.remove('hovered'); });
-    el.classList.add('pinned');
-    showPanel(name, variant);
+  });
+}
+
+function togglePin(el, name, reactive) {
+  if (pinned === el) {
+    pinned = null;
+    el.classList.remove('pinned');
+    hidePanel();
+    return;
   }
+  if (pinned) pinned.classList.remove('pinned');
+  pinned = el;
+  allInteractive.forEach(function (p) { p.classList.remove('hovered', 'pinned'); });
+  if (reactive) el.classList.add('pinned');
+  showPanel(name);
+}
 
   var coveredPaths = [];
   paths.forEach(function (path) {
@@ -185,28 +178,6 @@
   wire(hqGroup, HQ.name, 'hq');
 
   /* ---- State tag sidebar chips (plus the HQ chip) ---- */
-  var tags = document.querySelectorAll('.state-tag:not(.province-tag)');
-  tags.forEach(function (tag) {
-    tag.addEventListener('click', function () {
-      var isHQ = tag.hasAttribute('data-hq');
-      var s      = tag.getAttribute('data-state');
-      var target = isHQ ? hqGroup : svgEl.querySelector('path[data-state="' + s + '"]');
-      if (!target) return;
-
-      tags.forEach(function (t) { t.classList.remove('active'); });
-      tag.classList.add('active');
-
-      if (pinned === target) {
-        pinned = null;
-        target.classList.remove('pinned');
-        hidePanel();
-        return;
-      }
-      if (pinned) pinned.classList.remove('pinned');
-      pinned = target;
-      allInteractive.forEach(function (p) { p.classList.remove('hovered'); });
-      target.classList.add('pinned');
-
       if (isHQ) {
         showPanel(HQ.name, 'hq');
       } else {
@@ -226,9 +197,8 @@
           powerOnCoverage();
         } else {
           if (pinned) { pinned.classList.remove('pinned'); pinned = null; }
-          allInteractive.forEach(function (p) { p.classList.remove('hovered'); });
-          tags.forEach(function (t) { t.classList.remove('active'); });
-          hidePanel();
+allInteractive.forEach(function (p) { p.classList.remove('hovered', 'pinned'); });
+hidePanel();
         }
       });
     }, { threshold: 0.2 });
